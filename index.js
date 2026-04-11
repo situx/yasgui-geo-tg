@@ -6,6 +6,7 @@ import { decode } from '@erikmichelson/open-location-code-ts';
 import { GmlParser } from '@npm9912/s-gml';
 import {toGeoJSON} from 'kml-geojson'
 import { cellsToMultiPolygon, cellToLatLng } from 'h3-js';
+import geohash from 'ngeohash';
 
 // Known SRID proj4 definitions. Add more as needed.
 const SRID_PROJ = {
@@ -4872,6 +4873,11 @@ const parseKML = async (thekml) => {
   return toGeoJSON(thekml)
 }
 
+const parseWKB = async (thewkb) => {
+  console.log("Not yet implemented")
+  return {}
+}
+
 const parseDGGS = async (dggs) => {
   dggs=dggs.replaceAll(/^\s+|\s+$/gu, '');
   let dggsuri="";
@@ -4910,6 +4916,18 @@ const parseGeoCode = async (geocode) => {
   if(geocodeuri==='http://opengis.net/ont/geocode/OpenLocationCode'){
     let decoded=decode(geocode);
     return {"type":"Point","coordinates":[decoded.latitudeCenter, decoded.longitudeCenter]}
+  }
+  if(geocodeuri==='http://opengis.net/ont/geocode/GeoURI'){
+    let splitted=geocode.replaceAll("geo:","").split(",");
+    if(splitted.length===2){
+      return {"type":"Point","coordinates":[parseFloat(splitted[1]),parseFloat(splitted[0])]}
+    }else if(splitted.length===3){
+      return {"type":"Point","coordinates":[parseFloat(splitted[1]),parseFloat(splitted[0]),parseFloat(splitted[2])]}
+    }
+  }
+  if(geocodeuri==='http://opengis.net/ont/geocode/GeoHash' || geocodeuri==='http://opengis.net/ont/geocode/GeoHash-36'){
+    let decoded=geohash.decode(geocode);
+    return {"type":"Point","coordinates":[decoded.longitude,decoded.latitude]}
   }
   return {}
 }
@@ -4960,6 +4978,7 @@ const parseWKT = async (wkt) => {
  */
 const conversions = {
   'http://www.opengis.net/ont/geosparql#wktLiteral': parseWKT,
+  'http://www.opengis.net/ont/geosparql#wkbLiteral': parseWKB,
   'http://www.opengis.net/ont/geosparql#gmlLiteral': parseGML,
   'http://www.opengis.net/ont/geosparql#kmlLiteral': parseKML,
   'http://www.opengis.net/ont/geosparql#dggsLiteral': parseDGGS,
@@ -4967,6 +4986,10 @@ const conversions = {
   'http://www.openlinksw.com/schemas/virtrdf#Geometry': parseWKT,
   'http://www.opengis.net/ont/geosparql#geoJSONLiteral': JSON.parse,
 };
+
+const propertyPairs={
+    "http://www.w3.org/2003/01/geo/wgs84_pos#lat":{"latitude":"http://www.w3.org/2003/01/geo/wgs84_pos#lat","longitude":"http://www.w3.org/2003/01/geo/wgs84_pos#long"}
+}
 
 /**
  * Creates a GeoJSON object from SPARQL query bindings.

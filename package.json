@@ -49,6 +49,7 @@
     "@tmcw/togeojson": "^7.1.2",
     "@npm9912/s-gml": "^1.7.1",
     "h3-js": "^4.4.0",
+    "ngeohash": "^0.6.3",
     "@erikmichelson/open-location-code-ts": "^1.20250411.0"
   }
 }
