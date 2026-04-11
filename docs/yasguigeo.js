@@ -51180,7 +51180,7 @@ ${dataLines}`;
       return { "type": "Point", "coordinates": [decoded.latitudeCenter, decoded.longitudeCenter] };
     }
     if (geocodeuri === "http://opengis.net/ont/geocode/GeoURI") {
-      let splitted = geocode.split(",");
+      let splitted = geocode.replaceAll("geo:", "").split(",");
       if (splitted.length === 2) {
         return { "type": "Point", "coordinates": [parseFloat(splitted[0]), parseFloat(splitted[1])] };
       } else if (splitted.length === 3) {
