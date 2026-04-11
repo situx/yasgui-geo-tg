@@ -50704,6 +50704,7 @@ ${dataLines}`;
     updateColumns() {
       const bindings = this.yasr?.results?.json?.results?.bindings ?? [];
       const firstRow = bindings[0] ?? {};
+      console.log(firstRow);
       this.geometryColumns = Object.keys(firstRow).filter(
         (k) => firstRow[k].datatype && Object.keys(conversions).includes(firstRow[k].datatype)
       ).map((colName) => ({ colName, datatype: firstRow[colName].datatype }));
