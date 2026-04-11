@@ -50622,14 +50622,14 @@ ${dataLines}`;
     if (geocodeuri === "http://opengis.net/ont/geocode/GeoURI") {
       let splitted = geocode.replaceAll("geo:", "").split(",");
       if (splitted.length === 2) {
-        return { "type": "Point", "coordinates": [parseFloat(splitted[0]), parseFloat(splitted[1])] };
+        return { "type": "Point", "coordinates": [parseFloat(splitted[1]), parseFloat(splitted[0])] };
       } else if (splitted.length === 3) {
-        return { "type": "Point", "coordinates": [parseFloat(splitted[0]), parseFloat(splitted[1]), parseFloat(splitted[2])] };
+        return { "type": "Point", "coordinates": [parseFloat(splitted[1]), parseFloat(splitted[0]), parseFloat(splitted[2])] };
       }
     }
     if (geocodeuri === "http://opengis.net/ont/geocode/GeoHash" || geocodeuri === "http://opengis.net/ont/geocode/GeoHash-36") {
       let decoded = import_ngeohash.default.decode(geocode);
-      return { "type": "Point", "coordinates": [decoded.latitude, decoded.longitude] };
+      return { "type": "Point", "coordinates": [decoded.longitude, decoded.latitude] };
     }
     return {};
   };
