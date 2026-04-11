@@ -42,7 +42,7 @@ PREFIX geof: <http://www.opengis.net/def/function/geosparql/ext/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 SELECT ?literal
 WHERE {
-  BIND("<http://opengis.net/ont/geosparql/geocode/OpenLocationCode> 2G8PJ822+22"^^geo:geoCodeLiteral AS ?literal)
+  BIND("<http://opengis.net/ont/geocode/OpenLocationCode> 2G8PJ822+22"^^geo:geoCodeLiteral AS ?literal)
 }`, 
 "http://www.opengis.net/ont/geosparql#geoCodeLiteralGeoURI":`PREFIX my: <http://example.org/ApplicationSchema#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
@@ -50,7 +50,7 @@ PREFIX geof: <http://www.opengis.net/def/function/geosparql/ext/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 SELECT ?literal
 WHERE {
-  BIND("<http://opengis.net/ont/geosparql/geocode/GeoURI> geo:37.786971,-122.399677"^^geo:geoCodeLiteral AS ?literal)
+  BIND("<http://opengis.net/ont/geocode/GeoURI> geo:37.786971,-122.399677"^^geo:geoCodeLiteral AS ?literal)
 }`, 
 "http://www.opengis.net/ont/geosparql#geoCodeLiteralGeoHash":`PREFIX my: <http://example.org/ApplicationSchema#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
@@ -58,7 +58,7 @@ PREFIX geof: <http://www.opengis.net/def/function/geosparql/ext/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 SELECT ?literal
 WHERE {
-  BIND("<http://opengis.net/ont/geosparql/geocode/GeoHash> u4pruydqqvj"^^geo:geoCodeLiteral AS ?literal)
+  BIND("<http://opengis.net/ont/geocode/GeoHash> u4pruydqqvj"^^geo:geoCodeLiteral AS ?literal)
 }`, 
 "http://www.opengis.net/ont/geosparql#geoJSONLiteral":`PREFIX my: <http://example.org/ApplicationSchema#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
