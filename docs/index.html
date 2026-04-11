@@ -1,0 +1,226 @@
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>YasGUI Geo TestPage</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js" integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og==" crossorigin=""></script>
+<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+<link href="https://cdn.jsdelivr.net/npm/@zazuko/yasgui@4.6.1/build/yasgui.min.css" rel="stylesheet">
+<link href="yasguigeo.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@zazuko/yasgui@4.6.1/build/yasgui.min.js"></script>
+<script src="yasguigeo.js"></script>	
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integGrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+<script src="comunica-browser.js"></script>
+<script>
+    geof={
+        "http://www.opengis.net/ont/geosparql/dggsLiteralH3":"geo:dggsLiteral: H3",
+        "http://www.opengis.net/ont/geosparql/geoCodeLiteralOLC":"geo:geoCodeLiteral: Open Location Code",
+        "http://www.opengis.net/ont/geosparql/geoJSONLiteral":"geo:geoJSONLiteral",
+		"http://www.opengis.net/ont/geosparql/gmlLiteral":"geo:gmlLiteral",
+        "http://www.opengis.net/ont/geosparql/kmlLiteral":"geo:kmlLiteral",
+        "http://www.opengis.net/ont/geosparql/wktLiteral":"geo:wktLiteral",
+    }
+	geofqueries={
+
+"http://www.opengis.net/ont/dggsLiteralH3":`PREFIX my: <http://example.org/ApplicationSchema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/ext/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?literal
+WHERE {
+  BIND("<https://h3geo.org/res/7> CELLLIST( '87f15d9acffffff', '87f143749ffffff', '87f15d9a1ffffff', '87f143296ffffff', '87f15d910ffffff', '87f143648ffffff', '87f14374bffffff', '87f15d9aeffffff', '87f15d98dffffff', '87f14366bffffff', '87f15d912ffffff', '87f14374dffffff', '87f15d9a5ffffff', '87f15d832ffffff', '87f15d914ffffff', '87f14364cffffff', '87f15d916ffffff', '87f15d9a9ffffff', '87f15d836ffffff', '87f15d988ffffff', '87f143748ffffff', '87f15d9abffffff', '87f143668ffffff', '87f15d9adffffff', '87f15d98cffffff', '87f14366affffff', '87f143649ffffff', '87f14366cffffff', '87f15d810ffffff', '87f143661ffffff', '87f15d913ffffff', '87f14364bffffff', '87f14366effffff', '87f14364dffffff', '87f15d9a8ffffff', '87f143292ffffff', '87f15d814ffffff', '87f143665ffffff', '87f15d9aaffffff', '87f15d989ffffff', '87f15d816ffffff' )"^^geo:dggsLiteral AS ?literal)
+}`,        
+"http://www.opengis.net/ont/geoCodeLiteralOLC":`PREFIX my: <http://example.org/ApplicationSchema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/ext/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?literal
+WHERE {
+  BIND("<http://opengis.net/ont/geocode/OpenLocationCode> 2G8PJ822+22"^^geo:geoCodeLiteral AS ?literal)
+}`, 
+        "http://www.opengis.net/ont/geoJSONLiteral":`PREFIX my: <http://example.org/ApplicationSchema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/ext/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?literal
+WHERE {
+  BIND("{\"type\": \"Polygon\", \"coordinates\": [[[-83.6, 34.1], [-83.2, 34.1], [-83.2, 34.5], [-83.6, 34.5], [-83.6, 34.1]]]}"^^geo:geoJSONLiteral AS ?literal)
+}`, 
+"http://www.opengis.net/ont/gmlLiteral":`PREFIX my: <http://example.org/ApplicationSchema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/ext/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?literal
+WHERE {
+  BIND("<gml:Polygon xmlns:gml=\"http://www.opengis.net/gml\" srsName=\"http://www.opengis.net/def/crs/OGC/1.3/CRS84\"><gml:exterior><gml:LinearRing><gml:posList>-83.6 34.1 -83.2 34.1 -83.2 34.5 -83.6 34.5 -83.6 34.1</gml:posList></gml:LinearRing></gml:exterior></gml:Polygon>"^^geo:gmlLiteral AS ?literal)
+}`, 
+"http://www.opengis.net/ont/kmlLiteral":`PREFIX my: <http://example.org/ApplicationSchema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/ext/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?literal
+WHERE {
+  BIND("<Polygon><outerBoundaryIs><LinearRing><coordinates>-83.6,34.1 -83.2,34.1 -83.2,34.5 -83.6,34.5 -83.6,34.1</coordinates></LinearRing></outerBoundaryIs></Polygon>"^^geo:kmlLiteral AS ?literal)
+}`, 
+"http://www.opengis.net/ont/wktLiteral":`PREFIX my: <http://example.org/ApplicationSchema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/ext/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?literal
+WHERE {
+  BIND("Polygon((-83.3 33.0, -83.1 33.0, -83.1 33.2, -83.3 33.2, -83.3 33.0))"^^geo:wktLiteral AS ?literal)
+}`, 
+
+}
+    var prefixList="PREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX geo: <http://www.opengis.net/ont/geosparql#>\nPREFIX wd: <http://www.wikidata.org/entity/>\nPREFIX foaf: <http://xmlns.com/foaf/0.1/>\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX xml: <http://www.w3.org/XML/1998/namespace>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX xerl: <http://www.xerleben.de/schema/2.0_1#>\nPREFIX xplan5: <http://www.xplanung.de/xplangml/5/0#>\nPREFIX semgis: <http://www.semgis.de/geodata#> "
+
+	var colorArray = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6', 
+		  '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
+		  '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A', 
+		  '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
+		  '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC', 
+		  '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
+		  '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680', 
+		  '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
+		  '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3', 
+		  '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
+
+var overlayMaps={}
+	var sources=[]
+
+function showQuery(){
+  if(document.getElementById("functions").value in geofqueries){
+    yasgui.getTab().yasqe.setValue(geofqueries[document.getElementById("functions").value])
+  }else{
+	yasgui.getTab().yasqe.setValue("No sample query available for function "+document.getElementById("functions").value)
+	yasres={"head":{"vars":[]},"results":{"bindings":[]}}
+	yasgui.getTab().yasr.setResponse({
+	  data: yasres,
+	  contentType: "application/sparql-results+json",
+	  status: 200,
+	  executionTime: 1000 // ms
+	  // error to show
+	})  	
+  }
+}
+
+
+const endpoint = "https://situx.github.io/comunica-geosparql/testdata.ttl"
+const urlParams = new URLSearchParams(window.location.search);
+const prefixes=`
+PREFIX my: <http://example.org/ApplicationSchema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
+SELECT ?literal ?maxX
+WHERE {
+  my:AExactGeom geo:asWKT ?literal .
+  BIND(geof:maxX(?literal) AS ?maxX)
+}`
+
+ const myEngine=new Comunica.QueryEngine()
+async function queryFile(){
+  yasres={"head":{"vars":[]},"results":{"bindings":[]}}
+  config={"sources":[endpoint]}
+  const result=await myEngine.queryBindings(yasgui.getTab().yasqe.getValue(), config)
+  const data=await result.toArray()	
+  vararray=[]
+  ttypemap={"NamedNode":"uri","Literal":"literal"}
+  for(bind of data){
+	curbindings={}
+	for(entry of bind["entries"]["_root"]["entries"]){
+		if(!(vararray.includes(entry[0]))){
+			vararray.push(entry[0])
+		}
+		curbindings[entry[0]]={"type":ttypemap[entry[1]["termType"]],"value":entry[1]["value"]}	
+		if("datatype" in entry[1]){
+			curbindings[entry[0]]["datatype"]=entry[1]["datatype"]["value"]
+		}
+		if("language" in entry[1] && entry[1]["language"]!=""){
+			curbindings[entry[0]]["language"]=entry[1]["language"]
+		}
+			
+	}
+	yasres["results"]["bindings"].push(curbindings)
+  }
+  yasres["head"]["vars"]=vararray
+	yasgui.getTab().yasr.setResponse({
+	  data: yasres,
+	  contentType: "application/sparql-results+json",
+	  status: 200,
+	  executionTime: 1000 // ms
+	  // error to show
+	})  		
+
+}
+</script>
+	  <style>
+  #mapid { height: 500px;}
+  </style>
+  <style>
+.table-wrapper-scroll-y {
+  display: block;
+  max-height: 500px;
+  max-width: 100%;
+  overflow-y: auto;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+</style>
+</head>
+<body>
+<h2>Comunica GeoSPARQL Test</h2>
+<div class="row">
+
+  <div id="yasgui" class="col-12">
+This homepage allows testing GeoSPARQL queries for the Comunica Query engine.<br/>
+Officially standardized GeoSPARQL functions are presented in the geof namespace.<br/>
+Unofficial functions use the geofext namespace.<br/>
+Sample Queries: <select id="functions" onchange="showQuery()">
+</select><br/>
+<button id="query" onclick="queryFile()" class="yasqe_queryButton query_valid">
+  <div class="svgImg queryIcon">
+    <svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" height="81.9" width="72.9" version="1.1" y="0px" x="0px" viewBox="0 0 72.900002 81.900002" aria-hidden="true"><path id="queryIcon" d="m69.6 35.2-60.3-34.3c-2.2-1.2-4.4-1.2-6.4 0s-2.9 3.4-2.9 5.6v68.8c0 2.2 1.2 4.4 2.9 5.6 1 0.5 2.2 1 3.4 1s2.2-0.5 2.9-1l60.3-34.3c2.2-1.2 3.4-3.4 3.4-5.6s-1.1-4.3-3.3-5.8z"></path><path id="loadingIcon" d="m61.184 36.167-48.73-27.719c-1.7779-0.96976-3.5558-0.96976-5.172 0-1.6163 0.96976-2.3436 2.7476-2.3436 4.5255v55.599c0 1.7779 0.96976 3.5558 2.3436 4.5255 0.80813 0.40407 1.7779 0.80813 2.7476 0.80813 0.96975 0 1.7779-0.40406 2.3436-0.80813l48.73-27.719c1.7779-0.96976 2.7476-2.7476 2.7476-4.5255s-0.88894-3.475-2.6668-4.6872z" fill="none"></path></svg>
+  </div>
+</button>
+ </div>
+</div>
+<script>
+options=""
+for(fun in geof){
+    options+="<option value=\""+fun+"\">"+geof[fun]+"</option>"
+}
+document.getElementById("functions").innerHTML=options
+const GeoPlugin = window.YasguiGeoTg && (window.YasguiGeoTg.default || window.YasguiGeoTg);
+
+console.log(GeoPlugin)
+	
+// Register the plugin with YASR before creating Yasgui
+Yasgui.Yasr.registerPlugin('geo', GeoPlugin);
+
+const yasgui = new Yasgui(document.getElementById("yasgui"),{
+	"yasr":{"pluginOrder": ["table","response","geo"],"defaultPlugin":"geo"},
+	"yasqe":{"showQueryButton": false},
+	"requestConfig": { "endpoint": endpoint},  
+	"copyEndpointOnNewTab": false}
+);
+ if(typeof(thequery)!=='undefined' && thequery!=null){
+	yasgui.getTab().yasqe.setValue(thequery)
+ }else{
+	yasgui.getTab().yasqe.setValue(prefixes)
+ }
+ baseurl="{{site.url}}{{site.baseurl_root}}".replace("net//","net/")
+ yasgui.getTab().yasr.on("drawn",function(event){
+	$('.iri').each(function(i,obj){
+	    console.log(obj)
+		if($(this).attr("href").includes(baseurl)){
+			$(this).attr("href",$(this).attr("href").replace(baseurl,""))
+		}
+	})
+ })
+  document.getElementsByClassName('yasqe_buttons')[0].appendChild(document.getElementById('query'));
+</script>
+</body>
+</html>
