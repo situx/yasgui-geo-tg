@@ -114,11 +114,11 @@ const urlParams = new URLSearchParams(window.location.search);
 const prefixes=`
 PREFIX my: <http://example.org/ApplicationSchema#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
-PREFIX geof: <http://www.opengis.net/def/function/geosparql/>
-SELECT ?literal ?maxX
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/ext/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?literal
 WHERE {
-  my:AExactGeom geo:asWKT ?literal .
-  BIND(geof:maxX(?literal) AS ?maxX)
+  BIND("Polygon((-83.3 33.0, -83.1 33.0, -83.1 33.2, -83.3 33.2, -83.3 33.0))"^^geo:wktLiteral AS ?literal)
 }`
 
  const myEngine=new Comunica.QueryEngine()
