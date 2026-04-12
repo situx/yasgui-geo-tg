@@ -50696,7 +50696,6 @@ ${dataLines}`;
       this.label = "Geo";
       this.geometryColumns = [];
       this.updateColumns();
-      this.download = {};
       this.originaldownload = [];
     }
     /**
@@ -50749,7 +50748,7 @@ ${dataLines}`;
         );
         const DEFAULT_COLOR = "#3388ff";
         this.originaldownload.push(geojson);
-        this.download.push(geojson);
+        this.download = geojson;
         const newLayers = import_leaflet2.default.geoJson(geojson, {
           pointToLayer: (feature, latlng) => {
             const color = feature.properties?.wktColor?.value || DEFAULT_COLOR;
