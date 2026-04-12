@@ -50823,7 +50823,7 @@ ${dataLines}`;
     }
     download(filename = "result.geojson") {
       return {
-        getData: () => this.downloadData || "",
+        getData: this.downloadData || "",
         contentType: "text/geojson",
         title: "Download result",
         filename: `${filename || "queryResults"}.csv`
