@@ -50825,8 +50825,8 @@ ${dataLines}`;
       return {
         getData: this.downloadData || "",
         contentType: "text/geojson",
-        title: "Download result",
-        filename: `${filename || "queryResults"}.csv`
+        title: "Download geo query result",
+        filename: `${filename || "queryResults"}.geojson`
       };
     }
   };
