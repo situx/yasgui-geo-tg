@@ -50748,7 +50748,7 @@ ${dataLines}`;
         );
         const DEFAULT_COLOR = "#3388ff";
         this.originaldownload.push(geojson);
-        this.download = geojson;
+        this.downloadData = geojson;
         const newLayers = import_leaflet2.default.geoJson(geojson, {
           pointToLayer: (feature, latlng) => {
             const color = feature.properties?.wktColor?.value || DEFAULT_COLOR;
@@ -50823,7 +50823,7 @@ ${dataLines}`;
     }
     download(filename = "result.geojson") {
       return {
-        getData: () => this.download || "",
+        getData: () => this.downloadData || "",
         contentType: "text/geojson",
         title: "Download result",
         filename: `${filename || "queryResults"}.csv`
