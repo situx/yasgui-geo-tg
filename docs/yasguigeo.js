@@ -50758,8 +50758,9 @@ ${dataLines}`;
         } else if ("value" in feature.properties[prop]) {
           if ("datatype" in feature.properties[prop]) {
             popup += '<a href="' + feature.properties[prop]["datatype"] + '">' + feature.properties[prop]["value"] + "</a>";
+          } else {
+            popup += feature.properties[prop]["value"] + "";
           }
-          popup += feature.properties[prop]["value"] + "";
         } else {
           popup += feature.properties[prop] + "";
         }
