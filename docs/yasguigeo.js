@@ -50755,12 +50755,13 @@ ${dataLines}`;
           popup += "</ul>";
         } else if (Array.isArray(feature.properties[prop]) && (feature.properties[prop][0] + "").startsWith("http")) {
           popup += '<a href="' + feature.properties[prop][0] + '" target="_blank">' + feature.properties[prop][0].substring(feature.properties[prop][0].lastIndexOf("/") + 1) + "</a>";
-        } else {
-          if (typeof feature.properties[prop] === "object") {
-            popup += JSON.stringify(feature.properties[prop]);
-          } else {
-            popup += feature.properties[prop] + "";
+        } else if ("value" in feature.properties[prop]) {
+          if ("datatype" in feature.properties[prop]) {
+            popup += '<a href="' + feature.properties[prop]["datatype"] + '">' + feature.properties[prop]["value"] + "</a>";
           }
+          popup += feature.properties[prop]["value"] + "";
+        } else {
+          popup += feature.properties[prop] + "";
         }
         popup += "</li>";
       }
