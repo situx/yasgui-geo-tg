@@ -50721,9 +50721,17 @@ ${dataLines}`;
     generateLeafletPopup(feature, layer) {
       var popup = "<b>";
       if ("name" in feature && feature.name !== "") {
-        popup += '<a href="' + feature.id + '" class="footeruri" target="_blank">' + feature.name + "</a></b><br/><ul>";
+        if (feature.name.startsWith("http")) {
+          popup += '<a href="' + feature.id + '" class="footeruri" target="_blank">' + feature.name + "</a></b><br/><ul>";
+        } else {
+          popup += feature.name + "</b><br/><ul>";
+        }
       } else {
-        popup += '<a href="' + feature.id + '" class="footeruri" target="_blank">' + feature.id + "</a></b><br/><ul>";
+        if (feature.id.startsWith("http")) {
+          popup += '<a href="' + feature.id + '" class="footeruri" target="_blank">' + feature.id + "</a></b><br/><ul>";
+        } else {
+          popup += feature.id + "</b><br/><ul>";
+        }
       }
       for (const prop in feature.properties) {
         popup += "<li>";
