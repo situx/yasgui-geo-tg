@@ -50822,6 +50822,7 @@ ${dataLines}`;
       return this.geometryColumns && this.geometryColumns.length > 0;
     }
     download(filename = "result.geojson") {
+      console.log(this.downloadData);
       return {
         getData: () => this.downloadData || "",
         contentType: "text/geojson",
