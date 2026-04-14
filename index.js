@@ -5015,6 +5015,7 @@ const createGeojson = async (bindings, column) => ({
   ),
 });
 
+
 /**
  * GeoPlugin: YASR plugin that displays geographic results in a Leaflet map.
  *
@@ -5032,6 +5033,7 @@ class GeoPlugin {
     this.label = 'Geo';
     this.geometryColumns = [];
     this.updateColumns();
+    this.originaldownload=[]
   }
 
   /**
@@ -5042,6 +5044,7 @@ class GeoPlugin {
     const bindings = this.yasr?.results?.json?.results?.bindings ?? [];
     const firstRow = bindings[0] ?? {};
 
+    console.log(firstRow)
     this.geometryColumns = Object.keys(firstRow)
       .filter(
         (k) =>
@@ -5094,7 +5097,8 @@ class GeoPlugin {
       );
       
       const DEFAULT_COLOR = '#3388ff'; // Choose your default color
-
+      this.originaldownload.push(geojson)
+      this.downloadData=geojson
       const newLayers = L.geoJson(geojson, {
         pointToLayer: (feature, latlng) => {
           const color = feature.properties?.wktColor?.value || DEFAULT_COLOR;
@@ -5177,6 +5181,16 @@ class GeoPlugin {
   canHandleResults() {
     this.updateColumns();
     return this.geometryColumns && this.geometryColumns.length > 0;
+  }
+
+  download(filename="result.geojson") {
+    console.log(this.downloadData)
+    return {
+        getData: () => JSON.stringify(this.downloadData) || "",
+        contentType: "text/geojson",
+        title: "Download geo query result",
+        filename: `${filename || "queryResults"}.geojson`,
+    };
   }
 }
 
