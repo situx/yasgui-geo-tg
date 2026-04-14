@@ -50723,7 +50723,7 @@ ${dataLines}`;
       if ("name" in feature && feature.name !== "") {
         popup += '<a href="' + feature.id + '" class="footeruri" target="_blank">' + feature.name + "</a></b><br/><ul>";
       } else {
-        popup += '<a href="' + feature.id + '" class="footeruri" target="_blank">' + feature.id.substring(feature.id.lastIndexOf("/") + 1) + "</a></b><br/><ul>";
+        popup += '<a href="' + feature.id + '" class="footeruri" target="_blank">' + feature.id + "</a></b><br/><ul>";
       }
       for (const prop in feature.properties) {
         popup += "<li>";
