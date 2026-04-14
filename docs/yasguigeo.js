@@ -50804,6 +50804,7 @@ ${dataLines}`;
             if (colnameLabel in p) {
               feature.name = p[colnameLabel];
             }
+            feature.id = colName;
             const popupval = this.generateLeafletPopup(feature, layer);
             layer.bindPopup(popupval);
             layer.bindTooltip(popupval);
