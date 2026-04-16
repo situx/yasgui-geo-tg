@@ -25,6 +25,7 @@
 		"http://www.opengis.net/ont/geosparql#gmlLiteral":"geo:gmlLiteral",
         "http://www.opengis.net/ont/geosparql#kmlLiteral":"geo:kmlLiteral",
         "http://www.opengis.net/ont/geosparql#wktLiteral":"geo:wktLiteral",
+		"http://www.opengis.net/ont/geosparql#geoYAMLLiteral":"Unofficial: geo:geoJSONLiteral",
     }
 	geofqueries={
 
@@ -91,6 +92,24 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 SELECT ?literal
 WHERE {
   BIND("Polygon((-83.3 33.0, -83.1 33.0, -83.1 33.2, -83.3 33.2, -83.3 33.0))"^^geo:wktLiteral AS ?literal)
+}`, 
+"http://www.opengis.net/ont/geosparql#geoYAMLLiteral":`PREFIX my: <http://example.org/ApplicationSchema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/ext/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?literal
+WHERE {
+  BIND("""
+type: FeatureCollection
+features:
+  - geometry:
+      type: Point
+      coordinates:
+        - 37.96875
+        - 37.71859032558816
+    properties:
+      name: Hello World
+"""^^geo:geoYAMLLiteral AS ?literal)
 }`, 
 
 }
