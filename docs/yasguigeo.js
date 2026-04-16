@@ -123823,10 +123823,12 @@ Tip: Parse the GML instead of validating, or download and validate locally.`);
     return toGeoJSON(thekml);
   };
   var parseWKB = async (thewkb) => {
+    thewkb = thewkb.replaceAll(/^\s+|\s+$/gu, "");
     console.log("Not yet implemented");
     return {};
   };
   var parseGeoYAML = async (geoyamlstr) => {
+    geoyamlstr = geoyamlstr.replaceAll(/^\s+|\s+$/gu, "");
     return import_geoyaml.default.load(geoyamlstr);
   };
   var parseDGGS = async (dggs) => {
