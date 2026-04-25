@@ -50712,7 +50712,6 @@ var YasguiGeoTg = (() => {
     "kml": parseKML,
     "gpx": parseGPX,
     "gml": parseGML,
-    "dggs": loadXYZ,
     "json": JSON.parse,
     "jsonfg": JSON.parse,
     "geojson": JSON.parse,
