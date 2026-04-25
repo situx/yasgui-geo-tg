@@ -22,13 +22,22 @@
 		"http://www.opengis.net/ont/geosparql#geoCodeLiteralGeoURI":"geo:geoCodeLiteral: GeoURI",
 		"http://www.opengis.net/ont/geosparql#geoCodeLiteralGeoHash":"geo:geoCodeLiteral: GeoHash",
         "http://www.opengis.net/ont/geosparql#geoJSONLiteral":"geo:geoJSONLiteral",
+		"geoJSONURL":"xsd:anyURI GeoJSON",
 		"http://www.opengis.net/ont/geosparql#gmlLiteral":"geo:gmlLiteral",
         "http://www.opengis.net/ont/geosparql#kmlLiteral":"geo:kmlLiteral",
         "http://www.opengis.net/ont/geosparql#wktLiteral":"geo:wktLiteral",
 		"http://www.opengis.net/ont/geosparql#geoYAMLLiteral":"Unofficial: geo:geoYAMLLiteral",
     }
 	geofqueries={
-
+"geoJSONURL":`
+PREFIX my: <http://example.org/ApplicationSchema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/ext/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?literal
+WHERE {
+  BIND("""https://gist.githubusercontent.com/wavded/1200773/raw/e122cf709898c09758aecfef349964a8d73a83f3/sample.json"""^^xsd:anyURI AS ?literal)
+}`,
 "http://www.opengis.net/ont/geosparql#dggsLiteralH3":`PREFIX my: <http://example.org/ApplicationSchema#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
 PREFIX geof: <http://www.opengis.net/def/function/geosparql/ext/>
