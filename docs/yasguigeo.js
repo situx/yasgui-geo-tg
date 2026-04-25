@@ -41,7 +41,7 @@ var YasguiGeoTg = (() => {
     "node_modules/leaflet/dist/leaflet-src.js"(exports3, module) {
       (function(global2, factory) {
         typeof exports3 === "object" && typeof module !== "undefined" ? factory(exports3) : typeof define === "function" && define.amd ? define(["exports"], factory) : (global2 = typeof globalThis !== "undefined" ? globalThis : global2 || self, factory(global2.leaflet = {}));
-      })(exports3, function(exports4) {
+      })(exports3, (function(exports4) {
         "use strict";
         var version = "1.9.4";
         function extend2(dest) {
@@ -54,14 +54,14 @@ var YasguiGeoTg = (() => {
           }
           return dest;
         }
-        var create$2 = Object.create || /* @__PURE__ */ function() {
+        var create$2 = Object.create || /* @__PURE__ */ (function() {
           function F() {
           }
           return function(proto) {
             F.prototype = proto;
             return new F();
           };
-        }();
+        })();
         function bind(fn, obj2) {
           var slice = Array.prototype.slice;
           if (fn.bind) {
@@ -1161,10 +1161,10 @@ var YasguiGeoTg = (() => {
               point2.x * d3 / this.R
             );
           },
-          bounds: function() {
+          bounds: (function() {
             var d3 = earthRadius * Math.PI;
             return new Bounds([-d3, -d3], [d3, d3]);
-          }()
+          })()
         };
         function Transformation(a2, b2, c4, d3) {
           if (isArray2(a2)) {
@@ -1210,10 +1210,10 @@ var YasguiGeoTg = (() => {
         var EPSG3857 = extend2({}, Earth, {
           code: "EPSG:3857",
           projection: SphericalMercator,
-          transformation: function() {
+          transformation: (function() {
             var scale3 = 0.5 / (Math.PI * SphericalMercator.R);
             return toTransformation(scale3, 0.5, -scale3, 0.5);
-          }()
+          })()
         });
         var EPSG900913 = extend2({}, EPSG3857, {
           code: "EPSG:900913"
@@ -1263,7 +1263,7 @@ var YasguiGeoTg = (() => {
         var mobileOpera = mobile && opera;
         var mobileGecko = mobile && gecko;
         var retina = (window.devicePixelRatio || window.screen.deviceXDPI / window.screen.logicalXDPI) > 1;
-        var passiveEvents = function() {
+        var passiveEvents = (function() {
           var supportsPassiveOption = false;
           try {
             var opts = Object.defineProperty({}, "passive", {
@@ -1276,17 +1276,17 @@ var YasguiGeoTg = (() => {
           } catch (e2) {
           }
           return supportsPassiveOption;
-        }();
-        var canvas$1 = function() {
+        })();
+        var canvas$1 = (function() {
           return !!document.createElement("canvas").getContext;
-        }();
+        })();
         var svg$1 = !!(document.createElementNS && svgCreate("svg").createSVGRect);
-        var inlineSvg = !!svg$1 && function() {
+        var inlineSvg = !!svg$1 && (function() {
           var div = document.createElement("div");
           div.innerHTML = "<svg/>";
           return (div.firstChild && div.firstChild.namespaceURI) === "http://www.w3.org/2000/svg";
-        }();
-        var vml = !svg$1 && function() {
+        })();
+        var vml = !svg$1 && (function() {
           try {
             var div = document.createElement("div");
             div.innerHTML = '<v:shape adj="1"/>';
@@ -1296,7 +1296,7 @@ var YasguiGeoTg = (() => {
           } catch (e2) {
             return false;
           }
-        }();
+        })();
         var mac = navigator.platform.indexOf("Mac") === 0;
         var linux = navigator.platform.indexOf("Linux") === 0;
         function userAgentContains(str) {
@@ -4384,10 +4384,10 @@ var YasguiGeoTg = (() => {
         var EPSG3395 = extend2({}, Earth, {
           code: "EPSG:3395",
           projection: Mercator,
-          transformation: function() {
+          transformation: (function() {
             var scale3 = 0.5 / (Math.PI * Mercator.R);
             return toTransformation(scale3, 0.5, -scale3, 0.5);
-          }()
+          })()
         });
         var EPSG4326 = extend2({}, Earth, {
           code: "EPSG:4326",
@@ -8589,7 +8589,7 @@ var YasguiGeoTg = (() => {
         function canvas2(options) {
           return Browser.canvas ? new Canvas2(options) : null;
         }
-        var vmlCreate = function() {
+        var vmlCreate = (function() {
           try {
             document.namespaces.add("lvml", "urn:schemas-microsoft-com:vml");
             return function(name) {
@@ -8600,7 +8600,7 @@ var YasguiGeoTg = (() => {
           return function(name) {
             return document.createElement("<" + name + ' xmlns="urn:schemas-microsoft.com:vml" class="lvml">');
           };
-        }();
+        })();
         var vmlMixin = {
           _initContainer: function() {
             this._container = create$1("div", "leaflet-vml-container");
@@ -9582,7 +9582,7 @@ var YasguiGeoTg = (() => {
           return this;
         };
         window.L = exports4;
-      });
+      }));
     }
   });
 
@@ -9591,7 +9591,7 @@ var YasguiGeoTg = (() => {
     "node_modules/proj4/dist/proj4-src.js"(exports3, module) {
       (function(global2, factory) {
         typeof exports3 === "object" && typeof module !== "undefined" ? module.exports = factory() : typeof define === "function" && define.amd ? define(factory) : (global2 = typeof globalThis !== "undefined" ? globalThis : global2 || self, global2.proj4 = factory());
-      })(exports3, function() {
+      })(exports3, (function() {
         "use strict";
         function globals2(defs3) {
           defs3("EPSG:4326", "+title=WGS 84 (long/lat) +proj=longlat +ellps=WGS84 +datum=WGS84 +units=degrees");
@@ -10369,6 +10369,8 @@ var YasguiGeoTg = (() => {
             case "COMPD_CS":
             case "COMPOUNDCRS":
             case "FITTED_CS":
+            // the followings are the crs defined in
+            // https://github.com/proj4js/proj4js/blob/1da4ed0b865d0fcb51c136090569210cdcc9019e/lib/parseCode.js#L11
             case "PROJECTEDCRS":
             case "PROJCRS":
             case "GEOGCS":
@@ -17758,7 +17760,7 @@ var YasguiGeoTg = (() => {
         });
         includedProjections2(proj43);
         return proj43;
-      });
+      }));
     }
   });
 
@@ -20259,7 +20261,7 @@ var YasguiGeoTg = (() => {
       function copyBuffer(src, target, offset) {
         src.copy(target, offset);
       }
-      module.exports = function() {
+      module.exports = (function() {
         function BufferList2() {
           _classCallCheck(this, BufferList2);
           this.head = null;
@@ -20313,7 +20315,7 @@ var YasguiGeoTg = (() => {
           return ret;
         };
         return BufferList2;
-      }();
+      })();
       if (util2 && util2.inspect && util2.inspect.custom) {
         module.exports.prototype[util2.inspect.custom] = function() {
           var obj2 = util2.inspect({ length: this.length });
@@ -21707,11 +21709,11 @@ var YasguiGeoTg = (() => {
         });
         for (var i in stream3) {
           if (this[i] === void 0 && typeof stream3[i] === "function") {
-            this[i] = /* @__PURE__ */ function(method) {
+            this[i] = /* @__PURE__ */ (function(method) {
               return function() {
                 return stream3[method].apply(stream3, arguments);
               };
-            }(i);
+            })(i);
           }
         }
         for (var n2 = 0; n2 < kProxyEvents.length; n2++) {
@@ -22752,23 +22754,23 @@ var YasguiGeoTg = (() => {
           /**
            * true if the browser accepts to use String.fromCharCode on Uint8Array
            */
-          uint8array: function() {
+          uint8array: (function() {
             try {
               return support2.uint8array && String.fromCharCode.apply(null, new Uint8Array(1)).length === 1;
             } catch (e2) {
               return false;
             }
-          }(),
+          })(),
           /**
            * true if the browser accepts to use String.fromCharCode on nodejs Buffer.
            */
-          nodebuffer: function() {
+          nodebuffer: (function() {
             try {
               return support2.nodebuffer && String.fromCharCode.apply(null, nodejsUtils2.allocBuffer(1)).length === 1;
             } catch (e2) {
               return false;
             }
-          }()
+          })()
         }
       };
       function arrayLikeToString(array) {
@@ -27083,6 +27085,7 @@ var YasguiGeoTg = (() => {
                 hold = 0;
                 bits = 0;
                 state.mode = TIME2;
+              /* falls through */
               case TIME2:
                 while (bits < 32) {
                   if (have === 0) {
@@ -27105,6 +27108,7 @@ var YasguiGeoTg = (() => {
                 hold = 0;
                 bits = 0;
                 state.mode = OS2;
+              /* falls through */
               case OS2:
                 while (bits < 16) {
                   if (have === 0) {
@@ -27126,6 +27130,7 @@ var YasguiGeoTg = (() => {
                 hold = 0;
                 bits = 0;
                 state.mode = EXLEN2;
+              /* falls through */
               case EXLEN2:
                 if (state.flags & 1024) {
                   while (bits < 16) {
@@ -27151,6 +27156,7 @@ var YasguiGeoTg = (() => {
                   state.head.extra = null;
                 }
                 state.mode = EXTRA2;
+              /* falls through */
               case EXTRA2:
                 if (state.flags & 1024) {
                   copy = state.length;
@@ -27187,6 +27193,7 @@ var YasguiGeoTg = (() => {
                 }
                 state.length = 0;
                 state.mode = NAME2;
+              /* falls through */
               case NAME2:
                 if (state.flags & 2048) {
                   if (have === 0) {
@@ -27212,6 +27219,7 @@ var YasguiGeoTg = (() => {
                 }
                 state.length = 0;
                 state.mode = COMMENT2;
+              /* falls through */
               case COMMENT2:
                 if (state.flags & 4096) {
                   if (have === 0) {
@@ -27236,6 +27244,7 @@ var YasguiGeoTg = (() => {
                   state.head.comment = null;
                 }
                 state.mode = HCRC2;
+              /* falls through */
               case HCRC2:
                 if (state.flags & 512) {
                   while (bits < 16) {
@@ -27274,6 +27283,7 @@ var YasguiGeoTg = (() => {
                 hold = 0;
                 bits = 0;
                 state.mode = DICT2;
+              /* falls through */
               case DICT2:
                 if (state.havedict === 0) {
                   strm.next_out = put;
@@ -27286,10 +27296,12 @@ var YasguiGeoTg = (() => {
                 }
                 strm.adler = state.check = 1;
                 state.mode = TYPE2;
+              /* falls through */
               case TYPE2:
                 if (flush === Z_BLOCK2 || flush === Z_TREES2) {
                   break inf_leave;
                 }
+              /* falls through */
               case TYPEDO2:
                 if (state.last) {
                   hold >>>= bits & 7;
@@ -27354,8 +27366,10 @@ var YasguiGeoTg = (() => {
                 if (flush === Z_TREES2) {
                   break inf_leave;
                 }
+              /* falls through */
               case COPY_2:
                 state.mode = COPY2;
+              /* falls through */
               case COPY2:
                 copy = state.length;
                 if (copy) {
@@ -27403,6 +27417,7 @@ var YasguiGeoTg = (() => {
                 }
                 state.have = 0;
                 state.mode = LENLENS2;
+              /* falls through */
               case LENLENS2:
                 while (state.have < state.ncode) {
                   while (bits < 3) {
@@ -27432,6 +27447,7 @@ var YasguiGeoTg = (() => {
                 }
                 state.have = 0;
                 state.mode = CODELENS2;
+              /* falls through */
               case CODELENS2:
                 while (state.have < state.nlen + state.ndist) {
                   for (; ; ) {
@@ -27549,8 +27565,10 @@ var YasguiGeoTg = (() => {
                 if (flush === Z_TREES2) {
                   break inf_leave;
                 }
+              /* falls through */
               case LEN_2:
                 state.mode = LEN2;
+              /* falls through */
               case LEN2:
                 if (have >= 6 && left >= 258) {
                   strm.next_out = put;
@@ -27632,6 +27650,7 @@ var YasguiGeoTg = (() => {
                 }
                 state.extra = here_op & 15;
                 state.mode = LENEXT2;
+              /* falls through */
               case LENEXT2:
                 if (state.extra) {
                   n2 = state.extra;
@@ -27650,6 +27669,7 @@ var YasguiGeoTg = (() => {
                 }
                 state.was = state.length;
                 state.mode = DIST2;
+              /* falls through */
               case DIST2:
                 for (; ; ) {
                   here = state.distcode[hold & (1 << state.distbits) - 1];
@@ -27700,6 +27720,7 @@ var YasguiGeoTg = (() => {
                 state.offset = here_val;
                 state.extra = here_op & 15;
                 state.mode = DISTEXT2;
+              /* falls through */
               case DISTEXT2:
                 if (state.extra) {
                   n2 = state.extra;
@@ -27722,6 +27743,7 @@ var YasguiGeoTg = (() => {
                   break;
                 }
                 state.mode = MATCH2;
+              /* falls through */
               case MATCH2:
                 if (left === 0) {
                   break inf_leave;
@@ -27798,6 +27820,7 @@ var YasguiGeoTg = (() => {
                   bits = 0;
                 }
                 state.mode = LENGTH2;
+              /* falls through */
               case LENGTH2:
                 if (state.wrap && state.flags) {
                   while (bits < 32) {
@@ -27817,6 +27840,7 @@ var YasguiGeoTg = (() => {
                   bits = 0;
                 }
                 state.mode = DONE2;
+              /* falls through */
               case DONE2:
                 ret = Z_STREAM_END2;
                 break inf_leave;
@@ -27826,6 +27850,7 @@ var YasguiGeoTg = (() => {
               case MEM2:
                 return Z_MEM_ERROR2;
               case SYNC2:
+              /* falls through */
               default:
                 return Z_STREAM_ERROR2;
             }
@@ -30097,6 +30122,7 @@ var YasguiGeoTg = (() => {
                 }
                 end++;
                 break;
+              // end elment
               case "?":
                 locator && position(tagStart);
                 end = parseInstruction(source, tagStart, domBuilder);
@@ -30220,6 +30246,7 @@ var YasguiGeoTg = (() => {
                 case S_ATTR:
                 case S_ATTR_SPACE:
                   break;
+                //case S_EQ:
                 default:
                   throw new Error("attribute invalid close char('/')");
               }
@@ -30238,7 +30265,9 @@ var YasguiGeoTg = (() => {
                 case S_TAG_SPACE:
                 case S_TAG_CLOSE:
                   break;
+                //normal
                 case S_ATTR_NOQUOT_VALUE:
+                //Compatible state
                 case S_ATTR:
                   value = source.slice(start2, p);
                   if (value.slice(-1) === "/") {
@@ -30263,6 +30292,7 @@ var YasguiGeoTg = (() => {
                   throw new Error("attribute value missed!!");
               }
               return p;
+            /*xml space '\x20' | #x9 | #xD | #xA; */
             case "\x80":
               c4 = " ";
             default:
@@ -30286,6 +30316,9 @@ var YasguiGeoTg = (() => {
                 }
               } else {
                 switch (s2) {
+                  //case S_TAG:void();break;
+                  //case S_ATTR:void();break;
+                  //case S_ATTR_NOQUOT_VALUE:void();break;
                   case S_ATTR_SPACE:
                     var tagName = el.tagName;
                     if (currentNSMap[""] !== "http://www.w3.org/1999/xhtml" || !attrName.match(/^(?:disabled|checked|selected)$/i)) {
@@ -31493,6 +31526,8 @@ var YasguiGeoTg = (() => {
             return buf.push("<?", node2.target, " ", node2.data, "?>");
           case ENTITY_REFERENCE_NODE:
             return buf.push("&", node2.nodeName, ";");
+          //case ENTITY_NODE:
+          //case NOTATION_NODE:
           default:
             buf.push("??", node2.nodeName);
         }
@@ -31503,6 +31538,11 @@ var YasguiGeoTg = (() => {
           case ELEMENT_NODE:
             node22 = node2.cloneNode(false);
             node22.ownerDocument = doc;
+          //var attrs = node2.attributes;
+          //var len = attrs.length;
+          //for(var i=0;i<len;i++){
+          //node2.setAttributeNodeNS(importNode(doc,attrs.item(i),deep));
+          //}
           case DOCUMENT_FRAGMENT_NODE:
             break;
           case ATTRIBUTE_NODE:
@@ -31832,7 +31872,7 @@ var YasguiGeoTg = (() => {
   // node_modules/h3-js/dist/h3-js.js
   var require_h3_js = __commonJS({
     "node_modules/h3-js/dist/h3-js.js"(exports3) {
-      var libh3 = function(libh32) {
+      var libh3 = (function(libh32) {
         libh32 = libh32 || {};
         var Module = typeof libh32 !== "undefined" ? libh32 : {};
         var moduleOverrides = {};
@@ -32536,7 +32576,7 @@ var YasguiGeoTg = (() => {
         };
         var asm = (
           /** @suppress {uselessCode} */
-          function(global2, env, buffer2) {
+          (function(global2, env, buffer2) {
             "almost asm";
             var a2 = new global2.Int8Array(buffer2), b2 = new global2.Int32Array(buffer2), c4 = new global2.Uint8Array(buffer2), d3 = new global2.Float32Array(buffer2), e2 = new global2.Float64Array(buffer2), f3 = env.o | 0, g2 = env.p | 0, p = global2.Math.floor, q = global2.Math.abs, r2 = global2.Math.sqrt, s2 = global2.Math.pow, t = global2.Math.cos, u4 = global2.Math.sin, v = global2.Math.tan, w = global2.Math.acos, x3 = global2.Math.asin, y3 = global2.Math.atan, z = global2.Math.atan2, A3 = global2.Math.ceil, B3 = global2.Math.imul, C3 = global2.Math.min, D2 = global2.Math.max, E3 = global2.Math.clz32, G3 = env.b, H = env.c, I2 = env.d, J = env.e, K = env.f, L3 = env.g, M2 = env.h, N = env.i, T2 = 28656;
             function W(newBuffer) {
@@ -45492,7 +45532,7 @@ var YasguiGeoTg = (() => {
               stackRestore: Z2,
               stackSave: Y
             };
-          }(asmGlobalArg, asmLibraryArg, buffer)
+          })(asmGlobalArg, asmLibraryArg, buffer)
         );
         var ___divdi3 = Module["___divdi3"] = asm["___divdi3"];
         var ___muldi3 = Module["___muldi3"] = asm["___muldi3"];
@@ -45719,7 +45759,7 @@ var YasguiGeoTg = (() => {
         }
         run();
         return libh32;
-      }(typeof libh3 === "object" ? libh3 : {});
+      })(typeof libh3 === "object" ? libh3 : {});
       var NUMBER2 = "number";
       var H3_ERROR = NUMBER2;
       var BOOLEAN = NUMBER2;
@@ -46947,319 +46987,10 @@ var YasguiGeoTg = (() => {
     }
   });
 
-  // node_modules/ngeohash/main.js
-  var require_main = __commonJS({
-    "node_modules/ngeohash/main.js"(exports3, module) {
-      var BASE32_CODES = "0123456789bcdefghjkmnpqrstuvwxyz";
-      var BASE32_CODES_DICT = {};
-      for (i = 0; i < BASE32_CODES.length; i++) {
-        BASE32_CODES_DICT[BASE32_CODES.charAt(i)] = i;
-      }
-      var i;
-      var ENCODE_AUTO = "auto";
-      var MIN_LAT = -90;
-      var MAX_LAT = 90;
-      var MIN_LON = -180;
-      var MAX_LON = 180;
-      var SIGFIG_HASH_LENGTH = [0, 5, 7, 8, 11, 12, 13, 15, 16, 17, 18];
-      var encode2 = function(latitude, longitude, numberOfChars) {
-        if (numberOfChars === ENCODE_AUTO) {
-          if (typeof latitude === "number" || typeof longitude === "number") {
-            throw new Error("string notation required for auto precision.");
-          }
-          var decSigFigsLat = latitude.split(".")[1].length;
-          var decSigFigsLong = longitude.split(".")[1].length;
-          var numberOfSigFigs = Math.max(decSigFigsLat, decSigFigsLong);
-          numberOfChars = SIGFIG_HASH_LENGTH[numberOfSigFigs];
-        } else if (numberOfChars === void 0) {
-          numberOfChars = 9;
-        }
-        var chars = [], bits = 0, bitsTotal = 0, hash_value = 0, maxLat = MAX_LAT, minLat = MIN_LAT, maxLon = MAX_LON, minLon = MIN_LON, mid;
-        while (chars.length < numberOfChars) {
-          if (bitsTotal % 2 === 0) {
-            mid = (maxLon + minLon) / 2;
-            if (longitude > mid) {
-              hash_value = (hash_value << 1) + 1;
-              minLon = mid;
-            } else {
-              hash_value = (hash_value << 1) + 0;
-              maxLon = mid;
-            }
-          } else {
-            mid = (maxLat + minLat) / 2;
-            if (latitude > mid) {
-              hash_value = (hash_value << 1) + 1;
-              minLat = mid;
-            } else {
-              hash_value = (hash_value << 1) + 0;
-              maxLat = mid;
-            }
-          }
-          bits++;
-          bitsTotal++;
-          if (bits === 5) {
-            var code = BASE32_CODES[hash_value];
-            chars.push(code);
-            bits = 0;
-            hash_value = 0;
-          }
-        }
-        return chars.join("");
-      };
-      var encode_int = function(latitude, longitude, bitDepth) {
-        bitDepth = bitDepth || 52;
-        var bitsTotal = 0, maxLat = MAX_LAT, minLat = MIN_LAT, maxLon = MAX_LON, minLon = MIN_LON, mid, combinedBits = 0;
-        while (bitsTotal < bitDepth) {
-          combinedBits *= 2;
-          if (bitsTotal % 2 === 0) {
-            mid = (maxLon + minLon) / 2;
-            if (longitude > mid) {
-              combinedBits += 1;
-              minLon = mid;
-            } else {
-              maxLon = mid;
-            }
-          } else {
-            mid = (maxLat + minLat) / 2;
-            if (latitude > mid) {
-              combinedBits += 1;
-              minLat = mid;
-            } else {
-              maxLat = mid;
-            }
-          }
-          bitsTotal++;
-        }
-        return combinedBits;
-      };
-      var decode_bbox = function(hash_string) {
-        var isLon = true, maxLat = MAX_LAT, minLat = MIN_LAT, maxLon = MAX_LON, minLon = MIN_LON, mid;
-        var hashValue = 0;
-        for (var i2 = 0, l2 = hash_string.length; i2 < l2; i2++) {
-          var code = hash_string[i2].toLowerCase();
-          hashValue = BASE32_CODES_DICT[code];
-          for (var bits = 4; bits >= 0; bits--) {
-            var bit = hashValue >> bits & 1;
-            if (isLon) {
-              mid = (maxLon + minLon) / 2;
-              if (bit === 1) {
-                minLon = mid;
-              } else {
-                maxLon = mid;
-              }
-            } else {
-              mid = (maxLat + minLat) / 2;
-              if (bit === 1) {
-                minLat = mid;
-              } else {
-                maxLat = mid;
-              }
-            }
-            isLon = !isLon;
-          }
-        }
-        return [minLat, minLon, maxLat, maxLon];
-      };
-      var decode_bbox_int = function(hashInt, bitDepth) {
-        bitDepth = bitDepth || 52;
-        var maxLat = MAX_LAT, minLat = MIN_LAT, maxLon = MAX_LON, minLon = MIN_LON;
-        var latBit = 0, lonBit = 0;
-        var step = bitDepth / 2;
-        for (var i2 = 0; i2 < step; i2++) {
-          lonBit = get_bit(hashInt, (step - i2) * 2 - 1);
-          latBit = get_bit(hashInt, (step - i2) * 2 - 2);
-          if (latBit === 0) {
-            maxLat = (maxLat + minLat) / 2;
-          } else {
-            minLat = (maxLat + minLat) / 2;
-          }
-          if (lonBit === 0) {
-            maxLon = (maxLon + minLon) / 2;
-          } else {
-            minLon = (maxLon + minLon) / 2;
-          }
-        }
-        return [minLat, minLon, maxLat, maxLon];
-      };
-      function get_bit(bits, position) {
-        return bits / Math.pow(2, position) & 1;
-      }
-      var decode2 = function(hashString) {
-        var bbox2 = decode_bbox(hashString);
-        var lat = (bbox2[0] + bbox2[2]) / 2;
-        var lon = (bbox2[1] + bbox2[3]) / 2;
-        var latErr = bbox2[2] - lat;
-        var lonErr = bbox2[3] - lon;
-        return {
-          latitude: lat,
-          longitude: lon,
-          error: { latitude: latErr, longitude: lonErr }
-        };
-      };
-      var decode_int = function(hash_int, bitDepth) {
-        var bbox2 = decode_bbox_int(hash_int, bitDepth);
-        var lat = (bbox2[0] + bbox2[2]) / 2;
-        var lon = (bbox2[1] + bbox2[3]) / 2;
-        var latErr = bbox2[2] - lat;
-        var lonErr = bbox2[3] - lon;
-        return {
-          latitude: lat,
-          longitude: lon,
-          error: { latitude: latErr, longitude: lonErr }
-        };
-      };
-      var neighbor = function(hashString, direction) {
-        var lonLat = decode2(hashString);
-        var neighborLat = lonLat.latitude + direction[0] * lonLat.error.latitude * 2;
-        var neighborLon = lonLat.longitude + direction[1] * lonLat.error.longitude * 2;
-        neighborLon = ensure_valid_lon(neighborLon);
-        neighborLat = ensure_valid_lat(neighborLat);
-        return encode2(neighborLat, neighborLon, hashString.length);
-      };
-      var neighbor_int = function(hash_int, direction, bitDepth) {
-        bitDepth = bitDepth || 52;
-        var lonlat = decode_int(hash_int, bitDepth);
-        var neighbor_lat = lonlat.latitude + direction[0] * lonlat.error.latitude * 2;
-        var neighbor_lon = lonlat.longitude + direction[1] * lonlat.error.longitude * 2;
-        neighbor_lon = ensure_valid_lon(neighbor_lon);
-        neighbor_lat = ensure_valid_lat(neighbor_lat);
-        return encode_int(neighbor_lat, neighbor_lon, bitDepth);
-      };
-      var neighbors = function(hash_string) {
-        var hashstringLength = hash_string.length;
-        var lonlat = decode2(hash_string);
-        var lat = lonlat.latitude;
-        var lon = lonlat.longitude;
-        var latErr = lonlat.error.latitude * 2;
-        var lonErr = lonlat.error.longitude * 2;
-        var neighbor_lat, neighbor_lon;
-        var neighborHashList = [
-          encodeNeighbor(1, 0),
-          encodeNeighbor(1, 1),
-          encodeNeighbor(0, 1),
-          encodeNeighbor(-1, 1),
-          encodeNeighbor(-1, 0),
-          encodeNeighbor(-1, -1),
-          encodeNeighbor(0, -1),
-          encodeNeighbor(1, -1)
-        ];
-        function encodeNeighbor(neighborLatDir, neighborLonDir) {
-          neighbor_lat = lat + neighborLatDir * latErr;
-          neighbor_lon = lon + neighborLonDir * lonErr;
-          neighbor_lon = ensure_valid_lon(neighbor_lon);
-          neighbor_lat = ensure_valid_lat(neighbor_lat);
-          return encode2(neighbor_lat, neighbor_lon, hashstringLength);
-        }
-        return neighborHashList;
-      };
-      var neighbors_int = function(hash_int, bitDepth) {
-        bitDepth = bitDepth || 52;
-        var lonlat = decode_int(hash_int, bitDepth);
-        var lat = lonlat.latitude;
-        var lon = lonlat.longitude;
-        var latErr = lonlat.error.latitude * 2;
-        var lonErr = lonlat.error.longitude * 2;
-        var neighbor_lat, neighbor_lon;
-        var neighborHashIntList = [
-          encodeNeighbor_int(1, 0),
-          encodeNeighbor_int(1, 1),
-          encodeNeighbor_int(0, 1),
-          encodeNeighbor_int(-1, 1),
-          encodeNeighbor_int(-1, 0),
-          encodeNeighbor_int(-1, -1),
-          encodeNeighbor_int(0, -1),
-          encodeNeighbor_int(1, -1)
-        ];
-        function encodeNeighbor_int(neighborLatDir, neighborLonDir) {
-          neighbor_lat = lat + neighborLatDir * latErr;
-          neighbor_lon = lon + neighborLonDir * lonErr;
-          neighbor_lon = ensure_valid_lon(neighbor_lon);
-          neighbor_lat = ensure_valid_lat(neighbor_lat);
-          return encode_int(neighbor_lat, neighbor_lon, bitDepth);
-        }
-        return neighborHashIntList;
-      };
-      var bboxes = function(minLat, minLon, maxLat, maxLon, numberOfChars) {
-        numberOfChars = numberOfChars || 9;
-        var hashSouthWest = encode2(minLat, minLon, numberOfChars);
-        var hashNorthEast = encode2(maxLat, maxLon, numberOfChars);
-        var latLon = decode2(hashSouthWest);
-        var perLat = latLon.error.latitude * 2;
-        var perLon = latLon.error.longitude * 2;
-        var boxSouthWest = decode_bbox(hashSouthWest);
-        var boxNorthEast = decode_bbox(hashNorthEast);
-        var latStep = Math.round((boxNorthEast[0] - boxSouthWest[0]) / perLat);
-        var lonStep = Math.round((boxNorthEast[1] - boxSouthWest[1]) / perLon);
-        var hashList = [];
-        for (var lat = 0; lat <= latStep; lat++) {
-          for (var lon = 0; lon <= lonStep; lon++) {
-            hashList.push(neighbor(hashSouthWest, [lat, lon]));
-          }
-        }
-        return hashList;
-      };
-      var bboxes_int = function(minLat, minLon, maxLat, maxLon, bitDepth) {
-        bitDepth = bitDepth || 52;
-        var hashSouthWest = encode_int(minLat, minLon, bitDepth);
-        var hashNorthEast = encode_int(maxLat, maxLon, bitDepth);
-        var latlon = decode_int(hashSouthWest, bitDepth);
-        var perLat = latlon.error.latitude * 2;
-        var perLon = latlon.error.longitude * 2;
-        var boxSouthWest = decode_bbox_int(hashSouthWest, bitDepth);
-        var boxNorthEast = decode_bbox_int(hashNorthEast, bitDepth);
-        var latStep = Math.round((boxNorthEast[0] - boxSouthWest[0]) / perLat);
-        var lonStep = Math.round((boxNorthEast[1] - boxSouthWest[1]) / perLon);
-        var hashList = [];
-        for (var lat = 0; lat <= latStep; lat++) {
-          for (var lon = 0; lon <= lonStep; lon++) {
-            hashList.push(neighbor_int(hashSouthWest, [lat, lon], bitDepth));
-          }
-        }
-        return hashList;
-      };
-      function ensure_valid_lon(lon) {
-        if (lon > MAX_LON)
-          return MIN_LON + lon % MAX_LON;
-        if (lon < MIN_LON)
-          return MAX_LON + lon % MAX_LON;
-        return lon;
-      }
-      function ensure_valid_lat(lat) {
-        if (lat > MAX_LAT)
-          return MAX_LAT;
-        if (lat < MIN_LAT)
-          return MIN_LAT;
-        return lat;
-      }
-      var geohash2 = {
-        "ENCODE_AUTO": ENCODE_AUTO,
-        "encode": encode2,
-        "encode_uint64": encode_int,
-        // keeping for backwards compatibility, will deprecate
-        "encode_int": encode_int,
-        "decode": decode2,
-        "decode_int": decode_int,
-        "decode_uint64": decode_int,
-        // keeping for backwards compatibility, will deprecate
-        "decode_bbox": decode_bbox,
-        "decode_bbox_uint64": decode_bbox_int,
-        // keeping for backwards compatibility, will deprecate
-        "decode_bbox_int": decode_bbox_int,
-        "neighbor": neighbor,
-        "neighbor_int": neighbor_int,
-        "neighbors": neighbors,
-        "neighbors_int": neighbors_int,
-        "bboxes": bboxes,
-        "bboxes_int": bboxes_int
-      };
-      module.exports = geohash2;
-    }
-  });
-
   // index.js
-  var yasgui_geo_tg_exports = {};
-  __export(yasgui_geo_tg_exports, {
-    default: () => yasgui_geo_tg_default
+  var index_exports = {};
+  __export(index_exports, {
+    default: () => index_default
   });
   var import_leaflet2 = __toESM(require_leaflet_src(), 1);
   var import_proj4 = __toESM(require_proj4_src(), 1);
@@ -48877,13 +48608,13 @@ ${dataLines}`;
       const outerRing = gml.coordinates[0];
       const innerRings = gml.coordinates.slice(1);
       const outerCoords = outerRing.map(([lon, lat, alt]) => alt !== void 0 ? `${lon},${lat},${alt}` : `${lon},${lat}`).join(" ");
-      let kml2 = `<Polygon><outerBoundaryIs><LinearRing><coordinates>${outerCoords}</coordinates></LinearRing></outerBoundaryIs>`;
+      let kml = `<Polygon><outerBoundaryIs><LinearRing><coordinates>${outerCoords}</coordinates></LinearRing></outerBoundaryIs>`;
       for (const ring of innerRings) {
         const innerCoords = ring.map(([lon, lat, alt]) => alt !== void 0 ? `${lon},${lat},${alt}` : `${lon},${lat}`).join(" ");
-        kml2 += `<innerBoundaryIs><LinearRing><coordinates>${innerCoords}</coordinates></LinearRing></innerBoundaryIs>`;
+        kml += `<innerBoundaryIs><LinearRing><coordinates>${innerCoords}</coordinates></LinearRing></innerBoundaryIs>`;
       }
-      kml2 += "</Polygon>";
-      return kml2;
+      kml += "</Polygon>";
+      return kml;
     }
     /**
      * Convert MultiPoint to KML MultiGeometry with Points
@@ -49676,10 +49407,12 @@ ${dataLines}`;
         var val = row[f3.name];
         if (val === null || typeof val === "undefined") val = "";
         switch (f3.type) {
+          // boolean
           case "L":
             view.setUint8(offset, val ? 84 : 70);
             offset++;
             break;
+          // date
           case "D":
             offset = lib$8.writeField(
               view,
@@ -49688,6 +49421,7 @@ ${dataLines}`;
               offset
             );
             break;
+          // number
           case "N":
             offset = lib$8.writeField(
               view,
@@ -49696,6 +49430,7 @@ ${dataLines}`;
               offset
             );
             break;
+          // string
           case "C":
             offset = lib$8.writeField(
               view,
@@ -50200,7 +49935,7 @@ ${dataLines}`;
       function copyBuffer(src, target, offset) {
         src.copy(target, offset);
       }
-      module.exports = function() {
+      module.exports = (function() {
         function BufferList2() {
           _classCallCheck(this, BufferList2);
           this.head = null;
@@ -50254,7 +49989,7 @@ ${dataLines}`;
           return ret;
         };
         return BufferList2;
-      }();
+      })();
       if (util2 && util2.inspect && util2.inspect.custom) {
         module.exports.prototype[util2.inspect.custom] = function() {
           var obj2 = util2.inspect({ length: this.length });
@@ -51647,11 +51382,11 @@ ${dataLines}`;
       });
       for (var i in stream3) {
         if (this[i] === void 0 && typeof stream3[i] === "function") {
-          this[i] = /* @__PURE__ */ function(method) {
+          this[i] = /* @__PURE__ */ (function(method) {
             return function() {
               return stream3[method].apply(stream3, arguments);
             };
-          }(i);
+          })(i);
         }
       }
       for (var n2 = 0; n2 < kProxyEvents.length; n2++) {
@@ -52662,23 +52397,23 @@ ${dataLines}`;
           /**
            * true if the browser accepts to use String.fromCharCode on Uint8Array
            */
-          uint8array: function() {
+          uint8array: (function() {
             try {
               return support2.uint8array && String.fromCharCode.apply(null, new Uint8Array(1)).length === 1;
             } catch (e2) {
               return false;
             }
-          }(),
+          })(),
           /**
            * true if the browser accepts to use String.fromCharCode on nodejs Buffer.
            */
-          nodebuffer: function() {
+          nodebuffer: (function() {
             try {
               return support2.nodebuffer && String.fromCharCode.apply(null, nodejsUtils2.allocBuffer(1)).length === 1;
             } catch (e2) {
               return false;
             }
-          }()
+          })()
         }
       };
       function arrayLikeToString(array) {
@@ -56849,6 +56584,7 @@ ${dataLines}`;
             hold = 0;
             bits = 0;
             state.mode = TIME;
+          /* falls through */
           case TIME:
             while (bits < 32) {
               if (have === 0) {
@@ -56871,6 +56607,7 @@ ${dataLines}`;
             hold = 0;
             bits = 0;
             state.mode = OS;
+          /* falls through */
           case OS:
             while (bits < 16) {
               if (have === 0) {
@@ -56892,6 +56629,7 @@ ${dataLines}`;
             hold = 0;
             bits = 0;
             state.mode = EXLEN;
+          /* falls through */
           case EXLEN:
             if (state.flags & 1024) {
               while (bits < 16) {
@@ -56917,6 +56655,7 @@ ${dataLines}`;
               state.head.extra = null;
             }
             state.mode = EXTRA;
+          /* falls through */
           case EXTRA:
             if (state.flags & 1024) {
               copy = state.length;
@@ -56953,6 +56692,7 @@ ${dataLines}`;
             }
             state.length = 0;
             state.mode = NAME;
+          /* falls through */
           case NAME:
             if (state.flags & 2048) {
               if (have === 0) {
@@ -56978,6 +56718,7 @@ ${dataLines}`;
             }
             state.length = 0;
             state.mode = COMMENT;
+          /* falls through */
           case COMMENT:
             if (state.flags & 4096) {
               if (have === 0) {
@@ -57002,6 +56743,7 @@ ${dataLines}`;
               state.head.comment = null;
             }
             state.mode = HCRC;
+          /* falls through */
           case HCRC:
             if (state.flags & 512) {
               while (bits < 16) {
@@ -57040,6 +56782,7 @@ ${dataLines}`;
             hold = 0;
             bits = 0;
             state.mode = DICT;
+          /* falls through */
           case DICT:
             if (state.havedict === 0) {
               strm.next_out = put;
@@ -57052,10 +56795,12 @@ ${dataLines}`;
             }
             strm.adler = state.check = 1;
             state.mode = TYPE;
+          /* falls through */
           case TYPE:
             if (flush === Z_BLOCK || flush === Z_TREES) {
               break inf_leave;
             }
+          /* falls through */
           case TYPEDO:
             if (state.last) {
               hold >>>= bits & 7;
@@ -57120,8 +56865,10 @@ ${dataLines}`;
             if (flush === Z_TREES) {
               break inf_leave;
             }
+          /* falls through */
           case COPY_:
             state.mode = COPY;
+          /* falls through */
           case COPY:
             copy = state.length;
             if (copy) {
@@ -57169,6 +56916,7 @@ ${dataLines}`;
             }
             state.have = 0;
             state.mode = LENLENS;
+          /* falls through */
           case LENLENS:
             while (state.have < state.ncode) {
               while (bits < 3) {
@@ -57198,6 +56946,7 @@ ${dataLines}`;
             }
             state.have = 0;
             state.mode = CODELENS;
+          /* falls through */
           case CODELENS:
             while (state.have < state.nlen + state.ndist) {
               for (; ; ) {
@@ -57315,8 +57064,10 @@ ${dataLines}`;
             if (flush === Z_TREES) {
               break inf_leave;
             }
+          /* falls through */
           case LEN_:
             state.mode = LEN;
+          /* falls through */
           case LEN:
             if (have >= 6 && left >= 258) {
               strm.next_out = put;
@@ -57398,6 +57149,7 @@ ${dataLines}`;
             }
             state.extra = here_op & 15;
             state.mode = LENEXT;
+          /* falls through */
           case LENEXT:
             if (state.extra) {
               n2 = state.extra;
@@ -57416,6 +57168,7 @@ ${dataLines}`;
             }
             state.was = state.length;
             state.mode = DIST;
+          /* falls through */
           case DIST:
             for (; ; ) {
               here = state.distcode[hold & (1 << state.distbits) - 1];
@@ -57466,6 +57219,7 @@ ${dataLines}`;
             state.offset = here_val;
             state.extra = here_op & 15;
             state.mode = DISTEXT;
+          /* falls through */
           case DISTEXT:
             if (state.extra) {
               n2 = state.extra;
@@ -57488,6 +57242,7 @@ ${dataLines}`;
               break;
             }
             state.mode = MATCH;
+          /* falls through */
           case MATCH:
             if (left === 0) {
               break inf_leave;
@@ -57564,6 +57319,7 @@ ${dataLines}`;
               bits = 0;
             }
             state.mode = LENGTH;
+          /* falls through */
           case LENGTH:
             if (state.wrap && state.flags) {
               while (bits < 32) {
@@ -57583,6 +57339,7 @@ ${dataLines}`;
               bits = 0;
             }
             state.mode = DONE;
+          /* falls through */
           case DONE:
             ret = Z_STREAM_END;
             break inf_leave;
@@ -57592,6 +57349,7 @@ ${dataLines}`;
           case MEM:
             return Z_MEM_ERROR;
           case SYNC:
+          /* falls through */
           default:
             return Z_STREAM_ERROR;
         }
@@ -60335,6 +60093,8 @@ ${dataLines}`;
       case "COMPD_CS":
       case "COMPOUNDCRS":
       case "FITTED_CS":
+      // the followings are the crs defined in
+      // https://github.com/proj4js/proj4js/blob/1da4ed0b865d0fcb51c136090569210cdcc9019e/lib/parseCode.js#L11
       case "PROJECTEDCRS":
       case "PROJCRS":
       case "GEOGCS":
@@ -66115,10 +65875,10 @@ ${dataLines}`;
   var coreJsData$1 = root$6["__core-js_shared__"];
   var _coreJsData = coreJsData$1;
   var coreJsData = _coreJsData;
-  var maskSrcKey = function() {
+  var maskSrcKey = (function() {
     var uid = /[^.]+$/.exec(coreJsData && coreJsData.keys && coreJsData.keys.IE_PROTO || "");
     return uid ? "Symbol(src)_1." + uid : "";
-  }();
+  })();
   function isMasked$1(func) {
     return !!maskSrcKey && maskSrcKey in func;
   }
@@ -66586,9 +66346,9 @@ ${dataLines}`;
   var objectProto$5 = Object.prototype;
   var hasOwnProperty$4 = objectProto$5.hasOwnProperty;
   var propertyIsEnumerable = objectProto$5.propertyIsEnumerable;
-  var isArguments$1 = baseIsArguments(/* @__PURE__ */ function() {
+  var isArguments$1 = baseIsArguments(/* @__PURE__ */ (function() {
     return arguments;
-  }()) ? baseIsArguments : function(value) {
+  })()) ? baseIsArguments : function(value) {
     return isObjectLike$3(value) && hasOwnProperty$4.call(value, "callee") && !propertyIsEnumerable.call(value, "callee");
   };
   var isArguments_1 = isArguments$1;
@@ -66670,7 +66430,7 @@ ${dataLines}`;
     var freeModule = freeExports && true && module && !module.nodeType && module;
     var moduleExports = freeModule && freeModule.exports === freeExports;
     var freeProcess = moduleExports && freeGlobal2.process;
-    var nodeUtil2 = function() {
+    var nodeUtil2 = (function() {
       try {
         var types2 = freeModule && freeModule.require && freeModule.require("util").types;
         if (types2) {
@@ -66679,7 +66439,7 @@ ${dataLines}`;
         return freeProcess && freeProcess.binding && freeProcess.binding("util");
       } catch (e2) {
       }
-    }();
+    })();
     module.exports = nodeUtil2;
   })(_nodeUtil, _nodeUtil.exports);
   var _nodeUtilExports = _nodeUtil.exports;
@@ -66934,7 +66694,7 @@ ${dataLines}`;
   projectionConstants.ProjectionConstants = void 0;
   var ProjectionConstants = (
     /** @class */
-    function() {
+    (function() {
       function ProjectionConstants2() {
       }
       ProjectionConstants2.EPSG = "EPSG";
@@ -66955,7 +66715,7 @@ ${dataLines}`;
       ProjectionConstants2.WGS84_HALF_WORLD_LON_WIDTH = 180;
       ProjectionConstants2.WGS84_HALF_WORLD_LAT_HEIGHT = 90;
       return ProjectionConstants2;
-    }()
+    })()
   );
   projectionConstants.ProjectionConstants = ProjectionConstants;
   var __importDefault$l = commonjsGlobal && commonjsGlobal.__importDefault || function(mod) {
@@ -66968,7 +66728,7 @@ ${dataLines}`;
   var projectionConstants_1$c = projectionConstants;
   var Projection = (
     /** @class */
-    function() {
+    (function() {
       function Projection2() {
       }
       Projection2.loadProjection = function(name, definition) {
@@ -67040,7 +66800,7 @@ ${dataLines}`;
         return (0, proj4_1$2.default)(from, to);
       };
       return Projection2;
-    }()
+    })()
   );
   projection.Projection = Projection;
   Object.defineProperty(boundingBox, "__esModule", { value: true });
@@ -67049,7 +66809,7 @@ ${dataLines}`;
   var projectionConstants_1$b = projectionConstants;
   var BoundingBox = (
     /** @class */
-    function() {
+    (function() {
       function BoundingBox2(minLongitudeOrBoundingBox, maxLongitude, minLatitude, maxLatitude) {
         if (minLongitudeOrBoundingBox instanceof BoundingBox2) {
           this.minLongitude = minLongitudeOrBoundingBox.minLongitude;
@@ -67199,7 +66959,7 @@ ${dataLines}`;
         return this;
       };
       return BoundingBox2;
-    }()
+    })()
   );
   boundingBox.BoundingBox = BoundingBox;
   var geoPackage = {};
@@ -70281,7 +70041,7 @@ ${dataLines}`;
   geoPackageConstants.GeoPackageConstants = void 0;
   var GeoPackageConstants = (
     /** @class */
-    function() {
+    (function() {
       function GeoPackageConstants2() {
       }
       GeoPackageConstants2.GEOPACKAGE_EXTENSION = "gpkg";
@@ -70294,7 +70054,7 @@ ${dataLines}`;
       GeoPackageConstants2.GEOPACKAGE_GEOMETRY_VERSION_1 = 0;
       GeoPackageConstants2.SQLITE_HEADER_PREFIX = "SQLite format 3";
       return GeoPackageConstants2;
-    }()
+    })()
   );
   geoPackageConstants.GeoPackageConstants = GeoPackageConstants;
   var envelope = {};
@@ -70302,11 +70062,11 @@ ${dataLines}`;
   envelope.Envelope = void 0;
   var Envelope = (
     /** @class */
-    /* @__PURE__ */ function() {
+    /* @__PURE__ */ (function() {
       function Envelope2() {
       }
       return Envelope2;
-    }()
+    })()
   );
   envelope.Envelope = Envelope;
   var __importDefault$j = commonjsGlobal && commonjsGlobal.__importDefault || function(mod) {
@@ -70319,7 +70079,7 @@ ${dataLines}`;
   var envelope_1 = envelope;
   var GeometryData = (
     /** @class */
-    function() {
+    (function() {
       function GeometryData2(buffer) {
         this.empty = true;
         this.byteOrder = GeometryData2.BIG_ENDIAN;
@@ -70500,7 +70260,7 @@ ${dataLines}`;
       GeometryData2.BIG_ENDIAN = 0;
       GeometryData2.LITTLE_ENDIAN = 1;
       return GeometryData2;
-    }()
+    })()
   );
   geometryData.GeometryData = GeometryData;
   var crsWkt = {};
@@ -70509,7 +70269,7 @@ ${dataLines}`;
   extension.Extension = void 0;
   var Extension = (
     /** @class */
-    function() {
+    (function() {
       function Extension2() {
       }
       Extension2.prototype.setExtensionName = function(author, extensionName) {
@@ -70551,7 +70311,7 @@ ${dataLines}`;
       Extension2.READ_WRITE = "read-write";
       Extension2.WRITE_ONLY = "write-only";
       return Extension2;
-    }()
+    })()
   );
   extension.Extension = Extension;
   var baseExtension = {};
@@ -70560,7 +70320,7 @@ ${dataLines}`;
   var extension_1$a = extension;
   var BaseExtension = (
     /** @class */
-    function() {
+    (function() {
       function BaseExtension2(geoPackage2) {
         this.geoPackage = geoPackage2;
         this.connection = geoPackage2.connection;
@@ -70597,10 +70357,10 @@ ${dataLines}`;
         return this.extensionsDao.create(extension2);
       };
       return BaseExtension2;
-    }()
+    })()
   );
   baseExtension.BaseExtension = BaseExtension;
-  var __extends$18 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$18 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -70618,14 +70378,14 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(crsWkt, "__esModule", { value: true });
   crsWkt.CrsWktExtension = void 0;
   var extension_1$9 = extension;
   var baseExtension_1$8 = baseExtension;
   var CrsWktExtension = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$18(CrsWktExtension2, _super);
       function CrsWktExtension2(geoPackage2) {
         var _this = _super.call(this, geoPackage2) || this;
@@ -70653,7 +70413,7 @@ ${dataLines}`;
       CrsWktExtension2.EXTENSION_CRS_WKT_NAME_NO_AUTHOR = "crs_wkt";
       CrsWktExtension2.EXTENSION_CRS_WKT_DEFINITION = "http://www.geopackage.org/spec/#extension_crs_wkt";
       return CrsWktExtension2;
-    }(baseExtension_1$8.BaseExtension)
+    })(baseExtension_1$8.BaseExtension)
   );
   crsWkt.CrsWktExtension = CrsWktExtension;
   var relatedTables = {};
@@ -70665,7 +70425,7 @@ ${dataLines}`;
   columnValues.ColumnValues = void 0;
   var ColumnValues = (
     /** @class */
-    function() {
+    (function() {
       function ColumnValues2() {
         this.values = {};
         this.columns = [];
@@ -70678,7 +70438,7 @@ ${dataLines}`;
         return this.values[columnName];
       };
       return ColumnValues2;
-    }()
+    })()
   );
   columnValues.ColumnValues = ColumnValues;
   var sqliteQueryBuilder = {};
@@ -70686,7 +70446,7 @@ ${dataLines}`;
   sqliteQueryBuilder.SqliteQueryBuilder = void 0;
   var SqliteQueryBuilder = (
     /** @class */
-    function() {
+    (function() {
       function SqliteQueryBuilder2() {
       }
       SqliteQueryBuilder2.fixColumnName = function(columnName) {
@@ -70872,7 +70632,7 @@ ${dataLines}`;
         return !string || string.length === 0;
       };
       return SqliteQueryBuilder2;
-    }()
+    })()
   );
   sqliteQueryBuilder.SqliteQueryBuilder = SqliteQueryBuilder;
   var coreSQLUtils = {};
@@ -70881,7 +70641,7 @@ ${dataLines}`;
   stringUtils.StringUtils = void 0;
   var StringUtils = (
     /** @class */
-    function() {
+    (function() {
       function StringUtils2() {
       }
       StringUtils2.quoteWrap = function(name) {
@@ -70907,7 +70667,7 @@ ${dataLines}`;
         return unquotedName;
       };
       return StringUtils2;
-    }()
+    })()
   );
   stringUtils.StringUtils = StringUtils;
   var tableMapping = {};
@@ -71025,7 +70785,7 @@ ${dataLines}`;
   var isEqual_1$2 = __importDefault$i(isEqual_1$4);
   var MappedColumn = (
     /** @class */
-    function() {
+    (function() {
       function MappedColumn2(toColumn, fromColumn, defaultValue, dataType) {
         this._toColumn = toColumn;
         this._fromColumn = fromColumn;
@@ -71184,7 +70944,7 @@ ${dataLines}`;
         configurable: true
       });
       return MappedColumn2;
-    }()
+    })()
   );
   mappedColumn.MappedColumn = MappedColumn;
   var __importDefault$h = commonjsGlobal && commonjsGlobal.__importDefault || function(mod) {
@@ -71199,7 +70959,7 @@ ${dataLines}`;
   var mappedColumn_1 = mappedColumn;
   var TableMapping = (
     /** @class */
-    function() {
+    (function() {
       function TableMapping2(fromTableName, toTableName, columns) {
         var _this = this;
         this._transferContent = true;
@@ -71336,7 +71096,7 @@ ${dataLines}`;
         configurable: true
       });
       return TableMapping2;
-    }()
+    })()
   );
   tableMapping.TableMapping = TableMapping;
   var tableInfo = {};
@@ -71345,7 +71105,7 @@ ${dataLines}`;
   tableColumn.TableColumn = void 0;
   var TableColumn = (
     /** @class */
-    function() {
+    (function() {
       function TableColumn2(index2, name, type, dataType, max, notNull, defaultValueString, defaultValue, primaryKey, autoincrement) {
         this.index = index2;
         this.name = name;
@@ -71392,7 +71152,7 @@ ${dataLines}`;
         return this.autoincrement;
       };
       return TableColumn2;
-    }()
+    })()
   );
   tableColumn.TableColumn = TableColumn;
   var geometryType = {};
@@ -71566,7 +71326,7 @@ ${dataLines}`;
   var sortedIndex_1$1 = __importDefault$g(sortedIndex_1$2);
   var Constraints = (
     /** @class */
-    function() {
+    (function() {
       function Constraints2() {
         this.constraints = [];
         this.typedConstraints = {};
@@ -71646,7 +71406,7 @@ ${dataLines}`;
         return this.constraints.length;
       };
       return Constraints2;
-    }()
+    })()
   );
   constraints.Constraints = Constraints;
   Object.defineProperty(columnConstraints, "__esModule", { value: true });
@@ -71654,7 +71414,7 @@ ${dataLines}`;
   var constraints_1$4 = constraints;
   var ColumnConstraints = (
     /** @class */
-    function() {
+    (function() {
       function ColumnConstraints2(name) {
         this.name = name;
         this.constraints = new constraints_1$4.Constraints();
@@ -71686,7 +71446,7 @@ ${dataLines}`;
         return this.constraints.has();
       };
       return ColumnConstraints2;
-    }()
+    })()
   );
   columnConstraints.ColumnConstraints = ColumnConstraints;
   Object.defineProperty(tableConstraints, "__esModule", { value: true });
@@ -71695,7 +71455,7 @@ ${dataLines}`;
   var constraints_1$3 = constraints;
   var TableConstraints = (
     /** @class */
-    function() {
+    (function() {
       function TableConstraints2() {
         this.constraints = new constraints_1$3.Constraints();
         this.columnConstraints = {};
@@ -71785,7 +71545,7 @@ ${dataLines}`;
         return this.numColumnConstraints(columnName) > 0;
       };
       return TableConstraints2;
-    }()
+    })()
   );
   tableConstraints.TableConstraints = TableConstraints;
   var constraintParser = {};
@@ -71795,7 +71555,7 @@ ${dataLines}`;
   var stringUtils_1$5 = stringUtils;
   var Constraint = (
     /** @class */
-    function() {
+    (function() {
       function Constraint2(type, name, order) {
         if (order === void 0) {
           order = Number.MAX_SAFE_INTEGER;
@@ -71831,7 +71591,7 @@ ${dataLines}`;
       };
       Constraint2.CONSTRAINT = "CONSTRAINT";
       return Constraint2;
-    }()
+    })()
   );
   constraint.Constraint = Constraint;
   var constraintType = {};
@@ -71894,7 +71654,7 @@ ${dataLines}`;
     })(exports3.ConstraintType || (exports3.ConstraintType = {}));
   })(constraintType);
   var rawConstraint = {};
-  var __extends$17 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$17 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -71912,13 +71672,13 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(rawConstraint, "__esModule", { value: true });
   rawConstraint.RawConstraint = void 0;
   var constraint_1$2 = constraint;
   var RawConstraint = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$17(RawConstraint2, _super);
       function RawConstraint2(type, name, sql, order) {
         if (order === void 0) {
@@ -71936,7 +71696,7 @@ ${dataLines}`;
         return sql;
       };
       return RawConstraint2;
-    }(constraint_1$2.Constraint)
+    })(constraint_1$2.Constraint)
   );
   rawConstraint.RawConstraint = RawConstraint;
   Object.defineProperty(constraintParser, "__esModule", { value: true });
@@ -71949,7 +71709,7 @@ ${dataLines}`;
   var stringUtils_1$4 = stringUtils;
   var ConstraintParser = (
     /** @class */
-    function() {
+    (function() {
       function ConstraintParser2() {
       }
       ConstraintParser2.getConstraints = function(tableSql) {
@@ -72160,7 +71920,7 @@ ${dataLines}`;
       ConstraintParser2.CONSTRAINT_PATTERN_NAME_GROUP = 2;
       ConstraintParser2.CONSTRAINT_PATTERN_DEFINITION_GROUP = 3;
       return ConstraintParser2;
-    }()
+    })()
   );
   constraintParser.ConstraintParser = ConstraintParser;
   var sqliteMasterQuery = {};
@@ -72170,7 +71930,7 @@ ${dataLines}`;
   var stringUtils_1$3 = stringUtils;
   var SQLiteMasterQuery = (
     /** @class */
-    function() {
+    (function() {
       function SQLiteMasterQuery2(combineOperation) {
         this.queries = [];
         this.arguments = [];
@@ -72277,7 +72037,7 @@ ${dataLines}`;
         return SQLiteMasterQuery2.createOrForOperationAndColumnValue(sqliteMasterColumn_1$4.SQLiteMasterColumn.SQL, "LIKE", queries);
       };
       return SQLiteMasterQuery2;
-    }()
+    })()
   );
   sqliteMasterQuery.SQLiteMasterQuery = SQLiteMasterQuery;
   var __read$1 = commonjsGlobal && commonjsGlobal.__read || function(o2, n2) {
@@ -72315,7 +72075,7 @@ ${dataLines}`;
   var sqliteMasterQuery_1$2 = sqliteMasterQuery;
   var SQLiteMaster = (
     /** @class */
-    function() {
+    (function() {
       function SQLiteMaster2(results, columns) {
         this._columns = {};
         if (columns !== null && columns !== void 0 && columns.length > 0) {
@@ -72443,7 +72203,7 @@ ${dataLines}`;
       };
       SQLiteMaster2.TABLE_NAME = "sqlite_master";
       return SQLiteMaster2;
-    }()
+    })()
   );
   sqliteMaster.SQLiteMaster = SQLiteMaster;
   Object.defineProperty(tableInfo, "__esModule", { value: true });
@@ -72456,7 +72216,7 @@ ${dataLines}`;
   var stringUtils_1$2 = stringUtils;
   var TableInfo = (
     /** @class */
-    function() {
+    (function() {
       function TableInfo2(tableName, columns) {
         var _this = this;
         this.namesToColumns = /* @__PURE__ */ new Map();
@@ -72567,7 +72327,7 @@ ${dataLines}`;
       TableInfo2.PK = "pk";
       TableInfo2.DEFAULT_NULL = "NULL";
       return TableInfo2;
-    }()
+    })()
   );
   tableInfo.TableInfo = TableInfo;
   Object.defineProperty(coreSQLUtils, "__esModule", { value: true });
@@ -72580,7 +72340,7 @@ ${dataLines}`;
   var sqliteMasterColumn_1$1 = sqliteMasterColumn;
   var CoreSQLUtils = (
     /** @class */
-    function() {
+    (function() {
       function CoreSQLUtils2() {
       }
       CoreSQLUtils2.createTableSQL = function(table2) {
@@ -72849,7 +72609,7 @@ ${dataLines}`;
       };
       CoreSQLUtils2.NUMBER_PATTERN = "\\d+";
       return CoreSQLUtils2;
-    }()
+    })()
   );
   coreSQLUtils.CoreSQLUtils = CoreSQLUtils;
   Object.defineProperty(dao, "__esModule", { value: true });
@@ -72859,7 +72619,7 @@ ${dataLines}`;
   var coreSQLUtils_1$5 = coreSQLUtils;
   var Dao = (
     /** @class */
-    function() {
+    (function() {
       function Dao2(geoPackage2) {
         this.geoPackage = geoPackage2;
         this.connection = geoPackage2.database;
@@ -73155,7 +72915,7 @@ ${dataLines}`;
         this.gpkgTableName = newName;
       };
       return Dao2;
-    }()
+    })()
   );
   dao.Dao = Dao;
   var mediaTable = {};
@@ -73167,7 +72927,7 @@ ${dataLines}`;
   var constraints_1$2 = constraints;
   var UserTable = (
     /** @class */
-    function() {
+    (function() {
       function UserTable2(columns) {
         this.constraints = new constraints_1$2.Constraints();
         this.columns = columns;
@@ -73286,7 +73046,7 @@ ${dataLines}`;
         this.columns.alterColumn(column);
       };
       return UserTable2;
-    }()
+    })()
   );
   userTable.UserTable = UserTable;
   var userCustomColumns = {};
@@ -73296,7 +73056,7 @@ ${dataLines}`;
   var geoPackageDataType_1$g = geoPackageDataType;
   var UserColumns = (
     /** @class */
-    function() {
+    (function() {
       function UserColumns2(tableName, columns, custom) {
         if (custom === void 0) {
           custom = false;
@@ -73506,10 +73266,10 @@ ${dataLines}`;
         this._columns[index2] = column;
       };
       return UserColumns2;
-    }()
+    })()
   );
   userColumns.UserColumns = UserColumns;
-  var __extends$16 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$16 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -73527,13 +73287,13 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(userCustomColumns, "__esModule", { value: true });
   userCustomColumns.UserCustomColumns = void 0;
   var userColumns_1$3 = userColumns;
   var UserCustomColumns = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$16(UserCustomColumns2, _super);
       function UserCustomColumns2(tableName, columns, requiredColumns, custom) {
         var _this = _super.call(this, tableName, columns, custom) || this;
@@ -73574,10 +73334,10 @@ ${dataLines}`;
         }
       };
       return UserCustomColumns2;
-    }(userColumns_1$3.UserColumns)
+    })(userColumns_1$3.UserColumns)
   );
   userCustomColumns.UserCustomColumns = UserCustomColumns;
-  var __extends$15 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$15 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -73595,14 +73355,14 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(userCustomTable, "__esModule", { value: true });
   userCustomTable.UserCustomTable = void 0;
   var userTable_1$3 = userTable;
   var userCustomColumns_1 = userCustomColumns;
   var UserCustomTable = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$15(UserCustomTable2, _super);
       function UserCustomTable2(tableName, columns, requiredColumns) {
         if (requiredColumns === void 0) {
@@ -73623,10 +73383,10 @@ ${dataLines}`;
         return this.getUserColumns().getRequiredColumns();
       };
       return UserCustomTable2;
-    }(userTable_1$3.UserTable)
+    })(userTable_1$3.UserTable)
   );
   userCustomTable.UserCustomTable = UserCustomTable;
-  var __extends$14 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$14 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -73644,13 +73404,13 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(userRelatedTable, "__esModule", { value: true });
   userRelatedTable.UserRelatedTable = void 0;
   var userCustomTable_1$2 = userCustomTable;
   var UserRelatedTable = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$14(UserRelatedTable2, _super);
       function UserRelatedTable2(tableName, relation_name, data_type, columns, requiredColumns) {
         var _this = _super.call(this, tableName, columns, requiredColumns) || this;
@@ -73673,7 +73433,7 @@ ${dataLines}`;
         return true;
       };
       return UserRelatedTable2;
-    }(userCustomTable_1$2.UserCustomTable)
+    })(userCustomTable_1$2.UserCustomTable)
   );
   userRelatedTable.UserRelatedTable = UserRelatedTable;
   var relationType = {};
@@ -73716,7 +73476,7 @@ ${dataLines}`;
   var contentsDataType_1$6 = contentsDataType;
   var RelationType = (
     /** @class */
-    function() {
+    (function() {
       function RelationType2(name, dataType) {
         this.name = name;
         this.dataType = dataType;
@@ -73730,7 +73490,7 @@ ${dataLines}`;
       RelationType2.ATTRIBUTES = new RelationType2("attributes", contentsDataType_1$6.ContentsDataType.ATTRIBUTES);
       RelationType2.TILES = new RelationType2("tiles", contentsDataType_1$6.ContentsDataType.TILES);
       return RelationType2;
-    }()
+    })()
   );
   relationType.RelationType = RelationType;
   var userColumn = {};
@@ -73739,13 +73499,13 @@ ${dataLines}`;
   userTableDefaults.UserTableDefaults = void 0;
   var UserTableDefaults = (
     /** @class */
-    function() {
+    (function() {
       function UserTableDefaults2() {
       }
       UserTableDefaults2.DEFAULT_AUTOINCREMENT = true;
       UserTableDefaults2.DEFAULT_PK_NOT_NULL = true;
       return UserTableDefaults2;
-    }()
+    })()
   );
   userTableDefaults.UserTableDefaults = UserTableDefaults;
   var __importDefault$f = commonjsGlobal && commonjsGlobal.__importDefault || function(mod) {
@@ -73762,7 +73522,7 @@ ${dataLines}`;
   var constraints_1$1 = constraints;
   var UserColumn = (
     /** @class */
-    function() {
+    (function() {
       function UserColumn2(index2, name, dataType, max, notNull, defaultValue, primaryKey, autoincrement, unique) {
         this.index = index2;
         this.name = name;
@@ -74023,10 +73783,10 @@ ${dataLines}`;
       UserColumn2.AUTOINCREMENT_CONSTRAINT_ORDER = 4;
       UserColumn2.UNIQUE_CONSTRAINT_ORDER = 5;
       return UserColumn2;
-    }()
+    })()
   );
   userColumn.UserColumn = UserColumn;
-  var __extends$13 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$13 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -74044,7 +73804,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(mediaTable, "__esModule", { value: true });
   mediaTable.MediaTable = void 0;
   var userRelatedTable_1$1 = userRelatedTable;
@@ -74053,7 +73813,7 @@ ${dataLines}`;
   var geoPackageDataType_1$e = geoPackageDataType;
   var MediaTable = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$13(MediaTable2, _super);
       function MediaTable2(tableName, columns, requiredColumns) {
         var _this = _super.call(this, tableName, MediaTable2.RELATION_TYPE.name, MediaTable2.RELATION_TYPE.dataType, columns, requiredColumns) || this;
@@ -74136,11 +73896,11 @@ ${dataLines}`;
       MediaTable2.COLUMN_DATA = "data";
       MediaTable2.COLUMN_CONTENT_TYPE = "content_type";
       return MediaTable2;
-    }(userRelatedTable_1$1.UserRelatedTable)
+    })(userRelatedTable_1$1.UserRelatedTable)
   );
   mediaTable.MediaTable = MediaTable;
   var simpleAttributesTable = {};
-  var __extends$12 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$12 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -74158,7 +73918,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(simpleAttributesTable, "__esModule", { value: true });
   simpleAttributesTable.SimpleAttributesTable = void 0;
   var userRelatedTable_1 = userRelatedTable;
@@ -74167,7 +73927,7 @@ ${dataLines}`;
   var geoPackageDataType_1$d = geoPackageDataType;
   var SimpleAttributesTable = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$12(SimpleAttributesTable2, _super);
       function SimpleAttributesTable2(tableName, columns, requiredColumns) {
         var _this = _super.call(this, tableName, SimpleAttributesTable2.RELATION_TYPE.name, SimpleAttributesTable2.RELATION_TYPE.dataType, columns, requiredColumns) || this;
@@ -74227,7 +73987,7 @@ ${dataLines}`;
       SimpleAttributesTable2.RELATION_TYPE = relationType_1$4.RelationType.SIMPLE_ATTRIBUTES;
       SimpleAttributesTable2.COLUMN_ID = "id";
       return SimpleAttributesTable2;
-    }(userRelatedTable_1.UserRelatedTable)
+    })(userRelatedTable_1.UserRelatedTable)
   );
   simpleAttributesTable.SimpleAttributesTable = SimpleAttributesTable;
   var userRow = {};
@@ -74236,7 +73996,7 @@ ${dataLines}`;
   var geoPackageDataType_1$c = geoPackageDataType;
   var UserRow = (
     /** @class */
-    function() {
+    (function() {
       function UserRow2(table2, columnTypes, values2) {
         this.table = table2;
         this.columnTypes = columnTypes;
@@ -74417,7 +74177,7 @@ ${dataLines}`;
         this.values[this.table.getPkColumnName()] = void 0;
       };
       return UserRow2;
-    }()
+    })()
   );
   userRow.UserRow = UserRow;
   var alterTable = {};
@@ -74430,7 +74190,7 @@ ${dataLines}`;
   var sqliteMaster_1$1 = sqliteMaster;
   var UserTableReader = (
     /** @class */
-    function() {
+    (function() {
       function UserTableReader2(table_name) {
         this.table_name = table_name;
       }
@@ -74462,11 +74222,11 @@ ${dataLines}`;
         return new userColumn_1$9.UserColumn(tableColumn2.index, tableColumn2.name, tableColumn2.dataType, tableColumn2.max, tableColumn2.notNull, tableColumn2.defaultValue, tableColumn2.primaryKey, tableColumn2.autoincrement);
       };
       return UserTableReader2;
-    }()
+    })()
   );
   userTableReader.UserTableReader = UserTableReader;
   var userCustomColumn = {};
-  var __extends$11 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$11 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -74484,7 +74244,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(userCustomColumn, "__esModule", { value: true });
   userCustomColumn.UserCustomColumn = void 0;
   var userColumn_1$8 = userColumn;
@@ -74492,7 +74252,7 @@ ${dataLines}`;
   var userTableDefaults_1$3 = userTableDefaults;
   var UserCustomColumn = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$11(UserCustomColumn2, _super);
       function UserCustomColumn2(index2, name, dataType, max, notNull, defaultValue, primaryKey, autoincrement) {
         var _this = _super.call(this, index2, name, dataType, max, notNull, defaultValue, primaryKey, autoincrement) || this;
@@ -74514,10 +74274,10 @@ ${dataLines}`;
         return new UserCustomColumn2(index2, name, geoPackageDataType_1$b.GeoPackageDataType.INTEGER, void 0, void 0, void 0, true, autoincrement);
       };
       return UserCustomColumn2;
-    }(userColumn_1$8.UserColumn)
+    })(userColumn_1$8.UserColumn)
   );
   userCustomColumn.UserCustomColumn = UserCustomColumn;
-  var __extends$10 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$10 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -74535,7 +74295,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(userCustomTableReader, "__esModule", { value: true });
   userCustomTableReader.UserCustomTableReader = void 0;
   var userCustomTable_1$1 = userCustomTable;
@@ -74543,7 +74303,7 @@ ${dataLines}`;
   var userCustomColumn_1 = userCustomColumn;
   var UserCustomTableReader = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$10(UserCustomTableReader2, _super);
       function UserCustomTableReader2(table_name) {
         return _super.call(this, table_name) || this;
@@ -74558,7 +74318,7 @@ ${dataLines}`;
         return new userCustomColumn_1.UserCustomColumn(tableColumn2.index, tableColumn2.name, tableColumn2.dataType, tableColumn2.max, tableColumn2.notNull, tableColumn2.defaultValue, tableColumn2.primaryKey, tableColumn2.autoincrement);
       };
       return UserCustomTableReader2;
-    }(userTableReader_1$3.UserTableReader)
+    })(userTableReader_1$3.UserTableReader)
   );
   userCustomTableReader.UserCustomTableReader = UserCustomTableReader;
   var rtreeIndexDao = {};
@@ -74595,7 +74355,7 @@ ${dataLines}`;
   var bbox_1$1 = __importDefault$e(js$7);
   var EnvelopeBuilder = (
     /** @class */
-    function() {
+    (function() {
       function EnvelopeBuilder2() {
       }
       EnvelopeBuilder2.buildEnvelopeWithGeometry = function(wkbGeometry) {
@@ -74609,14 +74369,14 @@ ${dataLines}`;
         };
       };
       return EnvelopeBuilder2;
-    }()
+    })()
   );
   envelopeBuilder.EnvelopeBuilder = EnvelopeBuilder;
   var hasRequiredRtreeIndex;
   function requireRtreeIndex() {
     if (hasRequiredRtreeIndex) return rtreeIndex;
     hasRequiredRtreeIndex = 1;
-    var __extends2 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+    var __extends2 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
       var extendStatics2 = function(d3, b2) {
         extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
           d4.__proto__ = b3;
@@ -74634,7 +74394,7 @@ ${dataLines}`;
         }
         d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
       };
-    }();
+    })();
     Object.defineProperty(rtreeIndex, "__esModule", { value: true });
     rtreeIndex.RTreeIndex = void 0;
     var baseExtension_12 = baseExtension;
@@ -74644,7 +74404,7 @@ ${dataLines}`;
     var geometryData_12 = geometryData;
     var RTreeIndex = (
       /** @class */
-      function(_super) {
+      (function(_super) {
         __extends2(RTreeIndex2, _super);
         function RTreeIndex2(geoPackage2, featureDao2) {
           var _this = _super.call(this, geoPackage2) || this;
@@ -74914,7 +74674,7 @@ ${dataLines}`;
         RTreeIndex2.TRIGGER_UPDATE4_NAME = "update4";
         RTreeIndex2.TRIGGER_DELETE_NAME = "delete";
         return RTreeIndex2;
-      }(baseExtension_12.BaseExtension)
+      })(baseExtension_12.BaseExtension)
     );
     rtreeIndex.RTreeIndex = RTreeIndex;
     return rtreeIndex;
@@ -74923,7 +74683,7 @@ ${dataLines}`;
   function requireRtreeIndexDao() {
     if (hasRequiredRtreeIndexDao) return rtreeIndexDao;
     hasRequiredRtreeIndexDao = 1;
-    var __extends2 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+    var __extends2 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
       var extendStatics2 = function(d3, b2) {
         extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
           d4.__proto__ = b3;
@@ -74941,7 +74701,7 @@ ${dataLines}`;
         }
         d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
       };
-    }();
+    })();
     Object.defineProperty(rtreeIndexDao, "__esModule", { value: true });
     rtreeIndexDao.RTreeIndexDao = void 0;
     var dao_12 = dao;
@@ -74949,7 +74709,7 @@ ${dataLines}`;
     var sqliteQueryBuilder_12 = sqliteQueryBuilder;
     var RTreeIndexDao = (
       /** @class */
-      function(_super) {
+      (function(_super) {
         __extends2(RTreeIndexDao2, _super);
         function RTreeIndexDao2(geoPackage2, featureDao2) {
           var _this = _super.call(this, geoPackage2) || this;
@@ -75022,7 +74782,7 @@ ${dataLines}`;
         RTreeIndexDao2.EXTENSION_RTREE_INDEX_NAME_NO_AUTHOR = "rtree_index";
         RTreeIndexDao2.EXTENSION_RTREE_INDEX_DEFINITION = "http://www.geopackage.org/spec/#extension_rtree";
         return RTreeIndexDao2;
-      }(dao_12.Dao)
+      })(dao_12.Dao)
     );
     rtreeIndexDao.RTreeIndexDao = RTreeIndexDao;
     return rtreeIndexDao;
@@ -75042,7 +74802,7 @@ ${dataLines}`;
   var rtreeIndexDao_1$1 = requireRtreeIndexDao();
   var AlterTable = (
     /** @class */
-    function() {
+    (function() {
       function AlterTable2() {
       }
       AlterTable2.alterTableSQL = function(table2) {
@@ -75250,10 +75010,10 @@ ${dataLines}`;
         }
       };
       return AlterTable2;
-    }()
+    })()
   );
   alterTable.AlterTable = AlterTable;
-  var __extends$$ = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$$ = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -75271,7 +75031,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(userDao, "__esModule", { value: true });
   userDao.UserDao = void 0;
   var dao_1$f = dao;
@@ -75283,7 +75043,7 @@ ${dataLines}`;
   var coreSQLUtils_1$3 = coreSQLUtils;
   var UserDao = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$$(UserDao2, _super);
       function UserDao2(geoPackage2, table2) {
         var _this = _super.call(this, geoPackage2) || this;
@@ -75518,7 +75278,7 @@ ${dataLines}`;
         alterTable_1$3.AlterTable.alterColumnsForTable(this.connection, this.table, columns);
       };
       return UserDao2;
-    }(dao_1$f.Dao)
+    })(dao_1$f.Dao)
   );
   userDao.UserDao = UserDao;
   var mediaRow = {};
@@ -76704,7 +76464,7 @@ ${dataLines}`;
   canvas.Canvas = void 0;
   var Canvas = (
     /** @class */
-    function() {
+    (function() {
       function Canvas2() {
       }
       Canvas2.registerCanvasAdapter = function(adapter) {
@@ -76810,7 +76570,7 @@ ${dataLines}`;
       };
       Canvas2.adapter = void 0;
       return Canvas2;
-    }()
+    })()
   );
   canvas.Canvas = Canvas;
   var __awaiter$i = commonjsGlobal && commonjsGlobal.__awaiter || function(thisArg, _arguments, P3, generator) {
@@ -76918,7 +76678,7 @@ ${dataLines}`;
   var canvas_1$7 = canvas;
   var ImageUtils = (
     /** @class */
-    function() {
+    (function() {
       function ImageUtils2() {
       }
       ImageUtils2.getImageSize = function(data) {
@@ -76988,10 +76748,10 @@ ${dataLines}`;
         });
       };
       return ImageUtils2;
-    }()
+    })()
   );
   imageUtils.ImageUtils = ImageUtils;
-  var __extends$_ = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$_ = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -77009,14 +76769,14 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(mediaRow, "__esModule", { value: true });
   mediaRow.MediaRow = void 0;
   var userRow_1$6 = userRow;
   var imageUtils_1$3 = imageUtils;
   var MediaRow = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$_(MediaRow2, _super);
       function MediaRow2(mediaTable2, columnTypes, values2) {
         var _this = _super.call(this, mediaTable2, columnTypes, values2) || this;
@@ -77097,10 +76857,10 @@ ${dataLines}`;
         configurable: true
       });
       return MediaRow2;
-    }(userRow_1$6.UserRow)
+    })(userRow_1$6.UserRow)
   );
   mediaRow.MediaRow = MediaRow;
-  var __extends$Z = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$Z = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -77118,7 +76878,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(mediaDao, "__esModule", { value: true });
   mediaDao.MediaDao = void 0;
   var userDao_1$5 = userDao;
@@ -77126,7 +76886,7 @@ ${dataLines}`;
   var userCustomTableReader_1$5 = userCustomTableReader;
   var MediaDao = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$Z(MediaDao2, _super);
       function MediaDao2(geoPackage2, table2) {
         return _super.call(this, geoPackage2, table2) || this;
@@ -77151,12 +76911,12 @@ ${dataLines}`;
         return new MediaDao2(geoPackage2, userTable2);
       };
       return MediaDao2;
-    }(userDao_1$5.UserDao)
+    })(userDao_1$5.UserDao)
   );
   mediaDao.MediaDao = MediaDao;
   var simpleAttributesDao = {};
   var simpleAttributesRow = {};
-  var __extends$Y = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$Y = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -77174,13 +76934,13 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(simpleAttributesRow, "__esModule", { value: true });
   simpleAttributesRow.SimpleAttributesRow = void 0;
   var userRow_1$5 = userRow;
   var SimpleAttributesRow = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$Y(SimpleAttributesRow2, _super);
       function SimpleAttributesRow2(simpleAttributesTable2, columnTypes, values2) {
         var _this = _super.call(this, simpleAttributesTable2, columnTypes, values2) || this;
@@ -77188,10 +76948,10 @@ ${dataLines}`;
         return _this;
       }
       return SimpleAttributesRow2;
-    }(userRow_1$5.UserRow)
+    })(userRow_1$5.UserRow)
   );
   simpleAttributesRow.SimpleAttributesRow = SimpleAttributesRow;
-  var __extends$X = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$X = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -77209,14 +76969,14 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(simpleAttributesDao, "__esModule", { value: true });
   simpleAttributesDao.SimpleAttributesDao = void 0;
   var userDao_1$4 = userDao;
   var simpleAttributesRow_1 = simpleAttributesRow;
   var SimpleAttributesDao = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$X(SimpleAttributesDao2, _super);
       function SimpleAttributesDao2(geoPackage2, table2) {
         return _super.call(this, geoPackage2, table2) || this;
@@ -77249,11 +77009,11 @@ ${dataLines}`;
         return geoPackage2.relatedTablesExtension.getSimpleAttributesDao(tableName);
       };
       return SimpleAttributesDao2;
-    }(userDao_1$4.UserDao)
+    })(userDao_1$4.UserDao)
   );
   simpleAttributesDao.SimpleAttributesDao = SimpleAttributesDao;
   var userMappingTable = {};
-  var __extends$W = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$W = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -77271,7 +77031,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(userMappingTable, "__esModule", { value: true });
   userMappingTable.UserMappingTable = void 0;
   var userColumn_1$7 = userColumn;
@@ -77279,7 +77039,7 @@ ${dataLines}`;
   var userCustomTable_1 = userCustomTable;
   var UserMappingTable = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$W(UserMappingTable2, _super);
       function UserMappingTable2() {
         return _super !== null && _super.apply(this, arguments) || this;
@@ -77344,12 +77104,12 @@ ${dataLines}`;
       UserMappingTable2.COLUMN_BASE_ID = "base_id";
       UserMappingTable2.COLUMN_RELATED_ID = "related_id";
       return UserMappingTable2;
-    }(userCustomTable_1.UserCustomTable)
+    })(userCustomTable_1.UserCustomTable)
   );
   userMappingTable.UserMappingTable = UserMappingTable;
   var userMappingDao = {};
   var userCustomDao = {};
-  var __extends$V = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$V = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -77367,14 +77127,14 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(userCustomDao, "__esModule", { value: true });
   userCustomDao.UserCustomDao = void 0;
   var userDao_1$3 = userDao;
   var userCustomTableReader_1$4 = userCustomTableReader;
   var UserCustomDao = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$V(UserCustomDao2, _super);
       function UserCustomDao2(geoPackage2, table2) {
         return _super.call(this, geoPackage2, table2) || this;
@@ -77388,11 +77148,11 @@ ${dataLines}`;
         return new UserCustomDao2(geoPackage2, userCustomTable2);
       };
       return UserCustomDao2;
-    }(userDao_1$3.UserDao)
+    })(userDao_1$3.UserDao)
   );
   userCustomDao.UserCustomDao = UserCustomDao;
   var userMappingRow = {};
-  var __extends$U = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$U = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -77410,13 +77170,13 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(userMappingRow, "__esModule", { value: true });
   userMappingRow.UserMappingRow = void 0;
   var userRow_1$4 = userRow;
   var UserMappingRow = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$U(UserMappingRow2, _super);
       function UserMappingRow2(table2, columnTypes, values2) {
         var _this = _super.call(this, table2, columnTypes, values2) || this;
@@ -77482,10 +77242,10 @@ ${dataLines}`;
         configurable: true
       });
       return UserMappingRow2;
-    }(userRow_1$4.UserRow)
+    })(userRow_1$4.UserRow)
   );
   userMappingRow.UserMappingRow = UserMappingRow;
-  var __extends$T = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$T = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -77503,7 +77263,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(userMappingDao, "__esModule", { value: true });
   userMappingDao.UserMappingDao = void 0;
   var userCustomDao_1$1 = userCustomDao;
@@ -77512,7 +77272,7 @@ ${dataLines}`;
   var columnValues_1$7 = columnValues;
   var UserMappingDao = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$T(UserMappingDao2, _super);
       function UserMappingDao2(userCustomDao2, geoPackage2, userMappingTable2) {
         return _super.call(this, geoPackage2, userMappingTable2 || UserMappingDao2.createMappingTable(userCustomDao2)) || this;
@@ -77591,7 +77351,7 @@ ${dataLines}`;
         return this.deleteWhere(where, whereArgs);
       };
       return UserMappingDao2;
-    }(userCustomDao_1$1.UserCustomDao)
+    })(userCustomDao_1$1.UserCustomDao)
   );
   userMappingDao.UserMappingDao = UserMappingDao;
   var extendedRelationDao = {};
@@ -77600,14 +77360,14 @@ ${dataLines}`;
   extendedRelation.ExtendedRelation = void 0;
   var ExtendedRelation = (
     /** @class */
-    /* @__PURE__ */ function() {
+    /* @__PURE__ */ (function() {
       function ExtendedRelation2() {
       }
       return ExtendedRelation2;
-    }()
+    })()
   );
   extendedRelation.ExtendedRelation = ExtendedRelation;
-  var __extends$S = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$S = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -77625,7 +77385,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   var __values$c = commonjsGlobal && commonjsGlobal.__values || function(o2) {
     var s2 = typeof Symbol === "function" && Symbol.iterator, m3 = s2 && o2[s2], i = 0;
     if (m3) return m3.call(o2);
@@ -77644,7 +77404,7 @@ ${dataLines}`;
   var extendedRelation_1$1 = extendedRelation;
   var ExtendedRelationDao = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$S(ExtendedRelationDao2, _super);
       function ExtendedRelationDao2() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -77836,7 +77596,7 @@ ${dataLines}`;
       ExtendedRelationDao2.MAPPING_TABLE_NAME = "mapping_table_name";
       ExtendedRelationDao2.COLUMN_MAPPING_TABLE_NAME = ExtendedRelationDao2.TABLE_NAME + "." + ExtendedRelationDao2.MAPPING_TABLE_NAME;
       return ExtendedRelationDao2;
-    }(dao_1$e.Dao)
+    })(dao_1$e.Dao)
   );
   extendedRelationDao.ExtendedRelationDao = ExtendedRelationDao;
   var contents$1 = {};
@@ -77844,7 +77604,7 @@ ${dataLines}`;
   contents$1.Contents = void 0;
   var Contents = (
     /** @class */
-    function() {
+    (function() {
       function Contents2() {
       }
       Contents2.prototype.copy = function() {
@@ -77864,7 +77624,7 @@ ${dataLines}`;
         return this.table_name;
       };
       return Contents2;
-    }()
+    })()
   );
   contents$1.Contents = Contents;
   var optionBuilder = {};
@@ -77872,7 +77632,7 @@ ${dataLines}`;
   optionBuilder.OptionBuilder = void 0;
   var OptionBuilder = (
     /** @class */
-    function() {
+    (function() {
       function OptionBuilder2() {
       }
       OptionBuilder2.build = function(optionList) {
@@ -77889,12 +77649,12 @@ ${dataLines}`;
         return optionBuilder2;
       };
       return OptionBuilder2;
-    }()
+    })()
   );
   optionBuilder.OptionBuilder = OptionBuilder;
   var attributesDao = {};
   var attributesRow = {};
-  var __extends$R = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$R = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -77912,22 +77672,22 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(attributesRow, "__esModule", { value: true });
   attributesRow.AttributesRow = void 0;
   var userRow_1$3 = userRow;
   var AttributesRow = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$R(AttributesRow2, _super);
       function AttributesRow2(attributeTable, columnTypes, values2) {
         return _super.call(this, attributeTable, columnTypes, values2) || this;
       }
       return AttributesRow2;
-    }(userRow_1$3.UserRow)
+    })(userRow_1$3.UserRow)
   );
   attributesRow.AttributesRow = AttributesRow;
-  var __extends$Q = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$Q = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -77945,14 +77705,14 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(attributesDao, "__esModule", { value: true });
   attributesDao.AttributesDao = void 0;
   var userDao_1$2 = userDao;
   var attributesRow_1$1 = attributesRow;
   var AttributesDao = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$Q(AttributesDao2, _super);
       function AttributesDao2(geoPackage2, table2) {
         var _this = _super.call(this, geoPackage2, table2) || this;
@@ -77976,7 +77736,7 @@ ${dataLines}`;
         return geoPackage2.getAttributeDao(tableName);
       };
       return AttributesDao2;
-    }(userDao_1$2.UserDao)
+    })(userDao_1$2.UserDao)
   );
   attributesDao.AttributesDao = AttributesDao;
   var featureDao = {};
@@ -78711,7 +78471,7 @@ ${dataLines}`;
   }
   var Node = (
     /** @class */
-    /* @__PURE__ */ function() {
+    /* @__PURE__ */ (function() {
       function Node2(key, data) {
         this.next = null;
         this.key = key;
@@ -78720,7 +78480,7 @@ ${dataLines}`;
         this.right = null;
       }
       return Node2;
-    }()
+    })()
   );
   function DEFAULT_COMPARE(a2, b2) {
     return a2 > b2 ? 1 : a2 < b2 ? -1 : 0;
@@ -78829,7 +78589,7 @@ ${dataLines}`;
   }
   var Tree = (
     /** @class */
-    function() {
+    (function() {
       function Tree2(comparator) {
         if (comparator === void 0) {
           comparator = DEFAULT_COMPARE;
@@ -79198,7 +78958,7 @@ ${dataLines}`;
         });
       };
       return Tree2;
-    }()
+    })()
   );
   function loadRecursive(keys2, values2, start2, end) {
     var size = end - start2;
@@ -80989,11 +80749,11 @@ ${dataLines}`;
   tableIndex.TableIndex = void 0;
   var TableIndex = (
     /** @class */
-    /* @__PURE__ */ function() {
+    /* @__PURE__ */ (function() {
       function TableIndex2() {
       }
       return TableIndex2;
-    }()
+    })()
   );
   tableIndex.TableIndex = TableIndex;
   var geometryIndexDao = {};
@@ -81002,7 +80762,7 @@ ${dataLines}`;
   geometryIndex.GeometryIndex = void 0;
   var GeometryIndex = (
     /** @class */
-    function() {
+    (function() {
       function GeometryIndex2() {
       }
       Object.defineProperty(GeometryIndex2.prototype, "tableIndex", {
@@ -81013,7 +80773,7 @@ ${dataLines}`;
         configurable: true
       });
       return GeometryIndex2;
-    }()
+    })()
   );
   geometryIndex.GeometryIndex = GeometryIndex;
   var tableCreator = {};
@@ -81025,7 +80785,7 @@ ${dataLines}`;
   var projectionConstants_1$a = projectionConstants;
   var SpatialReferenceSystem = (
     /** @class */
-    function() {
+    (function() {
       function SpatialReferenceSystem2() {
       }
       Object.defineProperty(SpatialReferenceSystem2.prototype, "projection", {
@@ -81050,10 +80810,10 @@ ${dataLines}`;
       });
       SpatialReferenceSystem2.TABLE_NAME = "gpkg_spatial_ref_sys";
       return SpatialReferenceSystem2;
-    }()
+    })()
   );
   spatialReferenceSystem.SpatialReferenceSystem = SpatialReferenceSystem;
-  var __extends$P = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$P = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -81071,7 +80831,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(spatialReferenceSystemDao, "__esModule", { value: true });
   spatialReferenceSystemDao.SpatialReferenceSystemDao = void 0;
   var dao_1$d = dao;
@@ -81080,7 +80840,7 @@ ${dataLines}`;
   var projectionConstants_1$9 = projectionConstants;
   var SpatialReferenceSystemDao = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$P(SpatialReferenceSystemDao2, _super);
       function SpatialReferenceSystemDao2() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -81205,7 +80965,7 @@ ${dataLines}`;
       SpatialReferenceSystemDao2.COLUMN_DEFINITION = "definition";
       SpatialReferenceSystemDao2.COLUMN_DESCRIPTION = "description";
       return SpatialReferenceSystemDao2;
-    }(dao_1$d.Dao)
+    })(dao_1$d.Dao)
   );
   spatialReferenceSystemDao.SpatialReferenceSystemDao = SpatialReferenceSystemDao;
   Object.defineProperty(tableCreator, "__esModule", { value: true });
@@ -81214,7 +80974,7 @@ ${dataLines}`;
   var coreSQLUtils_1$2 = coreSQLUtils;
   var TableCreator = (
     /** @class */
-    function() {
+    (function() {
       function TableCreator2(geopackage) {
         this.geopackage = geopackage;
         this.connection = geopackage.database;
@@ -81379,10 +81139,10 @@ ${dataLines}`;
         ]
       };
       return TableCreator2;
-    }()
+    })()
   );
   tableCreator.TableCreator = TableCreator;
-  var __extends$O = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$O = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -81400,7 +81160,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(geometryIndexDao, "__esModule", { value: true });
   geometryIndexDao.GeometryIndexDao = void 0;
   var dao_1$c = dao;
@@ -81408,7 +81168,7 @@ ${dataLines}`;
   var tableCreator_1$4 = tableCreator;
   var GeometryIndexDao = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$O(GeometryIndexDao2, _super);
       function GeometryIndexDao2(geoPackage2, featureDao2) {
         var _this = _super.call(this, geoPackage2) || this;
@@ -81539,10 +81299,10 @@ ${dataLines}`;
       GeometryIndexDao2.COLUMN_MIN_M = GeometryIndexDao2.TABLE_NAME + ".min_m";
       GeometryIndexDao2.COLUMN_MAX_M = GeometryIndexDao2.TABLE_NAME + ".max_m";
       return GeometryIndexDao2;
-    }(dao_1$c.Dao)
+    })(dao_1$c.Dao)
   );
   geometryIndexDao.GeometryIndexDao = GeometryIndexDao;
-  var __extends$N = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$N = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -81560,7 +81320,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   var __awaiter$h = commonjsGlobal && commonjsGlobal.__awaiter || function(thisArg, _arguments, P3, generator) {
     function adopt(value) {
       return value instanceof P3 ? value : new P3(function(resolve2) {
@@ -81668,7 +81428,7 @@ ${dataLines}`;
   var envelopeBuilder_1 = envelopeBuilder;
   var FeatureTableIndex = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$N(FeatureTableIndex2, _super);
       function FeatureTableIndex2(geoPackage2, featureDao2) {
         var _this = _super.call(this, geoPackage2) || this;
@@ -81914,7 +81674,7 @@ ${dataLines}`;
       FeatureTableIndex2.EXTENSION_NAME = extension_1$8.Extension.buildExtensionName(FeatureTableIndex2.EXTENSION_GEOMETRY_INDEX_AUTHOR, FeatureTableIndex2.EXTENSION_GEOMETRY_INDEX_NAME_NO_AUTHOR);
       FeatureTableIndex2.EXTENSION_GEOMETRY_INDEX_DEFINITION = "http://ngageoint.github.io/GeoPackage/docs/extensions/geometry-index.html";
       return FeatureTableIndex2;
-    }(baseExtension_1$7.BaseExtension)
+    })(baseExtension_1$7.BaseExtension)
   );
   featureTableIndex.FeatureTableIndex = FeatureTableIndex;
   var dataColumnsDao = {};
@@ -81925,7 +81685,7 @@ ${dataLines}`;
   tileMatrix.TileMatrix = void 0;
   var TileMatrix = (
     /** @class */
-    function() {
+    (function() {
       function TileMatrix2() {
       }
       Object.defineProperty(TileMatrix2.prototype, "contents", {
@@ -81946,11 +81706,11 @@ ${dataLines}`;
       TileMatrix2.PIXEL_X_SIZE = "pixelXSize";
       TileMatrix2.PIXEL_Y_SIZE = "pixelYSize";
       return TileMatrix2;
-    }()
+    })()
   );
   tileMatrix.TileMatrix = TileMatrix;
   var tileColumn = {};
-  var __extends$M = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$M = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -81968,7 +81728,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(tileColumn, "__esModule", { value: true });
   tileColumn.TileColumn = void 0;
   var userColumn_1$6 = userColumn;
@@ -81976,7 +81736,7 @@ ${dataLines}`;
   var userTableDefaults_1$2 = userTableDefaults;
   var TileColumn = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$M(TileColumn2, _super);
       function TileColumn2(index2, name, dataType, max, notNull, defaultValue, primaryKey, autoincrement) {
         return _super.call(this, index2, name, dataType, max, notNull, defaultValue, primaryKey, autoincrement) || this;
@@ -82011,10 +81771,10 @@ ${dataLines}`;
       TileColumn2.COLUMN_TILE_ROW = "tile_row";
       TileColumn2.COLUMN_TILE_DATA = "tile_data";
       return TileColumn2;
-    }(userColumn_1$6.UserColumn)
+    })(userColumn_1$6.UserColumn)
   );
   tileColumn.TileColumn = TileColumn;
-  var __extends$L = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$L = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -82032,7 +81792,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(tileMatrixDao, "__esModule", { value: true });
   tileMatrixDao.TileMatrixDao = void 0;
   var dao_1$b = dao;
@@ -82041,7 +81801,7 @@ ${dataLines}`;
   var tileColumn_1$3 = tileColumn;
   var TileMatrixDao = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$L(TileMatrixDao2, _super);
       function TileMatrixDao2() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -82104,7 +81864,7 @@ ${dataLines}`;
       TileMatrixDao2.COLUMN_PIXEL_X_SIZE = "pixel_x_size";
       TileMatrixDao2.COLUMN_PIXEL_Y_SIZE = "pixel_y_size";
       return TileMatrixDao2;
-    }(dao_1$b.Dao)
+    })(dao_1$b.Dao)
   );
   tileMatrixDao.TileMatrixDao = TileMatrixDao;
   var tileMatrixSetDao = {};
@@ -82114,7 +81874,7 @@ ${dataLines}`;
   var boundingBox_1$6 = boundingBox;
   var TileMatrixSet = (
     /** @class */
-    function() {
+    (function() {
       function TileMatrixSet2() {
       }
       Object.defineProperty(TileMatrixSet2.prototype, "boundingBox", {
@@ -82146,10 +81906,10 @@ ${dataLines}`;
       TileMatrixSet2.MAX_Y = "maxY";
       TileMatrixSet2.SRS_ID = "srsId";
       return TileMatrixSet2;
-    }()
+    })()
   );
   tileMatrixSet.TileMatrixSet = TileMatrixSet;
-  var __extends$K = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$K = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -82167,7 +81927,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   var __values$b = commonjsGlobal && commonjsGlobal.__values || function(o2) {
     var s2 = typeof Symbol === "function" && Symbol.iterator, m3 = s2 && o2[s2], i = 0;
     if (m3) return m3.call(o2);
@@ -82185,7 +81945,7 @@ ${dataLines}`;
   var tileMatrixSet_1$1 = tileMatrixSet;
   var TileMatrixSetDao = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$K(TileMatrixSetDao2, _super);
       function TileMatrixSetDao2(geoPackage2) {
         var _this = _super.call(this, geoPackage2) || this;
@@ -82260,7 +82020,7 @@ ${dataLines}`;
       TileMatrixSetDao2.COLUMN_MAX_X = "max_x";
       TileMatrixSetDao2.COLUMN_MAX_Y = "max_y";
       return TileMatrixSetDao2;
-    }(dao_1$a.Dao)
+    })(dao_1$a.Dao)
   );
   tileMatrixSetDao.TileMatrixSetDao = TileMatrixSetDao;
   var geometryColumnsDao = {};
@@ -82270,7 +82030,7 @@ ${dataLines}`;
   var contentsDataType_1$5 = contentsDataType;
   var GeometryColumns = (
     /** @class */
-    function() {
+    (function() {
       function GeometryColumns2() {
       }
       Object.defineProperty(GeometryColumns2.prototype, "geometryType", {
@@ -82305,10 +82065,10 @@ ${dataLines}`;
       GeometryColumns2.Z = "z";
       GeometryColumns2.M = "m";
       return GeometryColumns2;
-    }()
+    })()
   );
   geometryColumns.GeometryColumns = GeometryColumns;
-  var __extends$J = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$J = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -82326,7 +82086,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   var __values$a = commonjsGlobal && commonjsGlobal.__values || function(o2) {
     var s2 = typeof Symbol === "function" && Symbol.iterator, m3 = s2 && o2[s2], i = 0;
     if (m3) return m3.call(o2);
@@ -82344,7 +82104,7 @@ ${dataLines}`;
   var geometryColumns_1$2 = geometryColumns;
   var GeometryColumnsDao = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$J(GeometryColumnsDao2, _super);
       function GeometryColumnsDao2() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -82417,10 +82177,10 @@ ${dataLines}`;
       GeometryColumnsDao2.COLUMN_Z = "z";
       GeometryColumnsDao2.COLUMN_M = "m";
       return GeometryColumnsDao2;
-    }(dao_1$9.Dao)
+    })(dao_1$9.Dao)
   );
   geometryColumnsDao.GeometryColumnsDao = GeometryColumnsDao;
-  var __extends$I = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$I = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -82438,7 +82198,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   var __values$9 = commonjsGlobal && commonjsGlobal.__values || function(o2) {
     var s2 = typeof Symbol === "function" && Symbol.iterator, m3 = s2 && o2[s2], i = 0;
     if (m3) return m3.call(o2);
@@ -82463,7 +82223,7 @@ ${dataLines}`;
   var projectionConstants_1$8 = projectionConstants;
   var ContentsDao = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$I(ContentsDao2, _super);
       function ContentsDao2() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -82655,7 +82415,7 @@ ${dataLines}`;
       ContentsDao2.COLUMN_MAX_Y = "max_y";
       ContentsDao2.COLUMN_SRS_ID = "srs_id";
       return ContentsDao2;
-    }(dao_1$8.Dao)
+    })(dao_1$8.Dao)
   );
   contentsDao.ContentsDao = ContentsDao;
   var dataColumns = {};
@@ -82663,7 +82423,7 @@ ${dataLines}`;
   dataColumns.DataColumns = void 0;
   var DataColumns = (
     /** @class */
-    /* @__PURE__ */ function() {
+    /* @__PURE__ */ (function() {
       function DataColumns2(object2) {
         object2 = object2 || {};
         this.table_name = object2.table_name;
@@ -82675,10 +82435,10 @@ ${dataLines}`;
         this.constraint_name = object2.constraint_name;
       }
       return DataColumns2;
-    }()
+    })()
   );
   dataColumns.DataColumns = DataColumns;
-  var __extends$H = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$H = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -82696,7 +82456,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   var __values$8 = commonjsGlobal && commonjsGlobal.__values || function(o2) {
     var s2 = typeof Symbol === "function" && Symbol.iterator, m3 = s2 && o2[s2], i = 0;
     if (m3) return m3.call(o2);
@@ -82715,7 +82475,7 @@ ${dataLines}`;
   var dataColumns_1$1 = dataColumns;
   var DataColumnsDao = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$H(DataColumnsDao2, _super);
       function DataColumnsDao2() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -82785,12 +82545,12 @@ ${dataLines}`;
       DataColumnsDao2.COLUMN_MIME_TYPE = "mime_type";
       DataColumnsDao2.COLUMN_CONSTRAINT_NAME = "constraint_name";
       return DataColumnsDao2;
-    }(dao_1$7.Dao)
+    })(dao_1$7.Dao)
   );
   dataColumnsDao.DataColumnsDao = DataColumnsDao;
   var featureRow = {};
   var featureColumn = {};
-  var __extends$G = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$G = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -82808,7 +82568,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(featureColumn, "__esModule", { value: true });
   featureColumn.FeatureColumn = void 0;
   var userColumn_1$5 = userColumn;
@@ -82817,7 +82577,7 @@ ${dataLines}`;
   var userTableDefaults_1$1 = userTableDefaults;
   var FeatureColumn = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$G(FeatureColumn2, _super);
       function FeatureColumn2(index2, name, dataType, max, notNull, defaultValue, primaryKey, geometryType2, autoincrement) {
         var _this = _super.call(this, index2, name, dataType, max, notNull, defaultValue, primaryKey, autoincrement) || this;
@@ -82869,10 +82629,10 @@ ${dataLines}`;
         return this.geometryType;
       };
       return FeatureColumn2;
-    }(userColumn_1$5.UserColumn)
+    })(userColumn_1$5.UserColumn)
   );
   featureColumn.FeatureColumn = FeatureColumn;
-  var __extends$F = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$F = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -82890,7 +82650,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(featureRow, "__esModule", { value: true });
   featureRow.FeatureRow = void 0;
   var userRow_1$2 = userRow;
@@ -82898,7 +82658,7 @@ ${dataLines}`;
   var geometryData_1$1 = geometryData;
   var FeatureRow = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$F(FeatureRow2, _super);
       function FeatureRow2(featureTable2, columnTypes, values2) {
         var _this = _super.call(this, featureTable2, columnTypes, values2) || this;
@@ -82977,10 +82737,10 @@ ${dataLines}`;
         return _super.prototype.getValueWithColumnName.call(this, columnName);
       };
       return FeatureRow2;
-    }(userRow_1$2.UserRow)
+    })(userRow_1$2.UserRow)
   );
   featureRow.FeatureRow = FeatureRow;
-  var __extends$E = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$E = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -82998,7 +82758,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   var __awaiter$g = commonjsGlobal && commonjsGlobal.__awaiter || function(thisArg, _arguments, P3, generator) {
     function adopt(value) {
       return value instanceof P3 ? value : new P3(function(resolve2) {
@@ -83114,7 +82874,7 @@ ${dataLines}`;
   var projectionConstants_1$7 = projectionConstants;
   var FeatureDao = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$E(FeatureDao2, _super);
       function FeatureDao2(geoPackage2, table2, geometryColumns2, metadataDao2) {
         var _this = _super.call(this, geoPackage2, table2) || this;
@@ -83509,12 +83269,12 @@ ${dataLines}`;
         return geoPackage2.getFeatureDao(tableName);
       };
       return FeatureDao2;
-    }(userDao_1$1.UserDao)
+    })(userDao_1$1.UserDao)
   );
   featureDao.FeatureDao = FeatureDao;
   var tileDao = {};
   var tileRow = {};
-  var __extends$D = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$D = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -83532,13 +83292,13 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(tileRow, "__esModule", { value: true });
   tileRow.TileRow = void 0;
   var userRow_1$1 = userRow;
   var TileRow = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$D(TileRow2, _super);
       function TileRow2(tileTable2, columnTypes, values2) {
         var _this = _super.call(this, tileTable2, columnTypes, values2) || this;
@@ -83721,7 +83481,7 @@ ${dataLines}`;
         configurable: true
       });
       return TileRow2;
-    }(userRow_1$1.UserRow)
+    })(userRow_1$1.UserRow)
   );
   tileRow.TileRow = TileRow;
   var tileGrid = {};
@@ -83729,7 +83489,7 @@ ${dataLines}`;
   tileGrid.TileGrid = void 0;
   var TileGrid = (
     /** @class */
-    function() {
+    (function() {
       function TileGrid2(min_x, max_x, min_y, max_y) {
         this.min_x = min_x;
         this.max_x = max_x;
@@ -83745,7 +83505,7 @@ ${dataLines}`;
         return this.min_x === tileGrid2.min_x && this.max_x === tileGrid2.max_x && this.min_y === tileGrid2.min_y && this.max_y === tileGrid2.max_y;
       };
       return TileGrid2;
-    }()
+    })()
   );
   tileGrid.TileGrid = TileGrid;
   var tileBoundingBoxUtils = {};
@@ -83756,7 +83516,7 @@ ${dataLines}`;
   var boundingBox_1$3 = boundingBox;
   var TileBoundingBoxUtils = (
     /** @class */
-    function() {
+    (function() {
       function TileBoundingBoxUtils2() {
       }
       TileBoundingBoxUtils2.webMercatorTileBox = function(webMercatorBoundingBox, zoom) {
@@ -84012,7 +83772,7 @@ ${dataLines}`;
         return { left, right, bottom, top, isValid };
       };
       return TileBoundingBoxUtils2;
-    }()
+    })()
   );
   tileBoundingBoxUtils.TileBoundingBoxUtils = TileBoundingBoxUtils;
   var tileDaoUtils = {};
@@ -84038,7 +83798,7 @@ ${dataLines}`;
   var sortedIndex_1 = __importDefault$8(sortedIndex_1$2);
   var TileDaoUtils = (
     /** @class */
-    function() {
+    (function() {
       function TileDaoUtils2() {
       }
       TileDaoUtils2.adjustTileMatrixLengths = function(tileMatrixSet2, tileMatrices) {
@@ -84206,10 +83966,10 @@ ${dataLines}`;
         return lengths[0] * 0.51;
       };
       return TileDaoUtils2;
-    }()
+    })()
   );
   tileDaoUtils.TileDaoUtils = TileDaoUtils;
-  var __extends$C = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$C = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -84227,7 +83987,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   var __values$7 = commonjsGlobal && commonjsGlobal.__values || function(o2) {
     var s2 = typeof Symbol === "function" && Symbol.iterator, m3 = s2 && o2[s2], i = 0;
     if (m3) return m3.call(o2);
@@ -84255,7 +84015,7 @@ ${dataLines}`;
   var projectionConstants_1$5 = projectionConstants;
   var TileDao = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$C(TileDao2, _super);
       function TileDao2(geoPackage2, table2, tileMatrixSet2, tileMatrices) {
         var _this = _super.call(this, geoPackage2, table2) || this;
@@ -84637,10 +84397,10 @@ ${dataLines}`;
         return geoPackage2.getTileDao(tableName);
       };
       return TileDao2;
-    }(userDao_1.UserDao)
+    })(userDao_1.UserDao)
   );
   tileDao.TileDao = TileDao;
-  var __extends$B = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$B = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -84658,7 +84418,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   var __values$6 = commonjsGlobal && commonjsGlobal.__values || function(o2) {
     var s2 = typeof Symbol === "function" && Symbol.iterator, m3 = s2 && o2[s2], i = 0;
     if (m3) return m3.call(o2);
@@ -84693,7 +84453,7 @@ ${dataLines}`;
   var tileDao_1$1 = tileDao;
   var RelatedTablesExtension = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$B(RelatedTablesExtension2, _super);
       function RelatedTablesExtension2(geoPackage2) {
         var _this = _super.call(this, geoPackage2) || this;
@@ -85100,7 +84860,7 @@ ${dataLines}`;
       RelatedTablesExtension2.EXTENSION_RELATED_TABLES_NAME_NO_AUTHOR = "related_tables";
       RelatedTablesExtension2.EXTENSION_RELATED_TABLES_DEFINITION = "TBD";
       return RelatedTablesExtension2;
-    }(baseExtension_1$6.BaseExtension)
+    })(baseExtension_1$6.BaseExtension)
   );
   relatedTables.RelatedTablesExtension = RelatedTablesExtension;
   var style = {};
@@ -85110,14 +84870,14 @@ ${dataLines}`;
   contentsId.ContentsId = void 0;
   var ContentsId = (
     /** @class */
-    /* @__PURE__ */ function() {
+    /* @__PURE__ */ (function() {
       function ContentsId2() {
       }
       return ContentsId2;
-    }()
+    })()
   );
   contentsId.ContentsId = ContentsId;
-  var __extends$A = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$A = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -85135,14 +84895,14 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(contentsIdDao, "__esModule", { value: true });
   contentsIdDao.ContentsIdDao = void 0;
   var dao_1$6 = dao;
   var contentsId_1 = contentsId;
   var ContentsIdDao = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$A(ContentsIdDao2, _super);
       function ContentsIdDao2() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -85184,11 +84944,11 @@ ${dataLines}`;
       ContentsIdDao2.COLUMN_ID = "id";
       ContentsIdDao2.COLUMN_TABLE_NAME = "table_name";
       return ContentsIdDao2;
-    }(dao_1$6.Dao)
+    })(dao_1$6.Dao)
   );
   contentsIdDao.ContentsIdDao = ContentsIdDao;
   var iconTable = {};
-  var __extends$z = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$z = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -85206,7 +84966,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(iconTable, "__esModule", { value: true });
   iconTable.IconTable = void 0;
   var mediaTable_1$1 = mediaTable;
@@ -85214,7 +84974,7 @@ ${dataLines}`;
   var userColumn_1$4 = userColumn;
   var IconTable = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$z(IconTable2, _super);
       function IconTable2() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -85285,12 +85045,12 @@ ${dataLines}`;
       IconTable2.COLUMN_ANCHOR_U = "anchor_u";
       IconTable2.COLUMN_ANCHOR_V = "anchor_v";
       return IconTable2;
-    }(mediaTable_1$1.MediaTable)
+    })(mediaTable_1$1.MediaTable)
   );
   iconTable.IconTable = IconTable;
   var iconDao = {};
   var iconRow = {};
-  var __extends$y = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$y = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -85308,14 +85068,14 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(iconRow, "__esModule", { value: true });
   iconRow.IconRow = void 0;
   var mediaRow_1 = mediaRow;
   var imageUtils_1$2 = imageUtils;
   var IconRow = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$y(IconRow2, _super);
       function IconRow2(iconTable2, columnTypes, values2) {
         var _this = _super.call(this, iconTable2, columnTypes, values2) || this;
@@ -85606,10 +85366,10 @@ ${dataLines}`;
         this.tableIcon = tableIcon;
       };
       return IconRow2;
-    }(mediaRow_1.MediaRow)
+    })(mediaRow_1.MediaRow)
   );
   iconRow.IconRow = IconRow;
-  var __extends$x = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$x = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -85627,14 +85387,14 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(iconDao, "__esModule", { value: true });
   iconDao.IconDao = void 0;
   var mediaDao_1 = mediaDao;
   var iconRow_1 = iconRow;
   var IconDao = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$x(IconDao2, _super);
       function IconDao2(geoPackage2, table2) {
         return _super.call(this, geoPackage2, table2) || this;
@@ -85643,13 +85403,13 @@ ${dataLines}`;
         return new iconRow_1.IconRow(this.table, columnTypes, values2);
       };
       return IconDao2;
-    }(mediaDao_1.MediaDao)
+    })(mediaDao_1.MediaDao)
   );
   iconDao.IconDao = IconDao;
   var styleTable = {};
   var attributesTable = {};
   var attributesColumns = {};
-  var __extends$w = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$w = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -85667,13 +85427,13 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(attributesColumns, "__esModule", { value: true });
   attributesColumns.AttributesColumns = void 0;
   var userColumns_1$2 = userColumns;
   var AttributesColumns = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$w(AttributesColumns2, _super);
       function AttributesColumns2(tableName, columns, custom) {
         var _this = _super.call(this, tableName, columns, custom) || this;
@@ -85684,10 +85444,10 @@ ${dataLines}`;
         return new AttributesColumns2(this.getTableName(), this.getColumns(), this.isCustom());
       };
       return AttributesColumns2;
-    }(userColumns_1$2.UserColumns)
+    })(userColumns_1$2.UserColumns)
   );
   attributesColumns.AttributesColumns = AttributesColumns;
-  var __extends$v = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$v = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -85705,7 +85465,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(attributesTable, "__esModule", { value: true });
   attributesTable.AttributesTable = void 0;
   var userTable_1$2 = userTable;
@@ -85713,7 +85473,7 @@ ${dataLines}`;
   var contentsDataType_1$3 = contentsDataType;
   var AttributesTable = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$v(AttributesTable2, _super);
       function AttributesTable2(tableName, columns) {
         return _super.call(this, new attributesColumns_1.AttributesColumns(tableName, columns, false)) || this;
@@ -85726,10 +85486,10 @@ ${dataLines}`;
         return true;
       };
       return AttributesTable2;
-    }(userTable_1$2.UserTable)
+    })(userTable_1$2.UserTable)
   );
   attributesTable.AttributesTable = AttributesTable;
-  var __extends$u = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$u = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -85747,7 +85507,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(styleTable, "__esModule", { value: true });
   styleTable.StyleTable = void 0;
   var attributesTable_1$2 = attributesTable;
@@ -85756,7 +85516,7 @@ ${dataLines}`;
   var geoPackageDataType_1$5 = geoPackageDataType;
   var StyleTable = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$u(StyleTable2, _super);
       function StyleTable2() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -85833,12 +85593,12 @@ ${dataLines}`;
       StyleTable2.COLUMN_FILL_COLOR = "fill_color";
       StyleTable2.COLUMN_FILL_OPACITY = "fill_opacity";
       return StyleTable2;
-    }(attributesTable_1$2.AttributesTable)
+    })(attributesTable_1$2.AttributesTable)
   );
   styleTable.StyleTable = StyleTable;
   var styleDao = {};
   var styleRow = {};
-  var __extends$t = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$t = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -85856,13 +85616,13 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(styleRow, "__esModule", { value: true });
   styleRow.StyleRow = void 0;
   var attributesRow_1 = attributesRow;
   var StyleRow = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$t(StyleRow2, _super);
       function StyleRow2(styleTable2, columnTypes, values2) {
         var _this = _super.call(this, styleTable2, columnTypes, values2) || this;
@@ -86025,10 +85785,10 @@ ${dataLines}`;
       };
       StyleRow2.colorPattern = /^#([0-9a-fA-F]{3}){1,2}$/;
       return StyleRow2;
-    }(attributesRow_1.AttributesRow)
+    })(attributesRow_1.AttributesRow)
   );
   styleRow.StyleRow = StyleRow;
-  var __extends$s = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$s = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -86046,14 +85806,14 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(styleDao, "__esModule", { value: true });
   styleDao.StyleDao = void 0;
   var attributesDao_1$1 = attributesDao;
   var styleRow_1 = styleRow;
   var StyleDao = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$s(StyleDao2, _super);
       function StyleDao2(geoPackage2, table2) {
         return _super.call(this, geoPackage2, table2) || this;
@@ -86078,11 +85838,11 @@ ${dataLines}`;
         return new styleRow_1.StyleRow(this.table, columnTypes, values2);
       };
       return StyleDao2;
-    }(attributesDao_1$1.AttributesDao)
+    })(attributesDao_1$1.AttributesDao)
   );
   styleDao.StyleDao = StyleDao;
   var styleMappingTable = {};
-  var __extends$r = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$r = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -86100,7 +85860,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(styleMappingTable, "__esModule", { value: true });
   styleMappingTable.StyleMappingTable = void 0;
   var userMappingTable_1$2 = userMappingTable;
@@ -86108,7 +85868,7 @@ ${dataLines}`;
   var userColumn_1$2 = userColumn;
   var StyleMappingTable = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$r(StyleMappingTable2, _super);
       function StyleMappingTable2() {
         return _super !== null && _super.apply(this, arguments) || this;
@@ -86130,12 +85890,12 @@ ${dataLines}`;
       };
       StyleMappingTable2.COLUMN_GEOMETRY_TYPE_NAME = "geometry_type_name";
       return StyleMappingTable2;
-    }(userMappingTable_1$2.UserMappingTable)
+    })(userMappingTable_1$2.UserMappingTable)
   );
   styleMappingTable.StyleMappingTable = StyleMappingTable;
   var styleMappingDao = {};
   var styleMappingRow = {};
-  var __extends$q = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$q = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -86153,13 +85913,13 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(styleMappingRow, "__esModule", { value: true });
   styleMappingRow.StyleMappingRow = void 0;
   var userMappingRow_1 = userMappingRow;
   var StyleMappingRow = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$q(StyleMappingRow2, _super);
       function StyleMappingRow2(styleMappingTable2, columnTypes, values2) {
         var _this = _super.call(this, styleMappingTable2, columnTypes, values2) || this;
@@ -86176,10 +85936,10 @@ ${dataLines}`;
         this.setValueWithColumnName(this.getGeometryTypeNameColumn().name, geometryTypeName);
       };
       return StyleMappingRow2;
-    }(userMappingRow_1.UserMappingRow)
+    })(userMappingRow_1.UserMappingRow)
   );
   styleMappingRow.StyleMappingRow = StyleMappingRow;
-  var __extends$p = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$p = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -86197,7 +85957,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(styleMappingDao, "__esModule", { value: true });
   styleMappingDao.StyleMappingDao = void 0;
   var userMappingDao_1 = userMappingDao;
@@ -86207,7 +85967,7 @@ ${dataLines}`;
   var geometryType_1$3 = geometryType;
   var StyleMappingDao = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$p(StyleMappingDao2, _super);
       function StyleMappingDao2(userCustomDao2, geoPackage2, styleMappingTable2) {
         return _super.call(this, userCustomDao2, geoPackage2, styleMappingTable2 || new styleMappingTable_1$2.StyleMappingTable(userCustomDao2.table.getTableName(), userCustomDao2.table.getUserColumns().getColumns(), null)) || this;
@@ -86234,13 +85994,13 @@ ${dataLines}`;
         return this.deleteWhere(where, whereArgs);
       };
       return StyleMappingDao2;
-    }(userMappingDao_1.UserMappingDao)
+    })(userMappingDao_1.UserMappingDao)
   );
   styleMappingDao.StyleMappingDao = StyleMappingDao;
   var styleTableReader = {};
   var attributesTableReader = {};
   var attributesColumn = {};
-  var __extends$o = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$o = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -86258,7 +86018,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(attributesColumn, "__esModule", { value: true });
   attributesColumn.AttributesColumn = void 0;
   var userColumn_1$1 = userColumn;
@@ -86266,7 +86026,7 @@ ${dataLines}`;
   var userTableDefaults_1 = userTableDefaults;
   var AttributesColumn = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$o(AttributesColumn2, _super);
       function AttributesColumn2(index2, name, dataType, max, notNull, defaultValue, primaryKey, autoincrement) {
         var _this = _super.call(this, index2, name, dataType, max, notNull, defaultValue, primaryKey, autoincrement) || this;
@@ -86291,10 +86051,10 @@ ${dataLines}`;
         return new AttributesColumn2(this.index, this.name, this.dataType, this.max, this.notNull, this.defaultValue, this.primaryKey, this.autoincrement);
       };
       return AttributesColumn2;
-    }(userColumn_1$1.UserColumn)
+    })(userColumn_1$1.UserColumn)
   );
   attributesColumn.AttributesColumn = AttributesColumn;
-  var __extends$n = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$n = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -86312,7 +86072,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(attributesTableReader, "__esModule", { value: true });
   attributesTableReader.AttributesTableReader = void 0;
   var userTableReader_1$2 = userTableReader;
@@ -86320,7 +86080,7 @@ ${dataLines}`;
   var attributesColumn_1$1 = attributesColumn;
   var AttributesTableReader = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$n(AttributesTableReader2, _super);
       function AttributesTableReader2(table_name) {
         return _super.call(this, table_name) || this;
@@ -86335,10 +86095,10 @@ ${dataLines}`;
         return new attributesColumn_1$1.AttributesColumn(tableColumn2.index, tableColumn2.name, tableColumn2.dataType, tableColumn2.max, tableColumn2.notNull, tableColumn2.defaultValue, tableColumn2.primaryKey, tableColumn2.autoincrement);
       };
       return AttributesTableReader2;
-    }(userTableReader_1$2.UserTableReader)
+    })(userTableReader_1$2.UserTableReader)
   );
   attributesTableReader.AttributesTableReader = AttributesTableReader;
-  var __extends$m = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$m = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -86356,14 +86116,14 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(styleTableReader, "__esModule", { value: true });
   styleTableReader.StyleTableReader = void 0;
   var attributesTableReader_1$1 = attributesTableReader;
   var styleTable_1$1 = styleTable;
   var StyleTableReader = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$m(StyleTableReader2, _super);
       function StyleTableReader2() {
         return _super !== null && _super.apply(this, arguments) || this;
@@ -86372,12 +86132,12 @@ ${dataLines}`;
         return new styleTable_1$1.StyleTable(tableName, columns);
       };
       return StyleTableReader2;
-    }(attributesTableReader_1$1.AttributesTableReader)
+    })(attributesTableReader_1$1.AttributesTableReader)
   );
   styleTableReader.StyleTableReader = StyleTableReader;
   var featureTable = {};
   var featureColumns = {};
-  var __extends$l = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$l = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -86395,14 +86155,14 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(featureColumns, "__esModule", { value: true });
   featureColumns.FeatureColumns = void 0;
   var userColumns_1$1 = userColumns;
   var geoPackageDataType_1$2 = geoPackageDataType;
   var FeatureColumns = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$l(FeatureColumns2, _super);
       function FeatureColumns2(tableName, geometryColumn, columns, custom) {
         var _this = _super.call(this, tableName, columns, custom) || this;
@@ -86459,10 +86219,10 @@ ${dataLines}`;
         return column;
       };
       return FeatureColumns2;
-    }(userColumns_1$1.UserColumns)
+    })(userColumns_1$1.UserColumns)
   );
   featureColumns.FeatureColumns = FeatureColumns;
-  var __extends$k = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$k = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -86480,7 +86240,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(featureTable, "__esModule", { value: true });
   featureTable.FeatureTable = void 0;
   var userTable_1$1 = userTable;
@@ -86488,7 +86248,7 @@ ${dataLines}`;
   var contentsDataType_1$2 = contentsDataType;
   var FeatureTable = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$k(FeatureTable2, _super);
       function FeatureTable2(tableName, geometryColumn, columns) {
         return _super.call(this, new featureColumns_1.FeatureColumns(tableName, geometryColumn, columns, false)) || this;
@@ -86518,7 +86278,7 @@ ${dataLines}`;
         }
       };
       return FeatureTable2;
-    }(userTable_1$1.UserTable)
+    })(userTable_1$1.UserTable)
   );
   featureTable.FeatureTable = FeatureTable;
   var featureStyles = {};
@@ -86526,7 +86286,7 @@ ${dataLines}`;
   featureStyles.FeatureStyles = void 0;
   var FeatureStyles = (
     /** @class */
-    /* @__PURE__ */ function() {
+    /* @__PURE__ */ (function() {
       function FeatureStyles2(styles2, icons2) {
         if (styles2 === void 0) {
           styles2 = null;
@@ -86538,7 +86298,7 @@ ${dataLines}`;
         this.icons = icons2;
       }
       return FeatureStyles2;
-    }()
+    })()
   );
   featureStyles.FeatureStyles = FeatureStyles;
   var featureStyle = {};
@@ -86546,7 +86306,7 @@ ${dataLines}`;
   featureStyle.FeatureStyle = void 0;
   var FeatureStyle = (
     /** @class */
-    function() {
+    (function() {
       function FeatureStyle2(styleRow2, iconRow2) {
         this.styleRow = styleRow2;
         this.iconRow = iconRow2;
@@ -86597,7 +86357,7 @@ ${dataLines}`;
         return this.hasIcon() && (!this.iconRow.isTableIcon() || !this.hasStyle() || this.styleRow.isTableStyle());
       };
       return FeatureStyle2;
-    }()
+    })()
   );
   featureStyle.FeatureStyle = FeatureStyle;
   var styles = {};
@@ -86605,7 +86365,7 @@ ${dataLines}`;
   styles.Styles = void 0;
   var Styles = (
     /** @class */
-    function() {
+    (function() {
       function Styles2(tableStyles) {
         if (tableStyles === void 0) {
           tableStyles = false;
@@ -86658,7 +86418,7 @@ ${dataLines}`;
         return Array.from(this.styles.keys());
       };
       return Styles2;
-    }()
+    })()
   );
   styles.Styles = Styles;
   var icons = {};
@@ -86666,7 +86426,7 @@ ${dataLines}`;
   icons.Icons = void 0;
   var Icons = (
     /** @class */
-    function() {
+    (function() {
       function Icons2(tableIcons) {
         if (tableIcons === void 0) {
           tableIcons = false;
@@ -86719,10 +86479,10 @@ ${dataLines}`;
         return Array.from(this.icons.keys());
       };
       return Icons2;
-    }()
+    })()
   );
   icons.Icons = Icons;
-  var __extends$j = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$j = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -86740,7 +86500,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(style, "__esModule", { value: true });
   style.FeatureStyleExtension = void 0;
   var baseExtension_1$5 = baseExtension;
@@ -86762,7 +86522,7 @@ ${dataLines}`;
   var geometryType_1$2 = geometryType;
   var FeatureStyleExtension = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$j(FeatureStyleExtension2, _super);
       function FeatureStyleExtension2(geoPackage2) {
         var _this = _super.call(this, geoPackage2) || this;
@@ -87600,11 +87360,11 @@ ${dataLines}`;
       FeatureStyleExtension2.TABLE_MAPPING_ICON = FeatureStyleExtension2.EXTENSION_AUTHOR + "_icon_";
       FeatureStyleExtension2.TABLE_MAPPING_TABLE_ICON = FeatureStyleExtension2.EXTENSION_AUTHOR + "_icon_default_";
       return FeatureStyleExtension2;
-    }(baseExtension_1$5.BaseExtension)
+    })(baseExtension_1$5.BaseExtension)
   );
   style.FeatureStyleExtension = FeatureStyleExtension;
   var contents = {};
-  var __extends$i = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$i = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -87622,7 +87382,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(contents, "__esModule", { value: true });
   contents.ContentsIdExtension = void 0;
   var baseExtension_1$4 = baseExtension;
@@ -87631,7 +87391,7 @@ ${dataLines}`;
   var contentsDao_1$1 = contentsDao;
   var ContentsIdExtension = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$i(ContentsIdExtension2, _super);
       function ContentsIdExtension2(geoPackage2) {
         var _this = _super.call(this, geoPackage2) || this;
@@ -87842,7 +87602,7 @@ ${dataLines}`;
       ContentsIdExtension2.EXTENSION_NAME_NO_AUTHOR = "contents_id";
       ContentsIdExtension2.EXTENSION_DEFINITION = "http://ngageoint.github.io/GeoPackage/docs/extensions/contents-id.html";
       return ContentsIdExtension2;
-    }(baseExtension_1$4.BaseExtension)
+    })(baseExtension_1$4.BaseExtension)
   );
   contents.ContentsIdExtension = ContentsIdExtension;
   var scale = {};
@@ -87866,7 +87626,7 @@ ${dataLines}`;
   var tileScalingType_1$2 = tileScalingType;
   var TileScaling = (
     /** @class */
-    function() {
+    (function() {
       function TileScaling2() {
       }
       TileScaling2.prototype.isZoomIn = function() {
@@ -87876,10 +87636,10 @@ ${dataLines}`;
         return (this.zoom_out == null || this.zoom_out > 0) && this.scaling_type != null && this.scaling_type != tileScalingType_1$2.TileScalingType.IN;
       };
       return TileScaling2;
-    }()
+    })()
   );
   tileScaling.TileScaling = TileScaling;
-  var __extends$h = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$h = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -87897,14 +87657,14 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(tileScalingDao, "__esModule", { value: true });
   tileScalingDao.TileScalingDao = void 0;
   var dao_1$5 = dao;
   var tileScaling_1$1 = tileScaling;
   var TileScalingDao = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$h(TileScalingDao2, _super);
       function TileScalingDao2() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -87942,10 +87702,10 @@ ${dataLines}`;
       TileScalingDao2.COLUMN_ZOOM_IN = "zoom_in";
       TileScalingDao2.COLUMN_ZOOM_OUT = "zoom_out";
       return TileScalingDao2;
-    }(dao_1$5.Dao)
+    })(dao_1$5.Dao)
   );
   tileScalingDao.TileScalingDao = TileScalingDao;
-  var __extends$g = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$g = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -87963,7 +87723,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(scale, "__esModule", { value: true });
   scale.TileScalingExtension = void 0;
   var baseExtension_1$3 = baseExtension;
@@ -87971,7 +87731,7 @@ ${dataLines}`;
   var tileScalingDao_1$2 = tileScalingDao;
   var TileScalingExtension = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$g(TileScalingExtension2, _super);
       function TileScalingExtension2(geoPackage2, tableName) {
         var _this = _super.call(this, geoPackage2) || this;
@@ -88015,11 +87775,11 @@ ${dataLines}`;
       TileScalingExtension2.EXTENSION_NAME_NO_AUTHOR = "tile_scaling";
       TileScalingExtension2.EXTENSION_DEFINITION = "http://ngageoint.github.io/GeoPackage/docs/extensions/tile-scaling.html";
       return TileScalingExtension2;
-    }(baseExtension_1$3.BaseExtension)
+    })(baseExtension_1$3.BaseExtension)
   );
   scale.TileScalingExtension = TileScalingExtension;
   var featureTableReader = {};
-  var __extends$f = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$f = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -88037,7 +87797,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(featureTableReader, "__esModule", { value: true });
   featureTableReader.FeatureTableReader = void 0;
   var geometryColumnsDao_1$1 = geometryColumnsDao;
@@ -88047,7 +87807,7 @@ ${dataLines}`;
   var geometryColumns_1$1 = geometryColumns;
   var FeatureTableReader = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$f(FeatureTableReader2, _super);
       function FeatureTableReader2(tableNameOrGeometryColumns) {
         var _this = _super.call(this, tableNameOrGeometryColumns instanceof geometryColumns_1$1.GeometryColumns ? tableNameOrGeometryColumns.table_name : tableNameOrGeometryColumns) || this;
@@ -88068,7 +87828,7 @@ ${dataLines}`;
         return new featureColumn_1$1.FeatureColumn(tableColumn2.index, tableColumn2.name, tableColumn2.dataType, tableColumn2.max, tableColumn2.notNull, tableColumn2.defaultValue, tableColumn2.primaryKey, featureColumn_1$1.FeatureColumn.getGeometryTypeFromTableColumn(tableColumn2), tableColumn2.autoincrement);
       };
       return FeatureTableReader2;
-    }(userTableReader_1$1.UserTableReader)
+    })(userTableReader_1$1.UserTableReader)
   );
   featureTableReader.FeatureTableReader = FeatureTableReader;
   var dataColumnConstraintsDao = {};
@@ -88077,14 +87837,14 @@ ${dataLines}`;
   dataColumnConstraints.DataColumnConstraints = void 0;
   var DataColumnConstraints = (
     /** @class */
-    /* @__PURE__ */ function() {
+    /* @__PURE__ */ (function() {
       function DataColumnConstraints2() {
       }
       return DataColumnConstraints2;
-    }()
+    })()
   );
   dataColumnConstraints.DataColumnConstraints = DataColumnConstraints;
-  var __extends$e = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$e = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -88102,14 +87862,14 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(dataColumnConstraintsDao, "__esModule", { value: true });
   dataColumnConstraintsDao.DataColumnConstraintsDao = void 0;
   var dao_1$4 = dao;
   var dataColumnConstraints_1 = dataColumnConstraints;
   var DataColumnConstraintsDao = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$e(DataColumnConstraintsDao2, _super);
       function DataColumnConstraintsDao2() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -88158,7 +87918,7 @@ ${dataLines}`;
       DataColumnConstraintsDao2.GLOB_TYPE = "glob";
       DataColumnConstraintsDao2.RANGE_TYPE = "range";
       return DataColumnConstraintsDao2;
-    }(dao_1$4.Dao)
+    })(dao_1$4.Dao)
   );
   dataColumnConstraintsDao.DataColumnConstraintsDao = DataColumnConstraintsDao;
   var metadataDao = {};
@@ -88167,7 +87927,7 @@ ${dataLines}`;
   metadata$1.Metadata = void 0;
   var Metadata = (
     /** @class */
-    function() {
+    (function() {
       function Metadata2() {
       }
       Metadata2.prototype.getScopeInformation = function(type) {
@@ -88308,10 +88068,10 @@ ${dataLines}`;
       Metadata2.NON_GEOGRAPHIC_DATASET = "nonGeographicDataset";
       Metadata2.DIMENSION_GROUP = "dimensionGroup";
       return Metadata2;
-    }()
+    })()
   );
   metadata$1.Metadata = Metadata;
-  var __extends$d = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$d = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -88329,14 +88089,14 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(metadataDao, "__esModule", { value: true });
   metadataDao.MetadataDao = void 0;
   var dao_1$3 = dao;
   var metadata_1$1 = metadata$1;
   var MetadataDao = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$d(MetadataDao2, _super);
       function MetadataDao2() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -88362,7 +88122,7 @@ ${dataLines}`;
       MetadataDao2.COLUMN_MIME_TYPE = "mime_type";
       MetadataDao2.COLUMN_METADATA = "metadata";
       return MetadataDao2;
-    }(dao_1$3.Dao)
+    })(dao_1$3.Dao)
   );
   metadataDao.MetadataDao = MetadataDao;
   var metadataReferenceDao = {};
@@ -88371,7 +88131,7 @@ ${dataLines}`;
   metadataReference.MetadataReference = void 0;
   var MetadataReference = (
     /** @class */
-    function() {
+    (function() {
       function MetadataReference2() {
       }
       MetadataReference2.prototype.toDatabaseValue = function(columnName) {
@@ -88420,10 +88180,10 @@ ${dataLines}`;
       MetadataReference2.ROW = "row";
       MetadataReference2.ROW_COL = "row/col";
       return MetadataReference2;
-    }()
+    })()
   );
   metadataReference.MetadataReference = MetadataReference;
-  var __extends$c = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$c = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -88441,7 +88201,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(metadataReferenceDao, "__esModule", { value: true });
   metadataReferenceDao.MetadataReferenceDao = void 0;
   var dao_1$2 = dao;
@@ -88449,7 +88209,7 @@ ${dataLines}`;
   var metadataReference_1 = metadataReference;
   var MetadataReferenceDao = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$c(MetadataReferenceDao2, _super);
       function MetadataReferenceDao2() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -88508,11 +88268,11 @@ ${dataLines}`;
       MetadataReferenceDao2.COLUMN_MD_FILE_ID = "md_file_id";
       MetadataReferenceDao2.COLUMN_MD_PARENT_ID = "md_parent_id";
       return MetadataReferenceDao2;
-    }(dao_1$2.Dao)
+    })(dao_1$2.Dao)
   );
   metadataReferenceDao.MetadataReferenceDao = MetadataReferenceDao;
   var extensionDao = {};
-  var __extends$b = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$b = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -88530,7 +88290,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   var __values$5 = commonjsGlobal && commonjsGlobal.__values || function(o2) {
     var s2 = typeof Symbol === "function" && Symbol.iterator, m3 = s2 && o2[s2], i = 0;
     if (m3) return m3.call(o2);
@@ -88550,7 +88310,7 @@ ${dataLines}`;
   var tableCreator_1$3 = tableCreator;
   var ExtensionDao = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$b(ExtensionDao2, _super);
       function ExtensionDao2() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -88677,11 +88437,11 @@ ${dataLines}`;
       ExtensionDao2.COLUMN_DEFINITION = "definition";
       ExtensionDao2.COLUMN_SCOPE = "scope";
       return ExtensionDao2;
-    }(dao_1$1.Dao)
+    })(dao_1$1.Dao)
   );
   extensionDao.ExtensionDao = ExtensionDao;
   var tableIndexDao = {};
-  var __extends$a = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$a = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -88699,7 +88459,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(tableIndexDao, "__esModule", { value: true });
   tableIndexDao.TableIndexDao = void 0;
   var dao_1 = dao;
@@ -88707,7 +88467,7 @@ ${dataLines}`;
   var tableIndex_1 = tableIndex;
   var TableIndexDao = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$a(TableIndexDao2, _super);
       function TableIndexDao2() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
@@ -88731,13 +88491,13 @@ ${dataLines}`;
       TableIndexDao2.COLUMN_TABLE_NAME = "table_name";
       TableIndexDao2.COLUMN_LAST_INDEXED = "last_indexed";
       return TableIndexDao2;
-    }(dao_1.Dao)
+    })(dao_1.Dao)
   );
   tableIndexDao.TableIndexDao = TableIndexDao;
   var tileTableReader = {};
   var tileTable = {};
   var tileColumns = {};
-  var __extends$9 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$9 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -88755,14 +88515,14 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(tileColumns, "__esModule", { value: true });
   tileColumns.TileColumns = void 0;
   var geoPackageDataType_1$1 = geoPackageDataType;
   var userColumns_1 = userColumns;
   var TileColumns = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$9(TileColumns2, _super);
       function TileColumns2(tableName, columns, custom) {
         var _this = _super.call(this, tableName, columns, custom) || this;
@@ -88886,11 +88646,11 @@ ${dataLines}`;
       TileColumns2.TILE_ROW = "tile_row";
       TileColumns2.TILE_DATA = "tile_data";
       return TileColumns2;
-    }(userColumns_1.UserColumns)
+    })(userColumns_1.UserColumns)
   );
   tileColumns.TileColumns = TileColumns;
   var uniqueConstraint = {};
-  var __extends$8 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$8 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -88908,7 +88668,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   var __read = commonjsGlobal && commonjsGlobal.__read || function(o2, n2) {
     var m3 = typeof Symbol === "function" && o2[Symbol.iterator];
     if (!m3) return o2;
@@ -88941,7 +88701,7 @@ ${dataLines}`;
   var constraint_1 = constraint;
   var UniqueConstraint = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$8(UniqueConstraint2, _super);
       function UniqueConstraint2(name) {
         var columns = [];
@@ -88986,10 +88746,10 @@ ${dataLines}`;
       };
       UniqueConstraint2.UNIQUE = "UNIQUE";
       return UniqueConstraint2;
-    }(constraint_1.Constraint)
+    })(constraint_1.Constraint)
   );
   uniqueConstraint.UniqueConstraint = UniqueConstraint;
-  var __extends$7 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$7 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -89007,7 +88767,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(tileTable, "__esModule", { value: true });
   tileTable.TileTable = void 0;
   var userTable_1 = userTable;
@@ -89017,7 +88777,7 @@ ${dataLines}`;
   var contentsDataType_1$1 = contentsDataType;
   var TileTable = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$7(TileTable2, _super);
       function TileTable2(tableName, columns) {
         var _this = _super.call(this, new tileColumns_1.TileColumns(tableName, columns, false)) || this;
@@ -89088,10 +88848,10 @@ ${dataLines}`;
       TileTable2.COLUMN_TILE_ROW = tileColumns_1.TileColumns.TILE_ROW;
       TileTable2.COLUMN_TILE_DATA = tileColumns_1.TileColumns.TILE_DATA;
       return TileTable2;
-    }(userTable_1.UserTable)
+    })(userTable_1.UserTable)
   );
   tileTable.TileTable = TileTable;
-  var __extends$6 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$6 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -89109,7 +88869,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(tileTableReader, "__esModule", { value: true });
   tileTableReader.TileTableReader = void 0;
   var userTableReader_1 = userTableReader;
@@ -89117,7 +88877,7 @@ ${dataLines}`;
   var tileColumn_1 = tileColumn;
   var TileTableReader = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$6(TileTableReader2, _super);
       function TileTableReader2(tileMatrixSet2) {
         var _this = _super.call(this, tileMatrixSet2.table_name) || this;
@@ -89134,11 +88894,11 @@ ${dataLines}`;
         return new tileColumn_1.TileColumn(tableColumn2.index, tableColumn2.name, tableColumn2.dataType, tableColumn2.max, tableColumn2.notNull, tableColumn2.defaultValue, tableColumn2.primaryKey, tableColumn2.autoincrement);
       };
       return TileTableReader2;
-    }(userTableReader_1.UserTableReader)
+    })(userTableReader_1.UserTableReader)
   );
   tileTableReader.TileTableReader = TileTableReader;
   var schema = {};
-  var __extends$5 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$5 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -89156,7 +88916,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(schema, "__esModule", { value: true });
   schema.SchemaExtension = void 0;
   var baseExtension_1$2 = baseExtension;
@@ -89165,7 +88925,7 @@ ${dataLines}`;
   var dataColumnConstraintsDao_1$1 = dataColumnConstraintsDao;
   var SchemaExtension = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$5(SchemaExtension2, _super);
       function SchemaExtension2(geoPackage2) {
         return _super.call(this, geoPackage2) || this;
@@ -89195,7 +88955,7 @@ ${dataLines}`;
       SchemaExtension2.EXTENSION_NAME = SchemaExtension2.EXTENSION_SCHEMA_AUTHOR + "_" + SchemaExtension2.EXTENSION_SCHEMA_NAME_NO_AUTHOR;
       SchemaExtension2.EXTENSION_SCHEMA_DEFINITION = "http://www.geopackage.org/spec/#extension_schema";
       return SchemaExtension2;
-    }(baseExtension_1$2.BaseExtension)
+    })(baseExtension_1$2.BaseExtension)
   );
   schema.SchemaExtension = SchemaExtension;
   var geoPackageValidate = {};
@@ -89208,18 +88968,18 @@ ${dataLines}`;
   var geoPackageConstants_1$1 = geoPackageConstants;
   var GeoPackageValidationError = (
     /** @class */
-    /* @__PURE__ */ function() {
+    /* @__PURE__ */ (function() {
       function GeoPackageValidationError2(error, fatal) {
         this.error = error;
         this.fatal = fatal;
       }
       return GeoPackageValidationError2;
-    }()
+    })()
   );
   geoPackageValidate.GeoPackageValidationError = GeoPackageValidationError;
   var GeoPackageValidate = (
     /** @class */
-    function() {
+    (function() {
       function GeoPackageValidate2() {
       }
       GeoPackageValidate2.hasGeoPackageExtension = function(filePath) {
@@ -89247,7 +89007,7 @@ ${dataLines}`;
         return this.validateMinimumTables(geoPackage2).length == 0;
       };
       return GeoPackageValidate2;
-    }()
+    })()
   );
   geoPackageValidate.GeoPackageValidate = GeoPackageValidate;
   var features = {};
@@ -89443,7 +89203,7 @@ ${dataLines}`;
   var imageUtils_1$1 = imageUtils;
   var IconCache = (
     /** @class */
-    function() {
+    (function() {
       function IconCache2(cacheSize) {
         if (cacheSize === void 0) {
           cacheSize = IconCache2.DEFAULT_CACHE_SIZE;
@@ -89622,7 +89382,7 @@ ${dataLines}`;
       };
       IconCache2.DEFAULT_CACHE_SIZE = 100;
       return IconCache2;
-    }()
+    })()
   );
   iconCache.IconCache = IconCache;
   var geometryCache = {};
@@ -89630,7 +89390,7 @@ ${dataLines}`;
   geometryCache.GeometryCache = void 0;
   var GeometryCache = (
     /** @class */
-    function() {
+    (function() {
       function GeometryCache2(cacheSize) {
         if (cacheSize === void 0) {
           cacheSize = GeometryCache2.DEFAULT_GEOMETRY_CACHE_SIZE;
@@ -89697,7 +89457,7 @@ ${dataLines}`;
       };
       GeometryCache2.DEFAULT_GEOMETRY_CACHE_SIZE = 100;
       return GeometryCache2;
-    }()
+    })()
   );
   geometryCache.GeometryCache = GeometryCache;
   var featureDrawType = {};
@@ -89733,7 +89493,7 @@ ${dataLines}`;
   featurePaint.FeaturePaint = void 0;
   var FeaturePaint = (
     /** @class */
-    function() {
+    (function() {
       function FeaturePaint2() {
         this.featurePaints = {};
       }
@@ -89744,7 +89504,7 @@ ${dataLines}`;
         this.featurePaints[featureDrawType2] = paint2;
       };
       return FeaturePaint2;
-    }()
+    })()
   );
   featurePaint.FeaturePaint = FeaturePaint;
   Object.defineProperty(featurePaintCache, "__esModule", { value: true });
@@ -89752,7 +89512,7 @@ ${dataLines}`;
   var featurePaint_1 = featurePaint;
   var FeaturePaintCache = (
     /** @class */
-    function() {
+    (function() {
       function FeaturePaintCache2(cacheSize) {
         if (cacheSize === void 0) {
           cacheSize = FeaturePaintCache2.DEFAULT_STYLE_PAINT_CACHE_SIZE;
@@ -89839,7 +89599,7 @@ ${dataLines}`;
       };
       FeaturePaintCache2.DEFAULT_STYLE_PAINT_CACHE_SIZE = 100;
       return FeaturePaintCache2;
-    }()
+    })()
   );
   featurePaintCache.FeaturePaintCache = FeaturePaintCache;
   var paint = {};
@@ -89847,7 +89607,7 @@ ${dataLines}`;
   paint.Paint = void 0;
   var Paint = (
     /** @class */
-    function() {
+    (function() {
       function Paint2() {
         this._color = "#000000FF";
         this._strokeWidth = 1;
@@ -89907,7 +89667,7 @@ ${dataLines}`;
         configurable: true
       });
       return Paint2;
-    }()
+    })()
   );
   paint.Paint = Paint;
   var featureTableStyles = {};
@@ -89921,7 +89681,7 @@ ${dataLines}`;
   var geometryType_1$1 = geometryType;
   var FeatureTableStyles = (
     /** @class */
-    function() {
+    (function() {
       function FeatureTableStyles2(geoPackage2, tableNameOrTable) {
         this.geoPackage = geoPackage2;
         if (tableNameOrTable instanceof featureTable_1$1.FeatureTable) {
@@ -90370,7 +90130,7 @@ ${dataLines}`;
         return this.featureStyleExtension.getAllIconIds(this.tableName);
       };
       return FeatureTableStyles2;
-    }()
+    })()
   );
   featureTableStyles.FeatureTableStyles = FeatureTableStyles;
   var __awaiter$e = commonjsGlobal && commonjsGlobal.__awaiter || function(thisArg, _arguments, P3, generator) {
@@ -90501,7 +90261,7 @@ ${dataLines}`;
   var projectionConstants_1$4 = projectionConstants;
   var FeatureTiles = (
     /** @class */
-    function() {
+    (function() {
       function FeatureTiles2(featureDao2, tileWidth, tileHeight) {
         if (tileWidth === void 0) {
           tileWidth = 256;
@@ -91493,7 +91253,7 @@ ${dataLines}`;
         return new boundingBox_1$1.BoundingBox(minLongitude, maxLongitude, minLatitude, maxLatitude);
       };
       return FeatureTiles2;
-    }()
+    })()
   );
   features.FeatureTiles = FeatureTiles;
   var retriever = {};
@@ -94150,7 +93910,7 @@ ${dataLines}`;
   var projection_1$3 = projection;
   var TileUtilities = (
     /** @class */
-    function() {
+    (function() {
       function TileUtilities2() {
       }
       TileUtilities2.getPiecePosition = function(tilePieceBoundingBox, tileBoundingBox, height, width, projectionTo, projectionToDefinition, projectionFrom, projectionFromDefinition, tileHeightUnitsPerPixel, tileWidthUnitsPerPixel, pixelXSize, pixelYSize) {
@@ -94200,7 +93960,7 @@ ${dataLines}`;
         };
       };
       return TileUtilities2;
-    }()
+    })()
   );
   tileUtilities.TileUtilities = TileUtilities;
   var webworkify;
@@ -94289,7 +94049,7 @@ ${dataLines}`;
     };
     return tileWorker_1;
   }
-  var __createBinding$1 = commonjsGlobal && commonjsGlobal.__createBinding || (Object.create ? function(o2, m3, k, k2) {
+  var __createBinding$1 = commonjsGlobal && commonjsGlobal.__createBinding || (Object.create ? (function(o2, m3, k, k2) {
     if (k2 === void 0) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m3, k);
     if (!desc || ("get" in desc ? !m3.__esModule : desc.writable || desc.configurable)) {
@@ -94298,13 +94058,13 @@ ${dataLines}`;
       } };
     }
     Object.defineProperty(o2, k2, desc);
-  } : function(o2, m3, k, k2) {
+  }) : (function(o2, m3, k, k2) {
     if (k2 === void 0) k2 = k;
     o2[k2] = m3[k];
-  });
-  var __setModuleDefault$1 = commonjsGlobal && commonjsGlobal.__setModuleDefault || (Object.create ? function(o2, v) {
+  }));
+  var __setModuleDefault$1 = commonjsGlobal && commonjsGlobal.__setModuleDefault || (Object.create ? (function(o2, v) {
     Object.defineProperty(o2, "default", { enumerable: true, value: v });
-  } : function(o2, v) {
+  }) : function(o2, v) {
     o2["default"] = v;
   });
   var __importStar$1 = commonjsGlobal && commonjsGlobal.__importStar || function(mod) {
@@ -94428,7 +94188,7 @@ ${dataLines}`;
   var projectionConstants_1$2 = projectionConstants;
   var TileCreator = (
     /** @class */
-    function() {
+    (function() {
       function TileCreator2(width, height, tileMatrix2, tileMatrixSet2, tileBoundingBox, srs, projectionTo, projectionToDefinition, canvas2) {
         this.dispose = false;
         this.canvas = null;
@@ -94647,7 +94407,7 @@ ${dataLines}`;
         canvas_1$4.Canvas.disposeCanvas(this.tileCanvas);
       };
       return TileCreator2;
-    }()
+    })()
   );
   tileCreator.TileCreator = TileCreator;
   var __awaiter$c = commonjsGlobal && commonjsGlobal.__awaiter || function(thisArg, _arguments, P3, generator) {
@@ -94766,7 +94526,7 @@ ${dataLines}`;
   var projectionConstants_1$1 = projectionConstants;
   var GeoPackageTileRetriever = (
     /** @class */
-    function() {
+    (function() {
       function GeoPackageTileRetriever2(tileDao2, width, height) {
         this.tileDao = tileDao2;
         this.tileDao.adjustTileMatrixLengths();
@@ -95017,7 +94777,7 @@ ${dataLines}`;
         return tileMatrices;
       };
       return GeoPackageTileRetriever2;
-    }()
+    })()
   );
   retriever.GeoPackageTileRetriever = GeoPackageTileRetriever;
   var geoPackageExtensions = {};
@@ -95042,7 +94802,7 @@ ${dataLines}`;
   var contentsIdDao_1$1 = contentsIdDao;
   var NGAExtensions = (
     /** @class */
-    function() {
+    (function() {
       function NGAExtensions2() {
       }
       NGAExtensions2.deleteTableExtensions = function(geoPackage2, table2) {
@@ -95267,11 +95027,11 @@ ${dataLines}`;
         }
       };
       return NGAExtensions2;
-    }()
+    })()
   );
   ngaExtensions.NGAExtensions = NGAExtensions;
   var metadata = {};
-  var __extends$4 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$4 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -95289,7 +95049,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(metadata, "__esModule", { value: true });
   metadata.MetadataExtension = void 0;
   var baseExtension_1$1 = baseExtension;
@@ -95298,7 +95058,7 @@ ${dataLines}`;
   var metadataDao_1$1 = metadataDao;
   var MetadataExtension = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$4(MetadataExtension2, _super);
       function MetadataExtension2(geoPackage2) {
         var _this = _super.call(this, geoPackage2) || this;
@@ -95332,7 +95092,7 @@ ${dataLines}`;
       MetadataExtension2.EXTENSION_Metadata_NAME_NO_AUTHOR = "metadata";
       MetadataExtension2.EXTENSION_Metadata_DEFINITION = "http://www.geopackage.org/spec/#extension_metadata";
       return MetadataExtension2;
-    }(baseExtension_1$1.BaseExtension)
+    })(baseExtension_1$1.BaseExtension)
   );
   metadata.MetadataExtension = MetadataExtension;
   Object.defineProperty(geoPackageExtensions, "__esModule", { value: true });
@@ -95355,7 +95115,7 @@ ${dataLines}`;
   var crsWkt_1$1 = crsWkt;
   var GeoPackageExtensions = (
     /** @class */
-    function() {
+    (function() {
       function GeoPackageExtensions2() {
       }
       GeoPackageExtensions2.deleteTableExtensions = function(geoPackage2, table2) {
@@ -95556,10 +95316,10 @@ ${dataLines}`;
         }
       };
       return GeoPackageExtensions2;
-    }()
+    })()
   );
   geoPackageExtensions.GeoPackageExtensions = GeoPackageExtensions;
-  var __createBinding = commonjsGlobal && commonjsGlobal.__createBinding || (Object.create ? function(o2, m3, k, k2) {
+  var __createBinding = commonjsGlobal && commonjsGlobal.__createBinding || (Object.create ? (function(o2, m3, k, k2) {
     if (k2 === void 0) k2 = k;
     var desc = Object.getOwnPropertyDescriptor(m3, k);
     if (!desc || ("get" in desc ? !m3.__esModule : desc.writable || desc.configurable)) {
@@ -95568,13 +95328,13 @@ ${dataLines}`;
       } };
     }
     Object.defineProperty(o2, k2, desc);
-  } : function(o2, m3, k, k2) {
+  }) : (function(o2, m3, k, k2) {
     if (k2 === void 0) k2 = k;
     o2[k2] = m3[k];
-  });
-  var __setModuleDefault = commonjsGlobal && commonjsGlobal.__setModuleDefault || (Object.create ? function(o2, v) {
+  }));
+  var __setModuleDefault = commonjsGlobal && commonjsGlobal.__setModuleDefault || (Object.create ? (function(o2, v) {
     Object.defineProperty(o2, "default", { enumerable: true, value: v });
-  } : function(o2, v) {
+  }) : function(o2, v) {
     o2["default"] = v;
   });
   var __importStar = commonjsGlobal && commonjsGlobal.__importStar || function(mod) {
@@ -95768,7 +95528,7 @@ ${dataLines}`;
   var sqliteQueryBuilder_1 = sqliteQueryBuilder;
   var GeoPackage = (
     /** @class */
-    function() {
+    (function() {
       function GeoPackage2(name, path, connection) {
         this.name = name;
         this.path = path;
@@ -97568,7 +97328,7 @@ ${dataLines}`;
         return contents2;
       };
       return GeoPackage2;
-    }()
+    })()
   );
   geoPackage.GeoPackage = GeoPackage;
   var dublinCoreMetadata = {};
@@ -97577,7 +97337,7 @@ ${dataLines}`;
   var userRow_1 = userRow;
   var DublinCoreMetadata = (
     /** @class */
-    function() {
+    (function() {
       function DublinCoreMetadata2() {
       }
       DublinCoreMetadata2.hasColumn = function(table2, type) {
@@ -97635,7 +97395,7 @@ ${dataLines}`;
         row.setValueWithColumnName(column.name, value);
       };
       return DublinCoreMetadata2;
-    }()
+    })()
   );
   dublinCoreMetadata.DublinCoreMetadata = DublinCoreMetadata;
   var dublinCoreType = {};
@@ -97643,7 +97403,7 @@ ${dataLines}`;
   dublinCoreType.DublinCoreType = void 0;
   var DublinCoreType = (
     /** @class */
-    function() {
+    (function() {
       function DublinCoreType2(name, synonyms) {
         this.name = name;
         this.synonyms = synonyms;
@@ -97673,7 +97433,7 @@ ${dataLines}`;
       DublinCoreType2.SOURCE = new DublinCoreType2("source");
       DublinCoreType2.TITLE = new DublinCoreType2("title");
       return DublinCoreType2;
-    }()
+    })()
   );
   dublinCoreType.DublinCoreType = DublinCoreType;
   var api = {};
@@ -97683,7 +97443,7 @@ ${dataLines}`;
   db.Db = void 0;
   var Db = (
     /** @class */
-    function() {
+    (function() {
       function Db2() {
       }
       Db2.registerDbAdapter = function(adapter) {
@@ -97694,7 +97454,7 @@ ${dataLines}`;
       };
       Db2.adapterCreator = void 0;
       return Db2;
-    }()
+    })()
   );
   db.Db = Db;
   var __awaiter$a = commonjsGlobal && commonjsGlobal.__awaiter || function(thisArg, _arguments, P3, generator) {
@@ -97799,7 +97559,7 @@ ${dataLines}`;
   var geoPackageConstants_1 = geoPackageConstants;
   var GeoPackageConnection = (
     /** @class */
-    function() {
+    (function() {
       function GeoPackageConnection2(filePath) {
         this.filePath = filePath;
         this.registeredFunctions = [];
@@ -97946,7 +97706,7 @@ ${dataLines}`;
         });
       };
       return GeoPackageConnection2;
-    }()
+    })()
   );
   geoPackageConnection.GeoPackageConnection = GeoPackageConnection;
   var __awaiter$9 = commonjsGlobal && commonjsGlobal.__awaiter || function(thisArg, _arguments, P3, generator) {
@@ -98058,7 +97818,7 @@ ${dataLines}`;
   var fs_1$2 = __importDefault$3(import_fs.default);
   var GeoPackageAPI = (
     /** @class */
-    function() {
+    (function() {
       function GeoPackageAPI2() {
       }
       GeoPackageAPI2.open = function(gppathOrByteArray) {
@@ -98154,7 +97914,7 @@ ${dataLines}`;
       };
       GeoPackageAPI2.version = "3.0.0";
       return GeoPackageAPI2;
-    }()
+    })()
   );
   api.GeoPackageAPI = GeoPackageAPI;
   var numberFeaturesTile = {};
@@ -98163,7 +97923,7 @@ ${dataLines}`;
   customFeaturesTile.CustomFeaturesTile = void 0;
   var CustomFeaturesTile = (
     /** @class */
-    /* @__PURE__ */ function() {
+    /* @__PURE__ */ (function() {
       function CustomFeaturesTile2() {
         this.compressFormat = "png";
         this.tileBorderStrokeWidth = 2;
@@ -98172,10 +97932,10 @@ ${dataLines}`;
         this.drawUnindexedTiles = true;
       }
       return CustomFeaturesTile2;
-    }()
+    })()
   );
   customFeaturesTile.CustomFeaturesTile = CustomFeaturesTile;
-  var __extends$3 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$3 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -98193,7 +97953,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   var __awaiter$8 = commonjsGlobal && commonjsGlobal.__awaiter || function(thisArg, _arguments, P3, generator) {
     function adopt(value) {
       return value instanceof P3 ? value : new P3(function(resolve2) {
@@ -98296,7 +98056,7 @@ ${dataLines}`;
   var customFeaturesTile_1$1 = customFeaturesTile;
   var NumberFeaturesTile = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$3(NumberFeaturesTile2, _super);
       function NumberFeaturesTile2() {
         var _this = _super.call(this) || this;
@@ -98460,11 +98220,11 @@ ${dataLines}`;
         });
       };
       return NumberFeaturesTile2;
-    }(customFeaturesTile_1$1.CustomFeaturesTile)
+    })(customFeaturesTile_1$1.CustomFeaturesTile)
   );
   numberFeaturesTile.NumberFeaturesTile = NumberFeaturesTile;
   var shadedFeaturesTile = {};
-  var __extends$2 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$2 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -98482,7 +98242,7 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   var __awaiter$7 = commonjsGlobal && commonjsGlobal.__awaiter || function(thisArg, _arguments, P3, generator) {
     function adopt(value) {
       return value instanceof P3 ? value : new P3(function(resolve2) {
@@ -98585,7 +98345,7 @@ ${dataLines}`;
   var customFeaturesTile_1 = customFeaturesTile;
   var ShadedFeaturesTile = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$2(ShadedFeaturesTile2, _super);
       function ShadedFeaturesTile2() {
         return _super.call(this) || this;
@@ -98676,11 +98436,11 @@ ${dataLines}`;
         });
       };
       return ShadedFeaturesTile2;
-    }(customFeaturesTile_1.CustomFeaturesTile)
+    })(customFeaturesTile_1.CustomFeaturesTile)
   );
   shadedFeaturesTile.ShadedFeaturesTile = ShadedFeaturesTile;
   var webp = {};
-  var __extends$1 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ function() {
+  var __extends$1 = commonjsGlobal && commonjsGlobal.__extends || /* @__PURE__ */ (function() {
     var extendStatics2 = function(d3, b2) {
       extendStatics2 = Object.setPrototypeOf || { __proto__: [] } instanceof Array && function(d4, b3) {
         d4.__proto__ = b3;
@@ -98698,14 +98458,14 @@ ${dataLines}`;
       }
       d3.prototype = b2 === null ? Object.create(b2) : (__.prototype = b2.prototype, new __());
     };
-  }();
+  })();
   Object.defineProperty(webp, "__esModule", { value: true });
   webp.WebPExtension = void 0;
   var baseExtension_1 = baseExtension;
   var extension_1 = extension;
   var WebPExtension = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends$1(WebPExtension2, _super);
       function WebPExtension2(geoPackage2, tableName) {
         var _this = _super.call(this, geoPackage2) || this;
@@ -98720,7 +98480,7 @@ ${dataLines}`;
       WebPExtension2.EXTENSION_WEBP_NAME_NO_AUTHOR = "webp";
       WebPExtension2.EXTENSION_WEBP_DEFINITION = "http://www.geopackage.org/spec/#extension_webp";
       return WebPExtension2;
-    }(baseExtension_1.BaseExtension)
+    })(baseExtension_1.BaseExtension)
   );
   webp.WebPExtension = WebPExtension;
   var wkb = {};
@@ -98729,7 +98489,7 @@ ${dataLines}`;
   wkb.WKB = void 0;
   var WKB = (
     /** @class */
-    function() {
+    (function() {
       function WKB2() {
       }
       WKB2.fromName = function(name) {
@@ -98761,7 +98521,7 @@ ${dataLines}`;
       };
       WKB2.wktToEnum = (_a = {}, _a[WKB2.typeMap.wkt.Point] = WKB2.typeMap.wkb.Point, _a[WKB2.typeMap.wkt.LineString] = WKB2.typeMap.wkb.LineString, _a[WKB2.typeMap.wkt.Polygon] = WKB2.typeMap.wkb.Polygon, _a[WKB2.typeMap.wkt.MultiPoint] = WKB2.typeMap.wkb.MultiPoint, _a[WKB2.typeMap.wkt.MultiLineString] = WKB2.typeMap.wkb.MultiLineString, _a[WKB2.typeMap.wkt.MultiPolygon] = WKB2.typeMap.wkb.MultiPolygon, _a[WKB2.typeMap.wkt.GeometryCollection] = WKB2.typeMap.wkb.GeometryCollection, _a);
       return WKB2;
-    }()
+    })()
   );
   wkb.WKB = WKB;
   var sqliteAdapter = {};
@@ -98781,8 +98541,8 @@ ${dataLines}`;
       }
       return value;
     };
-    util.cppdb = Symbol();
-    util.inspect = Symbol.for("nodejs.util.inspect.custom");
+    util.cppdb = /* @__PURE__ */ Symbol();
+    util.inspect = /* @__PURE__ */ Symbol.for("nodejs.util.inspect.custom");
     return util;
   }
   var sqliteError;
@@ -99642,7 +99402,7 @@ ${dataLines}`;
   var os_1 = __importDefault$2(import_os.default);
   var SqliteAdapter = (
     /** @class */
-    function() {
+    (function() {
       function SqliteAdapter2(filePath) {
         this.filePath = filePath;
       }
@@ -99823,7 +99583,7 @@ ${dataLines}`;
         this.db.transaction(func)();
       };
       return SqliteAdapter2;
-    }()
+    })()
   );
   sqliteAdapter.SqliteAdapter = SqliteAdapter;
   var sqljsAdapter = {};
@@ -100402,10 +100162,10 @@ ${dataLines}`;
             u4 ? (0 === m3 && (m3 = na()), g2[r2] = u4(d3[r2])) : g2[r2] = d3[r2];
           }
           c4 = a2.apply(null, g2);
-          return c4 = function(v) {
+          return c4 = (function(v) {
             0 !== m3 && pa(m3);
             return "string" === b2 ? D2(v) : "boolean" === b2 ? !!v : v;
-          }(c4);
+          })(c4);
         }
         function la(a2) {
           var b2 = ba(a2.length);
@@ -102054,7 +101814,7 @@ ${dataLines}`;
   var rtree_sql_js_1 = __importDefault$1(sqlWasmExports);
   var SqljsAdapter = (
     /** @class */
-    function() {
+    (function() {
       function SqljsAdapter2(filePath) {
         this.filePath = filePath;
       }
@@ -102303,17 +102063,17 @@ ${dataLines}`;
         return filename;
       };
       return SqljsAdapter2;
-    }()
+    })()
   );
   sqljsAdapter.SqljsAdapter = SqljsAdapter;
   var canvasKitCanvasAdapter = {};
   var canvaskit = { exports: {} };
   (function(module, exports3) {
-    var CanvasKitInit = function() {
+    var CanvasKitInit = (function() {
       var _scriptDir = typeof document !== "undefined" && document.currentScript ? document.currentScript.src : void 0;
       if (typeof __filename !== "undefined")
         _scriptDir = _scriptDir || __filename;
-      return function(CanvasKitInit2) {
+      return (function(CanvasKitInit2) {
         if (CanvasKitInit2 === void 0) {
           CanvasKitInit2 = {};
         }
@@ -107757,8 +107517,8 @@ ${dataLines}`;
             t.preInit.pop()();
         se();
         return CanvasKitInit2.ready;
-      };
-    }();
+      });
+    })();
     module.exports = CanvasKitInit;
   })(canvaskit);
   var canvaskitExports = canvaskit.exports;
@@ -107767,7 +107527,7 @@ ${dataLines}`;
   canvasUtils.CanvasUtils = void 0;
   var CanvasUtils = (
     /** @class */
-    function() {
+    (function() {
       function CanvasUtils2() {
       }
       CanvasUtils2.base64toUInt8Array = function(data) {
@@ -107780,7 +107540,7 @@ ${dataLines}`;
         return out2;
       };
       return CanvasUtils2;
-    }()
+    })()
   );
   canvasUtils.CanvasUtils = CanvasUtils;
   var __awaiter$4 = commonjsGlobal && commonjsGlobal.__awaiter || function(thisArg, _arguments, P3, generator) {
@@ -107891,7 +107651,7 @@ ${dataLines}`;
   var canvasUtils_1$1 = canvasUtils;
   var CanvasKitCanvasAdapter = (
     /** @class */
-    function() {
+    (function() {
       function CanvasKitCanvasAdapter2() {
       }
       CanvasKitCanvasAdapter2.setCanvasKitWasmLocateFile = function(locateFile) {
@@ -108072,7 +107832,7 @@ ${dataLines}`;
         return path_1.default.join(__dirname, "..", "..", "canvaskit", filename);
       };
       return CanvasKitCanvasAdapter2;
-    }()
+    })()
   );
   canvasKitCanvasAdapter.CanvasKitCanvasAdapter = CanvasKitCanvasAdapter;
   var offscreenCanvasAdapter = {};
@@ -108177,7 +107937,7 @@ ${dataLines}`;
   var canvasUtils_1 = canvasUtils;
   var OffscreenCanvasAdapter = (
     /** @class */
-    function() {
+    (function() {
       function OffscreenCanvasAdapter2() {
       }
       OffscreenCanvasAdapter2.prototype.initialize = function() {
@@ -108286,7 +108046,7 @@ ${dataLines}`;
       };
       OffscreenCanvasAdapter2.initialized = false;
       return OffscreenCanvasAdapter2;
-    }()
+    })()
   );
   offscreenCanvasAdapter.OffscreenCanvasAdapter = OffscreenCanvasAdapter;
   var htmlCanvasAdapter = {};
@@ -108390,7 +108150,7 @@ ${dataLines}`;
   htmlCanvasAdapter.HtmlCanvasAdapter = void 0;
   var HtmlCanvasAdapter = (
     /** @class */
-    function() {
+    (function() {
       function HtmlCanvasAdapter2() {
       }
       HtmlCanvasAdapter2.prototype.initialize = function() {
@@ -108497,7 +108257,7 @@ ${dataLines}`;
       };
       HtmlCanvasAdapter2.initialized = false;
       return HtmlCanvasAdapter2;
-    }()
+    })()
   );
   htmlCanvasAdapter.HtmlCanvasAdapter = HtmlCanvasAdapter;
   var context = {};
@@ -108608,7 +108368,7 @@ ${dataLines}`;
   var offscreenCanvasAdapter_1 = offscreenCanvasAdapter;
   var Context = (
     /** @class */
-    function() {
+    (function() {
       function Context2() {
       }
       Context2.initializeContext = function() {
@@ -108665,7 +108425,7 @@ ${dataLines}`;
       Context2.isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined";
       Context2.isWebWorker = typeof importScripts !== "undefined";
       return Context2;
-    }()
+    })()
   );
   context.Context = Context;
   (function(exports3) {
@@ -110678,7 +110438,7 @@ ${dataLines}`;
   }
   var RepeaterOverflowError = (
     /** @class */
-    function(_super) {
+    (function(_super) {
       __extends(RepeaterOverflowError2, _super);
       function RepeaterOverflowError2(message) {
         var _this = _super.call(this, message) || this;
@@ -110697,7 +110457,7 @@ ${dataLines}`;
         return _this;
       }
       return RepeaterOverflowError2;
-    }(Error)
+    })(Error)
   );
   (function() {
     function FixedBuffer(capacity) {
@@ -111011,7 +110771,7 @@ ${dataLines}`;
   var records = /* @__PURE__ */ new WeakMap();
   var Repeater = (
     /** @class */
-    function() {
+    (function() {
       function Repeater2(executor, buffer) {
         records.set(this, {
           executor,
@@ -111093,7 +110853,7 @@ ${dataLines}`;
       Repeater2.zip = zip;
       Repeater2.latest = latest;
       return Repeater2;
-    }()
+    })()
   );
   function getIterators(values2, options) {
     var e_3, _a2;
@@ -111104,7 +110864,7 @@ ${dataLines}`;
       } else if (value2 != null && typeof value2[Symbol.iterator] === "function") {
         iters.push(value2[Symbol.iterator]());
       } else {
-        iters.push(function valueToAsyncIterator() {
+        iters.push((function valueToAsyncIterator() {
           return __asyncGenerator(this, arguments, function valueToAsyncIterator_1() {
             return __generator(this, function(_a3) {
               switch (_a3.label) {
@@ -111129,7 +110889,7 @@ ${dataLines}`;
               }
             });
           });
-        }());
+        })());
       }
     };
     try {
@@ -111594,24 +111354,24 @@ ${dataLines}`;
   }
   function buildHeader(t, r2 = 0) {
     let n2, o2 = new Builder(), i = 0;
-    t.columns && (i = Header.createColumnsVector(o2, t.columns.map((e2) => function(e3, t2) {
+    t.columns && (i = Header.createColumnsVector(o2, t.columns.map((e2) => (function(e3, t2) {
       let r3 = e3.createString(t2.name);
       return Column.startColumn(e3), Column.addName(e3, r3), Column.addType(e3, t2.type), Column.endColumn(e3);
-    }(o2, e2))));
+    })(o2, e2))));
     let f3 = o2.createString("L1");
     r2 && (Crs.startCrs(o2), Crs.addCode(o2, r2), n2 = Crs.endCrs(o2)), Header.startHeader(o2), n2 && Header.addCrs(o2, n2), Header.addFeaturesCount(o2, BigInt(t.featuresCount)), Header.addGeometryType(o2, t.geometryType), Header.addIndexNodeSize(o2, 0), i && Header.addColumns(o2, i), Header.addName(o2, f3);
     let s2 = Header.endHeader(o2);
     return o2.finishSizePrefixed(s2), o2.asUint8Array();
   }
   function mapColumn(e2, t) {
-    return { name: t, type: function(e3) {
+    return { name: t, type: (function(e3) {
       if ("boolean" == typeof e3) return ColumnType.Bool;
       if ("number" == typeof e3) return e3 % 1 == 0 ? ColumnType.Int : ColumnType.Double;
       if ("string" == typeof e3 || null === e3) return ColumnType.String;
       if (e3 instanceof Uint8Array) return ColumnType.Binary;
       if ("object" == typeof e3) return ColumnType.Json;
       throw Error(`Unknown type (value '${e3}')`);
-    }(e2[t]), title: null, description: null, width: -1, precision: -1, scale: -1, nullable: true, unique: false, primary_key: false };
+    })(e2[t]), title: null, description: null, width: -1, precision: -1, scale: -1, nullable: true, unique: false, primary_key: false };
   }
   function parseGeometry(e2) {
     let r2, n2, i = e2.coordinates, a2 = [], l2 = [], p = toGeometryType(e2.type), s2 = 0;
@@ -111639,10 +111399,10 @@ ${dataLines}`;
     return { type: t, parts: r2 };
   }
   function serialize$1(n2, i = 0) {
-    let l2 = function(e2) {
+    let l2 = (function(e2) {
       let t = e2.features[0].properties, r2 = null;
       return t && (r2 = Object.keys(t).map((e3) => mapColumn(t, e3))), { geometryType: inferGeometryType(e2.features), columns: r2, envelope: null, featuresCount: e2.features.length, indexNodeSize: 0, crs: null, title: null, description: null, metadata: null };
-    }(n2), a2 = buildHeader(l2, i), f3 = n2.features.map((e2) => buildFeature("GeometryCollection" === e2.geometry.type ? parseGC(e2.geometry) : parseGeometry(e2.geometry), e2.properties, l2)), p = f3.map((e2) => e2.length).reduce((e2, t) => e2 + t), c4 = new Uint8Array(magicbytes.length + a2.length + p);
+    })(n2), a2 = buildHeader(l2, i), f3 = n2.features.map((e2) => buildFeature("GeometryCollection" === e2.geometry.type ? parseGC(e2.geometry) : parseGeometry(e2.geometry), e2.properties, l2)), p = f3.map((e2) => e2.length).reduce((e2, t) => e2 + t), c4 = new Uint8Array(magicbytes.length + a2.length + p);
     c4.set(a2, magicbytes.length);
     let g2 = magicbytes.length + a2.length;
     for (let e2 of f3) c4.set(e2, g2), g2 += e2.length;
@@ -115088,7 +114848,6 @@ Tip: Parse the GML instead of validating, or download and validate locally.`);
 
   // index.js
   var import_h3_js = __toESM(require_h3_js(), 1);
-  var import_ngeohash = __toESM(require_main(), 1);
   var SRID_PROJ = {
     "2000": "+proj=tmerc +lat_0=0 +lon_0=-62 +k=0.9995000000000001 +x_0=400000 +y_0=0 +ellps=clrk80 +units=m +no_defs",
     "2001": "+proj=tmerc +lat_0=0 +lon_0=-62 +k=0.9995000000000001 +x_0=400000 +y_0=0 +ellps=clrk80 +towgs84=-255,-15,71,0,0,0,0 +units=m +no_defs",
@@ -119953,8 +119712,6 @@ Tip: Parse the GML instead of validating, or download and validate locally.`);
       }
     }
     return {};
-    const { folders, geojson: geojson2 } = kmlToGeojson.parse(kml);
-    return geojson2.geometry;
   };
   var parseGeoCode = async (geocode) => {
     geocode = geocode.replaceAll(/^\s+|\s+$/gu, "");
@@ -119976,7 +119733,7 @@ Tip: Parse the GML instead of validating, or download and validate locally.`);
       }
     }
     if (geocodeuri === "http://opengis.net/ont/geocode/GeoHash" || geocodeuri === "http://opengis.net/ont/geocode/GeoHash-36") {
-      let decoded = import_ngeohash.default.decode(geocode);
+      let decoded = U(geocode);
       return { "type": "Point", "coordinates": [decoded.longitude, decoded.latitude] };
     }
     return {};
@@ -120096,7 +119853,7 @@ Tip: Parse the GML instead of validating, or download and validate locally.`);
       await this.updateMap();
     }
     generateLeafletPopup(feature, layer) {
-      var popup = "<b>";
+      let popup = "<b>";
       if ("name" in feature && feature.name !== "") {
         if (feature.name.startsWith("http")) {
           popup += '<a href="' + feature.id + '" class="footeruri" target="_blank">' + feature.name + "</a></b><br/><ul>";
@@ -120232,7 +119989,7 @@ Tip: Parse the GML instead of validating, or download and validate locally.`);
       }, 100);
     }
     /**
-     * Return an element used as a icon for the plugin.
+     * Return an element used as an icon for the plugin.
      * @returns {HTMLElement}
      */
     getIcon() {
@@ -120258,8 +120015,8 @@ Tip: Parse the GML instead of validating, or download and validate locally.`);
       };
     }
   };
-  var yasgui_geo_tg_default = GeoPlugin;
-  return __toCommonJS(yasgui_geo_tg_exports);
+  var index_default = GeoPlugin;
+  return __toCommonJS(index_exports);
 })();
 /*! Bundled license information:
 
