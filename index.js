@@ -3,7 +3,6 @@ import L from 'leaflet';
 import proj4 from 'proj4';
 import { wktToGeoJSON } from 'betterknown';
 import { decode } from '@erikmichelson/open-location-code-ts';
-import { GmlParser } from '@npm9912/s-gml';
 import {toGeoJSON} from 'kml-geojson'
 import { cellsToMultiPolygon, cellToLatLng } from 'h3-js';
 import geohash from 'ngeohash';
@@ -4862,7 +4861,12 @@ const basemaps = {
 
 const parseGML = async (gml) => {
   gml=gml.replaceAll(/^\s+|\s+$/gu, '');
-  return await new GmlParser().parse(gml)
+  return "" //await new GmlParser().parse(gml)
+}
+
+const parseGPX = async (thegpx) => {
+  thegpx=thegpx.replaceAll(/^\s+|\s+$/gu, '');
+  return toGeoJSON(thegpx)
 }
 
 const parseKML = async (thekml) => {
@@ -4874,8 +4878,14 @@ const parseKML = async (thekml) => {
 }
 
 const parseWKB = async (thewkb) => {
+  thewkb=thewkb.replaceAll(/^\s+|\s+$/gu, '');
   console.log("Not yet implemented")
   return {}
+}
+
+const parseGeoYAML = async (geoyamlstr) => {
+  geoyamlstr=geoyamlstr.replaceAll(/^\s+|\s+$/gu, '');
+  //return geoyaml.load(geoyamlstr)
 }
 
 const parseDGGS = async (dggs) => {
@@ -4902,8 +4912,8 @@ const parseDGGS = async (dggs) => {
     }
   }
   return {}
-  const { folders, geojson } =kmlToGeojson.parse(kml);
-  return geojson.geometry;
+  //const { folders, geojson } =kmlToGeojson.parse(kml);
+  //return geojson.geometry;
 }
 
 const parseGeoCode = async (geocode) => {
@@ -4969,6 +4979,24 @@ const parseWKT = async (wkt) => {
   return wktToGeoJSON(wkt, { proj: proj4 });
 }
 
+const parseURILink = async (urilink) => {
+  urilink=urilink.replaceAll(/^\s+|\s+$/gu, '');
+  console.log(urilink);
+  if(urilink.includes(".")){
+    let ext=urilink.substring(urilink.lastIndexOf(".")+1)
+    console.log(ext);
+    if(ext in extensions){
+      let ld=extensions[ext]
+      let fetchres=await fetch(urilink);
+      let fetchtext=await fetchres.text();
+      return await ld(fetchtext)
+    }
+  }
+  return ""
+}
+
+
+
 /**
  * Map of supported RDF datatype URIs to converter functions.
  * Converter functions accept a string (literal value) and may return synchronously or return a Promise.
@@ -4980,11 +5008,27 @@ const conversions = {
   'http://www.opengis.net/ont/geosparql#wktLiteral': parseWKT,
   'http://www.opengis.net/ont/geosparql#wkbLiteral': parseWKB,
   'http://www.opengis.net/ont/geosparql#gmlLiteral': parseGML,
+  'http://www.opengis.net/ont/geosparql#gpxLiteral': parseGPX,
   'http://www.opengis.net/ont/geosparql#kmlLiteral': parseKML,
   'http://www.opengis.net/ont/geosparql#dggsLiteral': parseDGGS,
   'http://www.opengis.net/ont/geosparql#geoCodeLiteral': parseGeoCode,
   'http://www.openlinksw.com/schemas/virtrdf#Geometry': parseWKT,
   'http://www.opengis.net/ont/geosparql#geoJSONLiteral': JSON.parse,
+  'http://www.opengis.net/ont/geosparql#jsonfgLiteral': JSON.parse,
+  'http://www.opengis.net/ont/geosparql#geoYAMLLiteral': parseGeoYAML,
+  'http://www.w3.org/2001/XMLSchema#anyURI':parseURILink,
+};
+
+const extensions = {
+  'wkt': parseWKT,
+  'wkb': parseWKB,
+  'kml': parseKML,
+  'gpx': parseGPX,
+  'gml': parseGML,
+  'json': JSON.parse,
+  'jsonfg': JSON.parse,
+  'geojson': JSON.parse,
+  'geoyaml': JSON.parse,
 };
 
 const propertyPairs={
@@ -5063,6 +5107,58 @@ class GeoPlugin {
     await this.updateMap();
   }
 
+  generateLeafletPopup(feature, layer) {
+    let popup = '<b>';
+    if("name" in feature && feature.name!==""){
+      if(feature.name.startsWith("http")){
+        popup+="<a href=\""+feature.id+"\" class=\"footeruri\" target=\"_blank\">"+feature.name+"</a></b><br/><ul>"
+      }else{
+        popup+=feature.name+"</b><br/><ul>"
+      }
+    }else{
+      if(feature.id.startsWith("http")){
+        popup+="<a href=\""+feature.id+"\" class=\"footeruri\" target=\"_blank\">"+feature.id+"</a></b><br/><ul>"
+      }else{
+        popup+=feature.id+"</b><br/><ul>"
+      }
+    }
+    for(const prop in feature.properties){
+      popup+="<li>"
+      if(prop.startsWith("http")){
+        popup+="<a href=\""+prop+"\" target=\"_blank\">"+prop.substring(prop.lastIndexOf('/')+1)+"</a>"
+      }else{
+        popup+=prop
+      }
+      popup+=" : "
+      if(Array.isArray(feature.properties[prop]) && feature.properties[prop].length>1){
+        popup+="<ul>"
+        for(const item of feature.properties[prop]){
+          popup+="<li>"
+          if((item+"").startsWith("http")){
+            popup+="<a href=\""+item+"\" target=\"_blank\">"+item.substring(item.lastIndexOf('/')+1)+"</a>"
+          }else{
+            popup+=item
+          }
+          popup+="</li>"
+        }
+        popup+="</ul>"
+      }else if(Array.isArray(feature.properties[prop]) && (feature.properties[prop][0]+"").startsWith("http")){
+        popup+="<a href=\""+feature.properties[prop][0]+"\" target=\"_blank\">"+feature.properties[prop][0].substring(feature.properties[prop][0].lastIndexOf('/')+1)+"</a>"
+      }else if("value" in feature.properties[prop]){
+        if("datatype" in feature.properties[prop]){
+          popup+="<a href=\""+feature.properties[prop]["datatype"]+"\">"+feature.properties[prop]["value"]+"</a>"
+        }else{
+          popup+=feature.properties[prop]["value"]+""
+        }
+      }else{
+        popup+=feature.properties[prop]+""
+      }
+      popup+="</li>"
+    }
+    popup+="</ul>"
+    return popup
+  }
+
   /**
    * Build or update the Leaflet map with the current results.
    * @returns {Promise<void>}
@@ -5113,8 +5209,14 @@ class GeoPlugin {
         },
         onEachFeature: (feature, layer) => {
           const p = feature.properties;
+          const colnameLabel=colName+"Label"
+          if(colnameLabel in p){
+            feature.name=p[colnameLabel]
+          }
+          feature.id=colName
           // By default, show all properties in popup
-          const DEFAULT_CONTENT_FN = () => (Object.keys(p).map(
+          const popupval = this.generateLeafletPopup(feature,layer)
+          /*=> (Object.keys(p).map(
             (k) =>
               `<b>${k}:</b> ${
                 p[k].value.length > 120
@@ -5122,14 +5224,21 @@ class GeoPlugin {
                   : p[k].value
               }`,
           )).join('<br/>');
-          // If ?wktLabel property is present, use it as popup content
-          const popupContent = p.wktLabel?.value || DEFAULT_CONTENT_FN();
-          layer.bindPopup(popupContent);
 
-          // Add a tooltip if ?wktTooltip property is present
-          if (p.wktTooltip?.value) {
-            layer.bindTooltip(p.wktTooltip.value);
+          // If ?wktLabel property is present, use it as popup content
+          const colnameLabel=colName+"Label"
+          if(colnameLabel in p){
+            const popupContent=p[colnameLabel]
+          }else{
+            const popupContent=DEFAULT_CONTENT_FN();
           }
+           */
+          //layer.bindPopup(popupval);
+          layer.bindTooltip(popupval);
+          // Add a tooltip if ?wktTooltip property is present
+          /*if (p.wktTooltip?.value) {
+
+          }*/
         },
         style: (feature) => {
           const color = feature.properties?.wktColor?.value || DEFAULT_COLOR;
@@ -5153,6 +5262,9 @@ class GeoPlugin {
       }
     }
 
+
+
+
     // Force map to redraw
     setTimeout(() => {
       this.map.invalidateSize();
@@ -5165,7 +5277,7 @@ class GeoPlugin {
   }
 
   /**
-   * Return an element used as a icon for the plugin.
+   * Return an element used as an icon for the plugin.
    * @returns {HTMLElement}
    */
   getIcon() {

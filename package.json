@@ -37,7 +37,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "vite": "^5.0.0",
+    "vite": "^8.0.10",
     "@zazuko/yasgui": "^4.6.1"
   },
   "dependencies": {
@@ -46,10 +46,9 @@
     "proj4": "^2.20.2",
     "xmldom": "^0.6.0",
     "kml-geojson": "^2.0.3",
-    "@tmcw/togeojson": "^7.1.2",
-    "@npm9912/s-gml": "^1.7.1",
-    "h3-js": "^4.4.0",
     "ngeohash": "^0.6.3",
+    "@tmcw/togeojson": "^7.1.2",
+    "h3-js": "^4.4.0",
     "@erikmichelson/open-location-code-ts": "^1.20250411.0"
   }
 }
