@@ -25,6 +25,7 @@
 		"geoJSONURL":"xsd:anyURI GeoJSON",
 		"http://www.opengis.net/ont/geosparql#gmlLiteral":"geo:gmlLiteral",
         "http://www.opengis.net/ont/geosparql#kmlLiteral":"geo:kmlLiteral",
+		"KMLURL":"xsd:anyURI KML",
         "http://www.opengis.net/ont/geosparql#wktLiteral":"geo:wktLiteral",
 		"http://www.opengis.net/ont/geosparql#geoYAMLLiteral":"Unofficial: geo:geoYAMLLiteral",
     }
@@ -37,6 +38,15 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 SELECT ?literal
 WHERE {
   BIND("""https://gist.githubusercontent.com/wavded/1200773/raw/e122cf709898c09758aecfef349964a8d73a83f3/sample.json"""^^xsd:anyURI AS ?literal)
+}`,
+"KMLURL":`
+PREFIX my: <http://example.org/ApplicationSchema#>
+PREFIX geo: <http://www.opengis.net/ont/geosparql#>
+PREFIX geof: <http://www.opengis.net/def/function/geosparql/ext/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+SELECT ?literal
+WHERE {
+  BIND("""https://raw.githubusercontent.com/opengeospatial/ogc-geosparql/refs/heads/master/examples/moreton-island.kml"""^^xsd:anyURI AS ?literal)
 }`,
 "http://www.opengis.net/ont/geosparql#dggsLiteralH3":`PREFIX my: <http://example.org/ApplicationSchema#>
 PREFIX geo: <http://www.opengis.net/ont/geosparql#>
