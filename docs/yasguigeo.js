@@ -50622,6 +50622,12 @@ var YasguiGeoTg = (() => {
           dggs = dggs.replaceAll(" ", ",");
           dggs = dggs.replaceAll("[,", "[ ").replaceAll(",]", " ]");
         }
+        if (!dggs.includes('["')) {
+          dggs = dggs.replaceAll("[", '["');
+        }
+        if (!dggs.includes('"]')) {
+          dggs = dggs.replaceAll("]", '"]');
+        }
       }
       console.log(dggs);
       const dggsdict = JSON.parse(dggs);
