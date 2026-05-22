@@ -50613,15 +50613,17 @@ var YasguiGeoTg = (() => {
       if (dggs.includes("CELLLIST")) {
         ispoint = false;
       }
-      dggs = dggs.replaceAll("CELLLIST", "").replaceAll("CELL", "").replaceAll("(", "[").replaceAll(")", "]").replaceAll("'", '"');
-      let dggsdict = JSON.parse(dggs);
-      if (ispoint) {
-        let decoded = (0, import_h3_js.cellToLatLng)(dggsdict[0]);
-        return { "type": "Point", "coordinates": [decoded[0], decoded[1]] };
-      } else {
-        let result = (0, import_h3_js.cellsToMultiPolygon)(dggsdict);
-        return { "type": "MultiPolygon", "coordinates": result };
+      dggs = dggs.replaceAll("CELLLIST", "").replaceAll("CELL", "").replaceAll("(", "[").replaceAll(")", "]").replaceAll("'", '"').trim();
+      if (!dggs.includes(",")) {
+        dggs = dggs.replaceAll(" ", ",");
       }
+      const dggsdict = JSON.parse(dggs);
+      if (ispoint) {
+        const decoded = (0, import_h3_js.cellToLatLng)(dggsdict[0]);
+        return { "type": "Point", "coordinates": [decoded[0], decoded[1]] };
+      }
+      const result = (0, import_h3_js.cellsToMultiPolygon)(dggsdict);
+      return { "type": "MultiPolygon", "coordinates": result };
     }
     return {};
   };
