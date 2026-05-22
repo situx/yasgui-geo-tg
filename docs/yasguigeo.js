@@ -50616,6 +50616,7 @@ var YasguiGeoTg = (() => {
       dggs = dggs.replaceAll("CELLLIST", "").replaceAll("CELL", "").replaceAll("(", "[").replaceAll(")", "]").replaceAll("'", '"').trim();
       if (!dggs.includes(",")) {
         dggs = dggs.replaceAll(" ", ",");
+        dggs = dggs.replaceAll("[,", "[ ").replaceAll(",]", " ]");
       }
       const dggsdict = JSON.parse(dggs);
       if (ispoint) {
