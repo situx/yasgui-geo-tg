@@ -50617,7 +50617,7 @@ var YasguiGeoTg = (() => {
       if (!dggs.includes(",")) {
         if (!dggs.includes("'")) {
           dggs = dggs.replaceAll(" ", '","');
-          dggs = dggs.replaceAll('[",', "[ ").replaceAll(',"]', " ]");
+          dggs = dggs.replaceAll('[",', "[").replaceAll(',"]', "]");
         } else {
           dggs = dggs.replaceAll(" ", ",");
           dggs = dggs.replaceAll("[,", "[ ").replaceAll(",]", " ]");
