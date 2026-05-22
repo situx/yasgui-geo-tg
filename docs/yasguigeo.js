@@ -50615,8 +50615,13 @@ var YasguiGeoTg = (() => {
       }
       dggs = dggs.replaceAll("CELLLIST", "").replaceAll("CELL", "").replaceAll("(", "[").replaceAll(")", "]").replaceAll("'", '"').trim();
       if (!dggs.includes(",")) {
-        dggs = dggs.replaceAll(" ", ",");
-        dggs = dggs.replaceAll("[,", "[ ").replaceAll(",]", " ]");
+        if (!dggs.includes("'")) {
+          dggs = dggs.replaceAll(" ", "','");
+          dggs = dggs.replaceAll("[',", "[ ").replaceAll(",']", " ]");
+        } else {
+          dggs = dggs.replaceAll(" ", ",");
+          dggs = dggs.replaceAll("[,", "[ ").replaceAll(",]", " ]");
+        }
       }
       console.log(dggs);
       const dggsdict = JSON.parse(dggs);
