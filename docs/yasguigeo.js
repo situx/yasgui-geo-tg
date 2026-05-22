@@ -50618,6 +50618,7 @@ var YasguiGeoTg = (() => {
         dggs = dggs.replaceAll(" ", ",");
         dggs = dggs.replaceAll("[,", "[ ").replaceAll(",]", " ]");
       }
+      console.log(dggs);
       const dggsdict = JSON.parse(dggs);
       if (ispoint) {
         const decoded = (0, import_h3_js.cellToLatLng)(dggsdict[0]);
