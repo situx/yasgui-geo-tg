@@ -50864,7 +50864,9 @@ F8XNPmPzB2wT8Nrrg/SEi+cX+w4L8of+GtdSDxP1sjk5AdouU/6ZjOVru13r8K0obqI6bxvwVbdNXyhf
       for (const geometryColumn of this.geometryColumns) {
         const colName = geometryColumn.colName;
         if (!(colName in this.layerGroups)) {
-          this.layerGroups[colName] = import_leaflet2.default.featureGroup().addTo(this.map);
+          let fg = import_leaflet2.default.featureGroup();
+          this.layerGroups[colName] = fg;
+          fg.addTo(this.map);
         }
         const geojson = await createGeojson(
           this.yasr.results.json.results.bindings,
