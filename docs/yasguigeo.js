@@ -50855,14 +50855,15 @@ F8XNPmPzB2wT8Nrrg/SEi+cX+w4L8of+GtdSDxP1sjk5AdouU/6ZjOVru13r8K0obqI6bxvwVbdNXyhf
         this.control.addTo(map);
       }
       this.yasr.resultsEl.appendChild(this.container);
+      console.log(this.layerGroups);
       for (var layg of this.layerGroups) {
         layg.clearLayers();
       }
       this.layerGroups = {};
       for (const geometryColumn of this.geometryColumns) {
         const colName = geometryColumn.colName;
-        if (!colName in layerGroups) {
-          layerGroups[colName] = import_leaflet2.default.layerGroup([]);
+        if (!colName in this.layerGroups) {
+          this.layerGroups[colName] = import_leaflet2.default.layerGroup([]);
         }
         const geojson = await createGeojson(
           this.yasr.results.json.results.bindings,
@@ -50911,14 +50912,14 @@ F8XNPmPzB2wT8Nrrg/SEi+cX+w4L8of+GtdSDxP1sjk5AdouU/6ZjOVru13r8K0obqI6bxvwVbdNXyhf
         });
         layerGroups[colName].addLayer(newLayers);
         if (geojson.features && geojson.features.length > 0) {
-          this.map.fitBounds(layerGroups[colName].getBounds(), {
+          this.map.fitBounds(this.layerGroups[colName].getBounds(), {
             padding: [20, 20],
             maxZoom: 14
           });
         }
       }
-      for (var col in layerGroups) {
-        this.control.addOverlay(layerGroups[col], col);
+      for (var col in this.layerGroups) {
+        this.control.addOverlay(this.layerGroups[col], col);
       }
       setTimeout(() => {
         this.map.invalidateSize();
