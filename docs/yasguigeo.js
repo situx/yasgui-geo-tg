@@ -50863,6 +50863,7 @@ F8XNPmPzB2wT8Nrrg/SEi+cX+w4L8of+GtdSDxP1sjk5AdouU/6ZjOVru13r8K0obqI6bxvwVbdNXyhf
         }
       }
       this.layerGroups = {};
+      this.fgl = import_leaflet2.default.featureGroup();
       for (const geometryColumn of this.geometryColumns) {
         const colName = geometryColumn.colName;
         if (!(colName in this.layerGroups)) {
