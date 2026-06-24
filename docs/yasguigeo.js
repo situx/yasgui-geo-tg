@@ -50914,6 +50914,7 @@ F8XNPmPzB2wT8Nrrg/SEi+cX+w4L8of+GtdSDxP1sjk5AdouU/6ZjOVru13r8K0obqI6bxvwVbdNXyhf
           }
         });
         this.layerGroups[colName].addLayer(newLayers);
+        console.log(this.layerGroups);
         if (geojson.features && geojson.features.length > 0) {
           this.map.fitBounds(this.layerGroups[colName].getBounds(), {
             padding: [20, 20],
