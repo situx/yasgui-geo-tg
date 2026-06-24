@@ -50913,7 +50913,7 @@ F8XNPmPzB2wT8Nrrg/SEi+cX+w4L8of+GtdSDxP1sjk5AdouU/6ZjOVru13r8K0obqI6bxvwVbdNXyhf
             };
           }
         });
-        layerGroups[colName].addLayer(newLayers);
+        this.layerGroups[colName].addLayer(newLayers);
         if (geojson.features && geojson.features.length > 0) {
           this.map.fitBounds(this.layerGroups[colName].getBounds(), {
             padding: [20, 20],
@@ -50921,7 +50921,7 @@ F8XNPmPzB2wT8Nrrg/SEi+cX+w4L8of+GtdSDxP1sjk5AdouU/6ZjOVru13r8K0obqI6bxvwVbdNXyhf
           });
         }
       }
-      for (var col in this.layerGroups) {
+      for (const col in Object.keys(this.layerGroups)) {
         this.control.addOverlay(this.layerGroups[col], col);
       }
       setTimeout(() => {
