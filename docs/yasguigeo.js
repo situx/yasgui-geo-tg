@@ -50856,7 +50856,7 @@ F8XNPmPzB2wT8Nrrg/SEi+cX+w4L8of+GtdSDxP1sjk5AdouU/6ZjOVru13r8K0obqI6bxvwVbdNXyhf
       this.yasr.resultsEl.appendChild(this.container);
       console.log(this.layerGroups);
       if (Object.keys(this.layerGroups).length > 0) {
-        for (const layg in Object.keys(this.layerGroups)) {
+        for (const layg of Object.keys(this.layerGroups)) {
           console.log(layg);
           this.layerGroups[layg].clearLayers();
         }
