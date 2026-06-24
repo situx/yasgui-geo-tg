@@ -50849,6 +50849,7 @@ F8XNPmPzB2wT8Nrrg/SEi+cX+w4L8of+GtdSDxP1sjk5AdouU/6ZjOVru13r8K0obqI6bxvwVbdNXyhf
         basemaps.openStreetMap.addTo(map);
         this.control = import_leaflet2.default.control.layers(basemaps, {});
         this.layerGroups = {};
+        this.fgl = import_leaflet2.default.featureGroup();
         this.map = map;
         this.control.addTo(map);
       }
@@ -50915,6 +50916,7 @@ F8XNPmPzB2wT8Nrrg/SEi+cX+w4L8of+GtdSDxP1sjk5AdouU/6ZjOVru13r8K0obqI6bxvwVbdNXyhf
           }
         });
         this.layerGroups[colName].addLayer(newLayers);
+        this.fgl.addLayer(newLayers);
         console.log(this.layerGroups);
         if (geojson.features && geojson.features.length > 0) {
           this.map.fitBounds(this.layerGroups[colName].getBounds(), {
@@ -50925,7 +50927,7 @@ F8XNPmPzB2wT8Nrrg/SEi+cX+w4L8of+GtdSDxP1sjk5AdouU/6ZjOVru13r8K0obqI6bxvwVbdNXyhf
       }
       setTimeout(() => {
         this.map.invalidateSize();
-        this.map.fitBounds(this.lg.getBounds(), {
+        this.map.fitBounds(this.fgl.getBounds(), {
           padding: [20, 20],
           maxZoom: 14
         });
