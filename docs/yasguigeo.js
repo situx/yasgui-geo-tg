@@ -50923,6 +50923,7 @@ F8XNPmPzB2wT8Nrrg/SEi+cX+w4L8of+GtdSDxP1sjk5AdouU/6ZjOVru13r8K0obqI6bxvwVbdNXyhf
         }
       }
       for (const col in Object.keys(this.layerGroups)) {
+        console.log(this.layerGroups[col]);
         this.control.addOverlay(this.layerGroups[col], col);
       }
       setTimeout(() => {
