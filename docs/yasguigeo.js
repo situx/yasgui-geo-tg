@@ -50858,6 +50858,7 @@ F8XNPmPzB2wT8Nrrg/SEi+cX+w4L8of+GtdSDxP1sjk5AdouU/6ZjOVru13r8K0obqI6bxvwVbdNXyhf
       if (Object.keys(this.layerGroups).length > 0) {
         for (const layg of Object.keys(this.layerGroups)) {
           console.log(layg);
+          this.control.removeLayer(this.layerGroups[layg]);
           this.layerGroups[layg].clearLayers();
         }
       }
