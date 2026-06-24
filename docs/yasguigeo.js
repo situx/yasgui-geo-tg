@@ -50850,7 +50850,6 @@ F8XNPmPzB2wT8Nrrg/SEi+cX+w4L8of+GtdSDxP1sjk5AdouU/6ZjOVru13r8K0obqI6bxvwVbdNXyhf
         this.control = import_leaflet2.default.control.layers(basemaps, {});
         this.layerGroups = {};
         this.map = map2;
-        this.lg = lg;
         this.control.addTo(map2);
       }
       this.yasr.resultsEl.appendChild(this.container);
