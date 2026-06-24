@@ -50856,8 +50856,11 @@ F8XNPmPzB2wT8Nrrg/SEi+cX+w4L8of+GtdSDxP1sjk5AdouU/6ZjOVru13r8K0obqI6bxvwVbdNXyhf
       }
       this.yasr.resultsEl.appendChild(this.container);
       console.log(this.layerGroups);
-      for (var layg of this.layerGroups) {
-        layg.clearLayers();
+      if (this.layerGroups !== {}) {
+        for (const layg of this.layerGroups) {
+          console.log(layg);
+          layg.clearLayers();
+        }
       }
       this.layerGroups = {};
       for (const geometryColumn of this.geometryColumns) {
