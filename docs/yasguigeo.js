@@ -3219,13 +3219,13 @@ var YasguiGeoTg = (() => {
           // @method setPosition(position: string): this
           // Sets the position of the control.
           setPosition: function(position) {
-            var map = this._map;
-            if (map) {
-              map.removeControl(this);
+            var map2 = this._map;
+            if (map2) {
+              map2.removeControl(this);
             }
             this.options.position = position;
-            if (map) {
-              map.addControl(this);
+            if (map2) {
+              map2.addControl(this);
             }
             return this;
           },
@@ -3236,10 +3236,10 @@ var YasguiGeoTg = (() => {
           },
           // @method addTo(map: Map): this
           // Adds the control to the given map.
-          addTo: function(map) {
+          addTo: function(map2) {
             this.remove();
-            this._map = map;
-            var container = this._container = this.onAdd(map), pos = this.getPosition(), corner = map._controlCorners[pos];
+            this._map = map2;
+            var container = this._container = this.onAdd(map2), pos = this.getPosition(), corner = map2._controlCorners[pos];
             addClass(container, "leaflet-control");
             if (pos.indexOf("bottom") !== -1) {
               corner.insertBefore(container, corner.firstChild);
@@ -3347,18 +3347,18 @@ var YasguiGeoTg = (() => {
               this._addLayer(overlays[i], i, true);
             }
           },
-          onAdd: function(map) {
+          onAdd: function(map2) {
             this._initLayout();
             this._update();
-            this._map = map;
-            map.on("zoomend", this._checkDisabledLayers, this);
+            this._map = map2;
+            map2.on("zoomend", this._checkDisabledLayers, this);
             for (var i = 0; i < this._layers.length; i++) {
               this._layers[i].layer.on("add remove", this._onLayerChange, this);
             }
             return this._container;
           },
-          addTo: function(map) {
-            Control.prototype.addTo.call(this, map);
+          addTo: function(map2) {
+            Control.prototype.addTo.call(this, map2);
             return this._expandIfNotCollapsed();
           },
           onRemove: function() {
@@ -3613,7 +3613,7 @@ var YasguiGeoTg = (() => {
             // The title set on the 'zoom out' button.
             zoomOutTitle: "Zoom out"
           },
-          onAdd: function(map) {
+          onAdd: function(map2) {
             var zoomName = "leaflet-control-zoom", container = create$1("div", zoomName + " leaflet-bar"), options = this.options;
             this._zoomInButton = this._createButton(
               options.zoomInText,
@@ -3630,11 +3630,11 @@ var YasguiGeoTg = (() => {
               this._zoomOut
             );
             this._updateDisabled();
-            map.on("zoomend zoomlevelschange", this._updateDisabled, this);
+            map2.on("zoomend zoomlevelschange", this._updateDisabled, this);
             return container;
           },
-          onRemove: function(map) {
-            map.off("zoomend zoomlevelschange", this._updateDisabled, this);
+          onRemove: function(map2) {
+            map2.off("zoomend zoomlevelschange", this._updateDisabled, this);
           },
           disable: function() {
             this._disabled = true;
@@ -3670,16 +3670,16 @@ var YasguiGeoTg = (() => {
             return link;
           },
           _updateDisabled: function() {
-            var map = this._map, className = "leaflet-disabled";
+            var map2 = this._map, className = "leaflet-disabled";
             removeClass(this._zoomInButton, className);
             removeClass(this._zoomOutButton, className);
             this._zoomInButton.setAttribute("aria-disabled", "false");
             this._zoomOutButton.setAttribute("aria-disabled", "false");
-            if (this._disabled || map._zoom === map.getMinZoom()) {
+            if (this._disabled || map2._zoom === map2.getMinZoom()) {
               addClass(this._zoomOutButton, className);
               this._zoomOutButton.setAttribute("aria-disabled", "true");
             }
-            if (this._disabled || map._zoom === map.getMaxZoom()) {
+            if (this._disabled || map2._zoom === map2.getMaxZoom()) {
               addClass(this._zoomInButton, className);
               this._zoomInButton.setAttribute("aria-disabled", "true");
             }
@@ -3714,15 +3714,15 @@ var YasguiGeoTg = (() => {
             // @option updateWhenIdle: Boolean = false
             // If `true`, the control is updated on [`moveend`](#map-moveend), otherwise it's always up-to-date (updated on [`move`](#map-move)).
           },
-          onAdd: function(map) {
+          onAdd: function(map2) {
             var className = "leaflet-control-scale", container = create$1("div", className), options = this.options;
             this._addScales(options, className + "-line", container);
-            map.on(options.updateWhenIdle ? "moveend" : "move", this._update, this);
-            map.whenReady(this._update, this);
+            map2.on(options.updateWhenIdle ? "moveend" : "move", this._update, this);
+            map2.whenReady(this._update, this);
             return container;
           },
-          onRemove: function(map) {
-            map.off(this.options.updateWhenIdle ? "moveend" : "move", this._update, this);
+          onRemove: function(map2) {
+            map2.off(this.options.updateWhenIdle ? "moveend" : "move", this._update, this);
           },
           _addScales: function(options, className, container) {
             if (options.metric) {
@@ -3733,10 +3733,10 @@ var YasguiGeoTg = (() => {
             }
           },
           _update: function() {
-            var map = this._map, y3 = map.getSize().y / 2;
-            var maxMeters = map.distance(
-              map.containerPointToLatLng([0, y3]),
-              map.containerPointToLatLng([this.options.maxWidth, y3])
+            var map2 = this._map, y3 = map2.getSize().y / 2;
+            var maxMeters = map2.distance(
+              map2.containerPointToLatLng([0, y3]),
+              map2.containerPointToLatLng([this.options.maxWidth, y3])
             );
             this._updateScales(maxMeters);
           },
@@ -3790,21 +3790,21 @@ var YasguiGeoTg = (() => {
             setOptions(this, options);
             this._attributions = {};
           },
-          onAdd: function(map) {
-            map.attributionControl = this;
+          onAdd: function(map2) {
+            map2.attributionControl = this;
             this._container = create$1("div", "leaflet-control-attribution");
             disableClickPropagation(this._container);
-            for (var i in map._layers) {
-              if (map._layers[i].getAttribution) {
-                this.addAttribution(map._layers[i].getAttribution());
+            for (var i in map2._layers) {
+              if (map2._layers[i].getAttribution) {
+                this.addAttribution(map2._layers[i].getAttribution());
               }
             }
             this._update();
-            map.on("layeradd", this._addAttribution, this);
+            map2.on("layeradd", this._addAttribution, this);
             return this._container;
           },
-          onRemove: function(map) {
-            map.off("layeradd", this._addAttribution, this);
+          onRemove: function(map2) {
+            map2.off("layeradd", this._addAttribution, this);
           },
           _addAttribution: function(ev) {
             if (ev.layer.getAttribution) {
@@ -3886,8 +3886,8 @@ var YasguiGeoTg = (() => {
         control.scale = scale;
         control.attribution = attribution;
         var Handler = Class.extend({
-          initialize: function(map) {
-            this._map = map;
+          initialize: function(map2) {
+            this._map = map2;
           },
           // @method enable(): this
           // Enables the handler
@@ -3921,8 +3921,8 @@ var YasguiGeoTg = (() => {
           // @method removeHooks()
           // Called when the handler is disabled, should remove the event hooks added previously.
         });
-        Handler.addTo = function(map, name) {
-          map.addHandler(name, this);
+        Handler.addTo = function(map2, name) {
+          map2.addHandler(name, this);
           return this;
         };
         var Mixin = { Events };
@@ -4432,8 +4432,8 @@ var YasguiGeoTg = (() => {
            * @method addTo(map: Map|LayerGroup): this
            * Adds the layer to the given map or layer group.
            */
-          addTo: function(map) {
-            map.addLayer(this);
+          addTo: function(map2) {
+            map2.addLayer(this);
             return this;
           },
           // @method remove: this
@@ -4472,22 +4472,22 @@ var YasguiGeoTg = (() => {
             return this.options.attribution;
           },
           _layerAdd: function(e) {
-            var map = e.target;
-            if (!map.hasLayer(this)) {
+            var map2 = e.target;
+            if (!map2.hasLayer(this)) {
               return;
             }
-            this._map = map;
-            this._zoomAnimated = map._zoomAnimated;
+            this._map = map2;
+            this._zoomAnimated = map2._zoomAnimated;
             if (this.getEvents) {
               var events = this.getEvents();
-              map.on(events, this);
+              map2.on(events, this);
               this.once("remove", function() {
-                map.off(events, this);
+                map2.off(events, this);
               }, this);
             }
-            this.onAdd(map);
+            this.onAdd(map2);
             this.fire("add");
-            map.fire("layeradd", { layer: this });
+            map2.fire("layeradd", { layer: this });
           }
         });
         Map2.include({
@@ -4647,11 +4647,11 @@ var YasguiGeoTg = (() => {
             }
             return this;
           },
-          onAdd: function(map) {
-            this.eachLayer(map.addLayer, map);
+          onAdd: function(map2) {
+            this.eachLayer(map2.addLayer, map2);
           },
-          onRemove: function(map) {
-            this.eachLayer(map.removeLayer, map);
+          onRemove: function(map2) {
+            this.eachLayer(map2.removeLayer, map2);
           },
           // @method eachLayer(fn: Function, context?: Object): this
           // Iterates over the layers of the group, optionally specifying context of the iterator function.
@@ -4920,7 +4920,7 @@ var YasguiGeoTg = (() => {
             return this._draggable && this._draggable._moved;
           },
           _adjustPan: function(e) {
-            var marker2 = this._marker, map = marker2._map, speed = this._marker.options.autoPanSpeed, padding = this._marker.options.autoPanPadding, iconPos = getPosition(marker2._icon), bounds = map.getPixelBounds(), origin = map.getPixelOrigin();
+            var marker2 = this._marker, map2 = marker2._map, speed = this._marker.options.autoPanSpeed, padding = this._marker.options.autoPanPadding, iconPos = getPosition(marker2._icon), bounds = map2.getPixelBounds(), origin = map2.getPixelOrigin();
             var panBounds = toBounds(
               bounds.min._subtract(origin).add(padding),
               bounds.max._subtract(origin).subtract(padding)
@@ -4930,7 +4930,7 @@ var YasguiGeoTg = (() => {
                 (Math.max(panBounds.max.x, iconPos.x) - panBounds.max.x) / (bounds.max.x - panBounds.max.x) - (Math.min(panBounds.min.x, iconPos.x) - panBounds.min.x) / (bounds.min.x - panBounds.min.x),
                 (Math.max(panBounds.max.y, iconPos.y) - panBounds.max.y) / (bounds.max.y - panBounds.max.y) - (Math.min(panBounds.min.y, iconPos.y) - panBounds.min.y) / (bounds.min.y - panBounds.min.y)
               ).multiplyBy(speed);
-              map.panBy(movement, { animate: false });
+              map2.panBy(movement, { animate: false });
               this._draggable._newPos._add(movement);
               this._draggable._startPos._add(movement);
               setPosition(marker2._icon, this._draggable._newPos);
@@ -5037,22 +5037,22 @@ var YasguiGeoTg = (() => {
             setOptions(this, options);
             this._latlng = toLatLng(latlng);
           },
-          onAdd: function(map) {
-            this._zoomAnimated = this._zoomAnimated && map.options.markerZoomAnimation;
+          onAdd: function(map2) {
+            this._zoomAnimated = this._zoomAnimated && map2.options.markerZoomAnimation;
             if (this._zoomAnimated) {
-              map.on("zoomanim", this._animateZoom, this);
+              map2.on("zoomanim", this._animateZoom, this);
             }
             this._initIcon();
             this.update();
           },
-          onRemove: function(map) {
+          onRemove: function(map2) {
             if (this.dragging && this.dragging.enabled()) {
               this.options.draggable = true;
               this.dragging.removeHooks();
             }
             delete this.dragging;
             if (this._zoomAnimated) {
-              map.off("zoomanim", this._animateZoom, this);
+              map2.off("zoomanim", this._animateZoom, this);
             }
             this._removeIcon();
             this._removeShadow();
@@ -5243,14 +5243,14 @@ var YasguiGeoTg = (() => {
             this._updateZIndex(0);
           },
           _panOnFocus: function() {
-            var map = this._map;
-            if (!map) {
+            var map2 = this._map;
+            if (!map2) {
               return;
             }
             var iconOpts = this.options.icon.options;
             var size = iconOpts.iconSize ? toPoint(iconOpts.iconSize) : toPoint(0, 0);
             var anchor = iconOpts.iconAnchor ? toPoint(iconOpts.iconAnchor) : toPoint(0, 0);
-            map.panInside(this._latlng, {
+            map2.panInside(this._latlng, {
               paddingTopLeft: anchor,
               paddingBottomRight: size.subtract(anchor)
             });
@@ -5313,8 +5313,8 @@ var YasguiGeoTg = (() => {
             // (unless [`L.DomEvent.stopPropagation`](#domevent-stoppropagation) is used).
             bubblingMouseEvents: true
           },
-          beforeAdd: function(map) {
-            this._renderer = map.getRenderer(this);
+          beforeAdd: function(map2) {
+            this._renderer = map2.getRenderer(this);
           },
           onAdd: function() {
             this._renderer._initPath(this);
@@ -5476,19 +5476,19 @@ var YasguiGeoTg = (() => {
           },
           setStyle: Path.prototype.setStyle,
           _project: function() {
-            var lng = this._latlng.lng, lat = this._latlng.lat, map = this._map, crs = map.options.crs;
+            var lng = this._latlng.lng, lat = this._latlng.lat, map2 = this._map, crs = map2.options.crs;
             if (crs.distance === Earth.distance) {
-              var d3 = Math.PI / 180, latR = this._mRadius / Earth.R / d3, top = map.project([lat + latR, lng]), bottom = map.project([lat - latR, lng]), p = top.add(bottom).divideBy(2), lat2 = map.unproject(p).lat, lngR = Math.acos((Math.cos(latR * d3) - Math.sin(lat * d3) * Math.sin(lat2 * d3)) / (Math.cos(lat * d3) * Math.cos(lat2 * d3))) / d3;
+              var d3 = Math.PI / 180, latR = this._mRadius / Earth.R / d3, top = map2.project([lat + latR, lng]), bottom = map2.project([lat - latR, lng]), p = top.add(bottom).divideBy(2), lat2 = map2.unproject(p).lat, lngR = Math.acos((Math.cos(latR * d3) - Math.sin(lat * d3) * Math.sin(lat2 * d3)) / (Math.cos(lat * d3) * Math.cos(lat2 * d3))) / d3;
               if (isNaN(lngR) || lngR === 0) {
                 lngR = latR / Math.cos(Math.PI / 180 * lat);
               }
-              this._point = p.subtract(map.getPixelOrigin());
-              this._radius = isNaN(lngR) ? 0 : p.x - map.project([lat2, lng - lngR]).x;
+              this._point = p.subtract(map2.getPixelOrigin());
+              this._radius = isNaN(lngR) ? 0 : p.x - map2.project([lat2, lng - lngR]).x;
               this._radiusY = p.y - top.y;
             } else {
               var latlng2 = crs.unproject(crs.project(this._latlng).subtract([this._mRadius, 0]));
-              this._point = map.latLngToLayerPoint(this._latlng);
-              this._radius = this._point.x - map.latLngToLayerPoint(latlng2).x;
+              this._point = map2.latLngToLayerPoint(this._latlng);
+              this._radius = this._point.x - map2.latLngToLayerPoint(latlng2).x;
             }
             this._updateBounds();
           }
@@ -6376,10 +6376,10 @@ var YasguiGeoTg = (() => {
           // @method openOn(map: Map): this
           // Adds the overlay to the map.
           // Alternative to `map.openPopup(popup)`/`.openTooltip(tooltip)`.
-          openOn: function(map) {
-            map = arguments.length ? map : this._source._map;
-            if (!map.hasLayer(this)) {
-              map.addLayer(this);
+          openOn: function(map2) {
+            map2 = arguments.length ? map2 : this._source._map;
+            if (!map2.hasLayer(this)) {
+              map2.addLayer(this);
             }
             return this;
           },
@@ -6411,18 +6411,18 @@ var YasguiGeoTg = (() => {
             }
             return this;
           },
-          onAdd: function(map) {
-            this._zoomAnimated = map._zoomAnimated;
+          onAdd: function(map2) {
+            this._zoomAnimated = map2._zoomAnimated;
             if (!this._container) {
               this._initLayout();
             }
-            if (map._fadeAnimated) {
+            if (map2._fadeAnimated) {
               setOpacity(this._container, 0);
             }
             clearTimeout(this._removeTimeout);
             this.getPane().appendChild(this._container);
             this.update();
-            if (map._fadeAnimated) {
+            if (map2._fadeAnimated) {
               setOpacity(this._container, 1);
             }
             this.bringToFront();
@@ -6431,8 +6431,8 @@ var YasguiGeoTg = (() => {
               this.addInteractiveTarget(this._container);
             }
           },
-          onRemove: function(map) {
-            if (map._fadeAnimated) {
+          onRemove: function(map2) {
+            if (map2._fadeAnimated) {
               setOpacity(this._container, 0);
               this._removeTimeout = setTimeout(bind(remove, void 0, this._container), 200);
             } else {
@@ -6680,17 +6680,17 @@ var YasguiGeoTg = (() => {
           // @method openOn(map: Map): this
           // Alternative to `map.openPopup(popup)`.
           // Adds the popup to the map and closes the previous one.
-          openOn: function(map) {
-            map = arguments.length ? map : this._source._map;
-            if (!map.hasLayer(this) && map._popup && map._popup.options.autoClose) {
-              map.removeLayer(map._popup);
+          openOn: function(map2) {
+            map2 = arguments.length ? map2 : this._source._map;
+            if (!map2.hasLayer(this) && map2._popup && map2._popup.options.autoClose) {
+              map2.removeLayer(map2._popup);
             }
-            map._popup = this;
-            return DivOverlay.prototype.openOn.call(this, map);
+            map2._popup = this;
+            return DivOverlay.prototype.openOn.call(this, map2);
           },
-          onAdd: function(map) {
-            DivOverlay.prototype.onAdd.call(this, map);
-            map.fire("popupopen", { popup: this });
+          onAdd: function(map2) {
+            DivOverlay.prototype.onAdd.call(this, map2);
+            map2.fire("popupopen", { popup: this });
             if (this._source) {
               this._source.fire("popupopen", { popup: this }, true);
               if (!(this._source instanceof Path)) {
@@ -6698,9 +6698,9 @@ var YasguiGeoTg = (() => {
               }
             }
           },
-          onRemove: function(map) {
-            DivOverlay.prototype.onRemove.call(this, map);
-            map.fire("popupclose", { popup: this });
+          onRemove: function(map2) {
+            DivOverlay.prototype.onRemove.call(this, map2);
+            map2.fire("popupclose", { popup: this });
             if (this._source) {
               this._source.fire("popupclose", { popup: this }, true);
               if (!(this._source instanceof Path)) {
@@ -6776,9 +6776,9 @@ var YasguiGeoTg = (() => {
               this._autopanning = false;
               return;
             }
-            var map = this._map, marginBottom = parseInt(getStyle(this._container, "marginBottom"), 10) || 0, containerHeight = this._container.offsetHeight + marginBottom, containerWidth = this._containerWidth, layerPos = new Point(this._containerLeft, -containerHeight - this._containerBottom);
+            var map2 = this._map, marginBottom = parseInt(getStyle(this._container, "marginBottom"), 10) || 0, containerHeight = this._container.offsetHeight + marginBottom, containerWidth = this._containerWidth, layerPos = new Point(this._containerLeft, -containerHeight - this._containerBottom);
             layerPos._add(getPosition(this._container));
-            var containerPos = map.layerPointToContainerPoint(layerPos), padding = toPoint(this.options.autoPanPadding), paddingTL = toPoint(this.options.autoPanPaddingTopLeft || padding), paddingBR = toPoint(this.options.autoPanPaddingBottomRight || padding), size = map.getSize(), dx = 0, dy = 0;
+            var containerPos = map2.layerPointToContainerPoint(layerPos), padding = toPoint(this.options.autoPanPadding), paddingTL = toPoint(this.options.autoPanPaddingTopLeft || padding), paddingBR = toPoint(this.options.autoPanPaddingBottomRight || padding), size = map2.getSize(), dx = 0, dy = 0;
             if (containerPos.x + containerWidth + paddingBR.x > size.x) {
               dx = containerPos.x + containerWidth - size.x + paddingBR.x;
             }
@@ -6795,7 +6795,7 @@ var YasguiGeoTg = (() => {
               if (this.options.keepInView) {
                 this._autopanning = true;
               }
-              map.fire("autopanstart").panBy([dx, dy]);
+              map2.fire("autopanstart").panBy([dx, dy]);
             }
           },
           _getAnchor: function() {
@@ -6960,18 +6960,18 @@ var YasguiGeoTg = (() => {
             // Tooltip container opacity.
             opacity: 0.9
           },
-          onAdd: function(map) {
-            DivOverlay.prototype.onAdd.call(this, map);
+          onAdd: function(map2) {
+            DivOverlay.prototype.onAdd.call(this, map2);
             this.setOpacity(this.options.opacity);
-            map.fire("tooltipopen", { tooltip: this });
+            map2.fire("tooltipopen", { tooltip: this });
             if (this._source) {
               this.addEventParent(this._source);
               this._source.fire("tooltipopen", { tooltip: this }, true);
             }
           },
-          onRemove: function(map) {
-            DivOverlay.prototype.onRemove.call(this, map);
-            map.fire("tooltipclose", { tooltip: this });
+          onRemove: function(map2) {
+            DivOverlay.prototype.onRemove.call(this, map2);
+            map2.fire("tooltipclose", { tooltip: this });
             if (this._source) {
               this.removeEventParent(this._source);
               this._source.fire("tooltipclose", { tooltip: this }, true);
@@ -6995,7 +6995,7 @@ var YasguiGeoTg = (() => {
           _adjustPan: function() {
           },
           _setPosition: function(pos) {
-            var subX, subY, map = this._map, container = this._container, centerPoint = map.latLngToContainerPoint(map.getCenter()), tooltipPoint = map.layerPointToContainerPoint(pos), direction = this.options.direction, tooltipWidth = container.offsetWidth, tooltipHeight = container.offsetHeight, offset = toPoint(this.options.offset), anchor = this._getAnchor();
+            var subX, subY, map2 = this._map, container = this._container, centerPoint = map2.latLngToContainerPoint(map2.getCenter()), tooltipPoint = map2.layerPointToContainerPoint(pos), direction = this.options.direction, tooltipWidth = container.offsetWidth, tooltipHeight = container.offsetHeight, offset = toPoint(this.options.offset), anchor = this._getAnchor();
             if (direction === "top") {
               subX = tooltipWidth / 2;
               subY = tooltipHeight;
@@ -7328,13 +7328,13 @@ var YasguiGeoTg = (() => {
             this._tiles = {};
             this._resetView();
           },
-          beforeAdd: function(map) {
-            map._addZoomLimit(this);
+          beforeAdd: function(map2) {
+            map2._addZoomLimit(this);
           },
-          onRemove: function(map) {
+          onRemove: function(map2) {
             this._removeAllTiles();
             remove(this._container);
-            map._removeZoomLimit(this);
+            map2._removeZoomLimit(this);
             this._container = null;
             this._tileZoom = void 0;
           },
@@ -7510,14 +7510,14 @@ var YasguiGeoTg = (() => {
                 delete this._levels[z];
               }
             }
-            var level = this._levels[zoom2], map = this._map;
+            var level = this._levels[zoom2], map2 = this._map;
             if (!level) {
               level = this._levels[zoom2] = {};
               level.el = create$1("div", "leaflet-tile-container leaflet-zoom-animated", this._container);
               level.el.style.zIndex = maxZoom;
-              level.origin = map.project(map.unproject(map.getPixelOrigin()), zoom2).round();
+              level.origin = map2.project(map2.unproject(map2.getPixelOrigin()), zoom2).round();
               level.zoom = zoom2;
-              this._setZoomTransform(level, map.getCenter(), map.getZoom());
+              this._setZoomTransform(level, map2.getCenter(), map2.getZoom());
               falseFn(level.el.offsetWidth);
               this._onCreateLevel(level);
             }
@@ -7667,18 +7667,18 @@ var YasguiGeoTg = (() => {
             }
           },
           _resetGrid: function() {
-            var map = this._map, crs = map.options.crs, tileSize = this._tileSize = this.getTileSize(), tileZoom = this._tileZoom;
+            var map2 = this._map, crs = map2.options.crs, tileSize = this._tileSize = this.getTileSize(), tileZoom = this._tileZoom;
             var bounds = this._map.getPixelWorldBounds(this._tileZoom);
             if (bounds) {
               this._globalTileRange = this._pxBoundsToTileRange(bounds);
             }
             this._wrapX = crs.wrapLng && !this.options.noWrap && [
-              Math.floor(map.project([0, crs.wrapLng[0]], tileZoom).x / tileSize.x),
-              Math.ceil(map.project([0, crs.wrapLng[1]], tileZoom).x / tileSize.y)
+              Math.floor(map2.project([0, crs.wrapLng[0]], tileZoom).x / tileSize.x),
+              Math.ceil(map2.project([0, crs.wrapLng[1]], tileZoom).x / tileSize.y)
             ];
             this._wrapY = crs.wrapLat && !this.options.noWrap && [
-              Math.floor(map.project([crs.wrapLat[0], 0], tileZoom).y / tileSize.x),
-              Math.ceil(map.project([crs.wrapLat[1], 0], tileZoom).y / tileSize.y)
+              Math.floor(map2.project([crs.wrapLat[0], 0], tileZoom).y / tileSize.x),
+              Math.ceil(map2.project([crs.wrapLat[1], 0], tileZoom).y / tileSize.y)
             ];
           },
           _onMoveEnd: function() {
@@ -7688,18 +7688,18 @@ var YasguiGeoTg = (() => {
             this._update();
           },
           _getTiledPixelBounds: function(center) {
-            var map = this._map, mapZoom = map._animatingZoom ? Math.max(map._animateToZoom, map.getZoom()) : map.getZoom(), scale2 = map.getZoomScale(mapZoom, this._tileZoom), pixelCenter = map.project(center, this._tileZoom).floor(), halfSize = map.getSize().divideBy(scale2 * 2);
+            var map2 = this._map, mapZoom = map2._animatingZoom ? Math.max(map2._animateToZoom, map2.getZoom()) : map2.getZoom(), scale2 = map2.getZoomScale(mapZoom, this._tileZoom), pixelCenter = map2.project(center, this._tileZoom).floor(), halfSize = map2.getSize().divideBy(scale2 * 2);
             return new Bounds(pixelCenter.subtract(halfSize), pixelCenter.add(halfSize));
           },
           // Private method to load tiles in the grid's active zoom level according to map bounds
           _update: function(center) {
-            var map = this._map;
-            if (!map) {
+            var map2 = this._map;
+            if (!map2) {
               return;
             }
-            var zoom2 = this._clampZoom(map.getZoom());
+            var zoom2 = this._clampZoom(map2.getZoom());
             if (center === void 0) {
-              center = map.getCenter();
+              center = map2.getCenter();
             }
             if (this._tileZoom === void 0) {
               return;
@@ -7769,7 +7769,7 @@ var YasguiGeoTg = (() => {
             return this._tileCoordsToBounds(this._keyToTileCoords(key));
           },
           _tileCoordsToNwSe: function(coords) {
-            var map = this._map, tileSize = this.getTileSize(), nwPoint = coords.scaleBy(tileSize), sePoint = nwPoint.add(tileSize), nw = map.unproject(nwPoint, coords.z), se = map.unproject(sePoint, coords.z);
+            var map2 = this._map, tileSize = this.getTileSize(), nwPoint = coords.scaleBy(tileSize), sePoint = nwPoint.add(tileSize), nw = map2.unproject(nwPoint, coords.z), se = map2.unproject(sePoint, coords.z);
             return [nw, se];
           },
           // converts tile coordinates to its geographical bounds
@@ -8136,12 +8136,12 @@ var YasguiGeoTg = (() => {
             wmsParams.height = tileSize.y * realRetina;
             this.wmsParams = wmsParams;
           },
-          onAdd: function(map) {
-            this._crs = this.options.crs || map.options.crs;
+          onAdd: function(map2) {
+            this._crs = this.options.crs || map2.options.crs;
             this._wmsVersion = parseFloat(this.wmsParams.version);
             var projectionKey = this._wmsVersion >= 1.3 ? "crs" : "srs";
             this.wmsParams[projectionKey] = this._crs.code;
-            TileLayer.prototype.onAdd.call(this, map);
+            TileLayer.prototype.onAdd.call(this, map2);
           },
           getTileUrl: function(coords) {
             var tileBounds = this._tileCoordsToNwSe(coords), crs = this._crs, bounds = toBounds(crs.project(tileBounds[0]), crs.project(tileBounds[1])), min = bounds.min, max = bounds.max, bbox = (this._wmsVersion >= 1.3 && this._crs === EPSG4326 ? [min.y, min.x, max.y, max.x] : [min.x, min.y, max.x, max.y]).join(","), url = TileLayer.prototype.getTileUrl.call(this, coords);
@@ -8866,12 +8866,12 @@ var YasguiGeoTg = (() => {
           boxZoom: true
         });
         var BoxZoom = Handler.extend({
-          initialize: function(map) {
-            this._map = map;
-            this._container = map._container;
-            this._pane = map._panes.overlayPane;
+          initialize: function(map2) {
+            this._map = map2;
+            this._container = map2._container;
+            this._pane = map2._panes.overlayPane;
             this._resetStateTimeout = 0;
-            map.on("unload", this._destroy, this);
+            map2.on("unload", this._destroy, this);
           },
           addHooks: function() {
             on(this._container, "mousedown", this._onMouseDown, this);
@@ -8980,11 +8980,11 @@ var YasguiGeoTg = (() => {
             this._map.off("dblclick", this._onDoubleClick, this);
           },
           _onDoubleClick: function(e) {
-            var map = this._map, oldZoom = map.getZoom(), delta = map.options.zoomDelta, zoom2 = e.originalEvent.shiftKey ? oldZoom - delta : oldZoom + delta;
-            if (map.options.doubleClickZoom === "center") {
-              map.setZoom(zoom2);
+            var map2 = this._map, oldZoom = map2.getZoom(), delta = map2.options.zoomDelta, zoom2 = e.originalEvent.shiftKey ? oldZoom - delta : oldZoom + delta;
+            if (map2.options.doubleClickZoom === "center") {
+              map2.setZoom(zoom2);
             } else {
-              map.setZoomAround(e.containerPoint, zoom2);
+              map2.setZoomAround(e.containerPoint, zoom2);
             }
           }
         });
@@ -9027,18 +9027,18 @@ var YasguiGeoTg = (() => {
         var Drag = Handler.extend({
           addHooks: function() {
             if (!this._draggable) {
-              var map = this._map;
-              this._draggable = new Draggable(map._mapPane, map._container);
+              var map2 = this._map;
+              this._draggable = new Draggable(map2._mapPane, map2._container);
               this._draggable.on({
                 dragstart: this._onDragStart,
                 drag: this._onDrag,
                 dragend: this._onDragEnd
               }, this);
               this._draggable.on("predrag", this._onPreDragLimit, this);
-              if (map.options.worldCopyJump) {
+              if (map2.options.worldCopyJump) {
                 this._draggable.on("predrag", this._onPreDragWrap, this);
-                map.on("zoomend", this._onZoomEnd, this);
-                map.whenReady(this._onZoomEnd, this);
+                map2.on("zoomend", this._onZoomEnd, this);
+                map2.whenReady(this._onZoomEnd, this);
               }
             }
             addClass(this._map._container, "leaflet-grab leaflet-touch-drag");
@@ -9058,8 +9058,8 @@ var YasguiGeoTg = (() => {
             return this._draggable && this._draggable._moving;
           },
           _onDragStart: function() {
-            var map = this._map;
-            map._stop();
+            var map2 = this._map;
+            map2._stop();
             if (this._map.options.maxBounds && this._map.options.maxBoundsViscosity) {
               var bounds = toLatLngBounds(this._map.options.maxBounds);
               this._offsetLimit = toBounds(
@@ -9070,8 +9070,8 @@ var YasguiGeoTg = (() => {
             } else {
               this._offsetLimit = null;
             }
-            map.fire("movestart").fire("dragstart");
-            if (map.options.inertia) {
+            map2.fire("movestart").fire("dragstart");
+            if (map2.options.inertia) {
               this._positions = [];
               this._times = [];
             }
@@ -9125,19 +9125,19 @@ var YasguiGeoTg = (() => {
             this._draggable._newPos.x = newX;
           },
           _onDragEnd: function(e) {
-            var map = this._map, options = map.options, noInertia = !options.inertia || e.noInertia || this._times.length < 2;
-            map.fire("dragend", e);
+            var map2 = this._map, options = map2.options, noInertia = !options.inertia || e.noInertia || this._times.length < 2;
+            map2.fire("dragend", e);
             if (noInertia) {
-              map.fire("moveend");
+              map2.fire("moveend");
             } else {
               this._prunePositions(+/* @__PURE__ */ new Date());
               var direction = this._lastPos.subtract(this._positions[0]), duration = (this._lastTime - this._times[0]) / 1e3, ease = options.easeLinearity, speedVector = direction.multiplyBy(ease / duration), speed = speedVector.distanceTo([0, 0]), limitedSpeed = Math.min(options.inertiaMaxSpeed, speed), limitedSpeedVector = speedVector.multiplyBy(limitedSpeed / speed), decelerationDuration = limitedSpeed / (options.inertiaDeceleration * ease), offset = limitedSpeedVector.multiplyBy(-decelerationDuration / 2).round();
               if (!offset.x && !offset.y) {
-                map.fire("moveend");
+                map2.fire("moveend");
               } else {
-                offset = map._limitOffset(offset, map.options.maxBounds);
+                offset = map2._limitOffset(offset, map2.options.maxBounds);
                 requestAnimFrame(function() {
-                  map.panBy(offset, {
+                  map2.panBy(offset, {
                     duration: decelerationDuration,
                     easeLinearity: ease,
                     noMoveStart: true,
@@ -9167,10 +9167,10 @@ var YasguiGeoTg = (() => {
             zoomIn: [187, 107, 61, 171],
             zoomOut: [189, 109, 54, 173]
           },
-          initialize: function(map) {
-            this._map = map;
-            this._setPanDelta(map.options.keyboardPanDelta);
-            this._setZoomDelta(map.options.zoomDelta);
+          initialize: function(map2) {
+            this._map = map2;
+            this._setPanDelta(map2.options.keyboardPanDelta);
+            this._setZoomDelta(map2.options.zoomDelta);
           },
           addHooks: function() {
             var container = this._map._container;
@@ -9249,27 +9249,27 @@ var YasguiGeoTg = (() => {
             if (e.altKey || e.ctrlKey || e.metaKey) {
               return;
             }
-            var key = e.keyCode, map = this._map, offset;
+            var key = e.keyCode, map2 = this._map, offset;
             if (key in this._panKeys) {
-              if (!map._panAnim || !map._panAnim._inProgress) {
+              if (!map2._panAnim || !map2._panAnim._inProgress) {
                 offset = this._panKeys[key];
                 if (e.shiftKey) {
                   offset = toPoint(offset).multiplyBy(3);
                 }
-                if (map.options.maxBounds) {
-                  offset = map._limitOffset(toPoint(offset), map.options.maxBounds);
+                if (map2.options.maxBounds) {
+                  offset = map2._limitOffset(toPoint(offset), map2.options.maxBounds);
                 }
-                if (map.options.worldCopyJump) {
-                  var newLatLng = map.wrapLatLng(map.unproject(map.project(map.getCenter()).add(offset)));
-                  map.panTo(newLatLng);
+                if (map2.options.worldCopyJump) {
+                  var newLatLng = map2.wrapLatLng(map2.unproject(map2.project(map2.getCenter()).add(offset)));
+                  map2.panTo(newLatLng);
                 } else {
-                  map.panBy(offset);
+                  map2.panBy(offset);
                 }
               }
             } else if (key in this._zoomKeys) {
-              map.setZoom(map.getZoom() + (e.shiftKey ? 3 : 1) * this._zoomKeys[key]);
-            } else if (key === 27 && map._popup && map._popup.options.closeOnEscapeKey) {
-              map.closePopup();
+              map2.setZoom(map2.getZoom() + (e.shiftKey ? 3 : 1) * this._zoomKeys[key]);
+            } else if (key === 27 && map2._popup && map2._popup.options.closeOnEscapeKey) {
+              map2.closePopup();
             } else {
               return;
             }
@@ -9315,18 +9315,18 @@ var YasguiGeoTg = (() => {
             stop(e);
           },
           _performZoom: function() {
-            var map = this._map, zoom2 = map.getZoom(), snap = this._map.options.zoomSnap || 0;
-            map._stop();
-            var d22 = this._delta / (this._map.options.wheelPxPerZoomLevel * 4), d3 = 4 * Math.log(2 / (1 + Math.exp(-Math.abs(d22)))) / Math.LN2, d4 = snap ? Math.ceil(d3 / snap) * snap : d3, delta = map._limitZoom(zoom2 + (this._delta > 0 ? d4 : -d4)) - zoom2;
+            var map2 = this._map, zoom2 = map2.getZoom(), snap = this._map.options.zoomSnap || 0;
+            map2._stop();
+            var d22 = this._delta / (this._map.options.wheelPxPerZoomLevel * 4), d3 = 4 * Math.log(2 / (1 + Math.exp(-Math.abs(d22)))) / Math.LN2, d4 = snap ? Math.ceil(d3 / snap) * snap : d3, delta = map2._limitZoom(zoom2 + (this._delta > 0 ? d4 : -d4)) - zoom2;
             this._delta = 0;
             this._startTime = null;
             if (!delta) {
               return;
             }
-            if (map.options.scrollWheelZoom === "center") {
-              map.setZoom(zoom2 + delta);
+            if (map2.options.scrollWheelZoom === "center") {
+              map2.setZoom(zoom2 + delta);
             } else {
-              map.setZoomAround(this._lastMousePos, zoom2 + delta);
+              map2.setZoomAround(this._lastMousePos, zoom2 + delta);
             }
           }
         });
@@ -9425,21 +9425,21 @@ var YasguiGeoTg = (() => {
             off(this._map._container, "touchstart", this._onTouchStart, this);
           },
           _onTouchStart: function(e) {
-            var map = this._map;
-            if (!e.touches || e.touches.length !== 2 || map._animatingZoom || this._zooming) {
+            var map2 = this._map;
+            if (!e.touches || e.touches.length !== 2 || map2._animatingZoom || this._zooming) {
               return;
             }
-            var p1 = map.mouseEventToContainerPoint(e.touches[0]), p2 = map.mouseEventToContainerPoint(e.touches[1]);
-            this._centerPoint = map.getSize()._divideBy(2);
-            this._startLatLng = map.containerPointToLatLng(this._centerPoint);
-            if (map.options.touchZoom !== "center") {
-              this._pinchStartLatLng = map.containerPointToLatLng(p1.add(p2)._divideBy(2));
+            var p1 = map2.mouseEventToContainerPoint(e.touches[0]), p2 = map2.mouseEventToContainerPoint(e.touches[1]);
+            this._centerPoint = map2.getSize()._divideBy(2);
+            this._startLatLng = map2.containerPointToLatLng(this._centerPoint);
+            if (map2.options.touchZoom !== "center") {
+              this._pinchStartLatLng = map2.containerPointToLatLng(p1.add(p2)._divideBy(2));
             }
             this._startDist = p1.distanceTo(p2);
-            this._startZoom = map.getZoom();
+            this._startZoom = map2.getZoom();
             this._moved = false;
             this._zooming = true;
-            map._stop();
+            map2._stop();
             on(document, "touchmove", this._onTouchMove, this);
             on(document, "touchend touchcancel", this._onTouchEnd, this);
             preventDefault(e);
@@ -9448,12 +9448,12 @@ var YasguiGeoTg = (() => {
             if (!e.touches || e.touches.length !== 2 || !this._zooming) {
               return;
             }
-            var map = this._map, p1 = map.mouseEventToContainerPoint(e.touches[0]), p2 = map.mouseEventToContainerPoint(e.touches[1]), scale2 = p1.distanceTo(p2) / this._startDist;
-            this._zoom = map.getScaleZoom(scale2, this._startZoom);
-            if (!map.options.bounceAtZoomLimits && (this._zoom < map.getMinZoom() && scale2 < 1 || this._zoom > map.getMaxZoom() && scale2 > 1)) {
-              this._zoom = map._limitZoom(this._zoom);
+            var map2 = this._map, p1 = map2.mouseEventToContainerPoint(e.touches[0]), p2 = map2.mouseEventToContainerPoint(e.touches[1]), scale2 = p1.distanceTo(p2) / this._startDist;
+            this._zoom = map2.getScaleZoom(scale2, this._startZoom);
+            if (!map2.options.bounceAtZoomLimits && (this._zoom < map2.getMinZoom() && scale2 < 1 || this._zoom > map2.getMaxZoom() && scale2 > 1)) {
+              this._zoom = map2._limitZoom(this._zoom);
             }
-            if (map.options.touchZoom === "center") {
+            if (map2.options.touchZoom === "center") {
               this._center = this._startLatLng;
               if (scale2 === 1) {
                 return;
@@ -9463,14 +9463,14 @@ var YasguiGeoTg = (() => {
               if (scale2 === 1 && delta.x === 0 && delta.y === 0) {
                 return;
               }
-              this._center = map.unproject(map.project(this._pinchStartLatLng, this._zoom).subtract(delta), this._zoom);
+              this._center = map2.unproject(map2.project(this._pinchStartLatLng, this._zoom).subtract(delta), this._zoom);
             }
             if (!this._moved) {
-              map._moveStart(true, false);
+              map2._moveStart(true, false);
               this._moved = true;
             }
             cancelAnimFrame(this._animRequest);
-            var moveFn = bind(map._move, map, this._center, this._zoom, { pinch: true, round: false }, void 0);
+            var moveFn = bind(map2._move, map2, this._center, this._zoom, { pinch: true, round: false }, void 0);
             this._animRequest = requestAnimFrame(moveFn, this, true);
             preventDefault(e);
           },
@@ -28636,10 +28636,10 @@ var YasguiGeoTg = (() => {
         lookupPrefix: function(namespaceURI) {
           var el = this;
           while (el) {
-            var map = el._nsMap;
-            if (map) {
-              for (var n in map) {
-                if (map[n] == namespaceURI) {
+            var map2 = el._nsMap;
+            if (map2) {
+              for (var n in map2) {
+                if (map2[n] == namespaceURI) {
                   return n;
                 }
               }
@@ -28652,10 +28652,10 @@ var YasguiGeoTg = (() => {
         lookupNamespaceURI: function(prefix) {
           var el = this;
           while (el) {
-            var map = el._nsMap;
-            if (map) {
-              if (prefix in map) {
-                return map[prefix];
+            var map2 = el._nsMap;
+            if (map2) {
+              if (prefix in map2) {
+                return map2[prefix];
               }
             }
             el = el.nodeType == ATTRIBUTE_NODE ? el.ownerDocument : el.parentNode;
@@ -50842,17 +50842,16 @@ F8XNPmPzB2wT8Nrrg/SEi+cX+w4L8of+GtdSDxP1sjk5AdouU/6ZjOVru13r8K0obqI6bxvwVbdNXyhf
         this.container.style.height = "100%";
         this.container.style.minHeight = "500px";
         this.container.style.width = "100%";
-        const map = import_leaflet2.default.map(this.container, {
+        const map2 = import_leaflet2.default.map(this.container, {
           center: [50 + 38 / 60 + 28 / 3600, 4 + 40 / 60 + 5 / 3600],
           zoom: 5
         });
-        basemaps.openStreetMap.addTo(map);
-        const lg = import_leaflet2.default.featureGroup().addTo(map);
+        basemaps.openStreetMap.addTo(map2);
         this.control = import_leaflet2.default.control.layers(basemaps, {});
         this.layerGroups = {};
-        this.map = map;
+        this.map = map2;
         this.lg = lg;
-        this.control.addTo(map);
+        this.control.addTo(map2);
       }
       this.yasr.resultsEl.appendChild(this.container);
       console.log(this.layerGroups);
@@ -50866,7 +50865,8 @@ F8XNPmPzB2wT8Nrrg/SEi+cX+w4L8of+GtdSDxP1sjk5AdouU/6ZjOVru13r8K0obqI6bxvwVbdNXyhf
       for (const geometryColumn of this.geometryColumns) {
         const colName = geometryColumn.colName;
         if (!(colName in this.layerGroups)) {
-          this.layerGroups[colName] = import_leaflet2.default.layerGroup([]);
+          let fg = import_leaflet2.default.featureGroup().addTo(map);
+          this.layerGroups[colName] = fg;
         }
         const geojson = await createGeojson(
           this.yasr.results.json.results.bindings,
